@@ -1,0 +1,49 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "devstart": "nodemon server.js",
+    "knex": "./node_modules/.bin/knex",
+    "eslint": "eslint"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/eslint-parser": "^7.12.1",
+    "babel-eslint": "^10.1.0",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.10",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.13.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-promise-router": "^3.0.3",
+    "faker": "^5.0.0",
+    "google-spreadsheet": "^3.1.15",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.12",
+    "knex-migrate": "^1.7.4",
+    "pg": "^8.0.3",
+    "pg-promise": "^10.5.2",
+    "postgres": "^1.0.2",
+    "shift-parser": "^7.0.3",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.21.3",
+    "husky": "^4.2.5",
+    "needle": "^3.0.0",
+    "node-html-parser": "^4.1.4",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.6",
+    "request-promise": "^4.2.6",
+    "tress": "^1.1.4"
+  },
+  "keywords": [],
+  "description": ""
+}
