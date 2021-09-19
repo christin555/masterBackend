@@ -28,7 +28,7 @@ module.exports = {
         const categoryFields = catalogItems.filter(({id}) => fields.includes(id));
         const objectTablesValues = await getObjectTablesValues({categoryFields, knex, values});
 
-        return categoryFields.map(({name, ...item}) => {
+        const fieldsFilter =  categoryFields.map(({name, ...item}) => {
             
             if(objectTablesValues[name])
                 return {
@@ -40,6 +40,10 @@ module.exports = {
                 return {name, ...item};
             }
         });
+
+        console.log(fieldsFilter);
+
+        return fieldsFilter;
     }
 };
 getObjectTablesValues = async ({categoryFields, knex, values}) => {

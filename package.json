@@ -7,7 +7,8 @@
     "start": "node server.js",
     "devstart": "nodemon server.js",
     "knex": "./node_modules/.bin/knex",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "prodstart": "pm2 start server.js"
   },
   "author": "",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "knex-migrate": "^1.7.4",
     "pg": "^8.0.3",
     "pg-promise": "^10.5.2",
+    "pm2": "^5.1.0",
     "postgres": "^1.0.2",
     "shift-parser": "^7.0.3",
     "sqlite3": "^5.0.0"
