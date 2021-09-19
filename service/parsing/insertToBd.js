@@ -36,9 +36,10 @@ module.exports = {
 
         Promise.all(imgToInsert.map(({path, origSrc}) => saveImg(origSrc, path)));
 
+        //когда-нибудь переделай, пожалуйста, ну реально кровь из глаз идет аж...
         await knex('media')
-            .insert(imgToInsert.map(({entity, entityId, src, isDoor}) =>{
-                return {entity, entityId, src, isDoor};
+            .insert(imgToInsert.map(({entity, entityId, src, isDoor, isMain, isForHover}) =>{
+                return {entity, entityId, src, isDoor, isMain,isForHover};
             }));
         
         if (prices) {
