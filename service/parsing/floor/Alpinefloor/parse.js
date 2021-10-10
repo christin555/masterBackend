@@ -35,7 +35,15 @@ module.exports = {
                     });
 
                     $('[class="h1 item-detail__header"]').each(function () {
-                        const value = $(this).text().trim();
+                        let value = $(this).text().trim();
+
+                        if (value.indexOf("ЕСО") > 0) {
+                            value = value.substring(0, value.indexOf("ЕСО"));
+                        }
+
+                        if (value.indexOf("(без") > 0) {
+                            value = value.substring(0, value.indexOf("(без"));
+                        }
                         product.name = value;
                     });
 
