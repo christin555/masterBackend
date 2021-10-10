@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    array2Object: (array, key = 'id') => {
+    array2Object: (array, key = 'id', toLowerCase) => {
         const result = {};
 
         array.forEach((item) => {
@@ -22,7 +22,8 @@ module.exports = {
                     result[newKey] = item;
                 }
             } else {
-                result[item[key]] = item;
+                const _key = toLowerCase && item[key].toLowerCase() || item[key];
+                result[_key] = item;
             }
         });
 

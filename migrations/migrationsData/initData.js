@@ -17,7 +17,7 @@ const categories = [
         name: 'Ламинат',
         level: 2,
         alias: 'laminate',
-        isLast: false,
+        isLast: true,
         img: 'https://newmix.ru/upload/iblock/7dd/7dd4ef75faf362dc97b237ed7821e79b.jpg'
     },
     {
@@ -173,25 +173,21 @@ const collections = [
     //оптима порте
     {
         name: 'Парма',
-        nameDealer: 'Парма',
         brand: 'optima',
         category: 'doors'
     },
     {
         name: 'Турин',
-        nameDealer: 'Турин',
         brand: 'optima',
         category: 'doors'
     },
     {
         name: 'Тоскана',
-        nameDealer: 'Тоскана',
         brand: 'optima',
         category: 'doors'
     },
     {
         name: 'Сицилия',
-        nameDealer: 'Сицилия',
         brand: 'optima',
         category: 'doors'
     },
@@ -219,6 +215,16 @@ const collections = [
     {name: "Первая Уральская", nameDealer: "Первая Уральская", brand: "tarkett"},
     {name: "VERNISSAGE", nameDealer: "VERNISSAGE", brand: "tarkett"},
     {name: "WOODSTOCK Pr.", nameDealer: "WOODSTOCK Pr.", brand: "tarkett"},
+
+    //alpinefloor
+    {name: "Stone", brand: "alpine"},
+    {name: "Classic", brand: "alpine"},
+    {name: "Expressive", brand: "alpine"},
+    {name: "Grand Sequoia", brand: "alpine"},
+    {name: "Parquet Light", brand: "alpine"},
+    {name: "Sequoia", brand: "alpine"},
+    {name: "Intense", brand: "alpine"},
+    {name: "Easy Line", brand: "alpine"},
 
 ];
 
@@ -271,10 +277,15 @@ const articles = [
 ];
 
 const media = [
-    {entity: 3 , entityId: 1, src: 'wHxlaxkd8cU', type: 'youtube'},
-    {entity: 3 , entityId: 2, src: 'nsV6WbbXjtg', type: 'youtube'},
-    {entity: 3 , entityId: 3, src: 'BG-tTfV6DLw', type: 'youtube'},
-    {entity: 3 , entityId: 4, src: 'https://sun9-40.userapi.com/impg/dozkbEqPBbhtAmr_GzDJbSTI-FQpC61ZFFgo5w/N56rVPhZuNE.jpg?size=750x750&quality=96&sign=d9e2b6566907a9346572bdc232a4a8a3&type=album', type: 'img'}
+    {entity: 3, entityId: 1, src: 'wHxlaxkd8cU', type: 'youtube'},
+    {entity: 3, entityId: 2, src: 'nsV6WbbXjtg', type: 'youtube'},
+    {entity: 3, entityId: 3, src: 'BG-tTfV6DLw', type: 'youtube'},
+    {
+        entity: 3,
+        entityId: 4,
+        src: 'https://sun9-40.userapi.com/impg/dozkbEqPBbhtAmr_GzDJbSTI-FQpC61ZFFgo5w/N56rVPhZuNE.jpg?size=750x750&quality=96&sign=d9e2b6566907a9346572bdc232a4a8a3&type=album',
+        type: 'img'
+    }
 ];
 
 const catalogs = [
@@ -373,9 +384,10 @@ const catalogItems = [
 ];
 
 const conditions = [
-    {catalog: 'filterFields', category: 'doors', fields: [1,3]},
-    {catalog: 'filterFields', category: 'floors', fields: [1,2]}
+    {catalog: 'filterFields', category: 'doors', fields: [1, 3]},
+    {catalog: 'filterFields', category: 'floors', fields: [1, 2]}
 ];
+
 const brands = [
     {
         name: 'Moduleo',
@@ -401,6 +413,10 @@ const brands = [
         name: 'Tarkett',
         alias: 'tarkett'
     },
+    {
+        name: 'Alpine Floor',
+        alias: 'alpine'
+    }
 ];
 
 const hierarchy = [
@@ -417,7 +433,7 @@ const hierarchy = [
 const finishingMaterialDoors = [
     {name: 'Венге FL ЭКО-шпон', img: 'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_venge.jpg'},
     {name: 'Дуб беленый FL ЭКО-шпон', img: 'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_dub_bel.jpg'},
-    {name: 'Дуб серый FL ЭКО-шпон', img:'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_dub_ser.jpg'},
+    {name: 'Дуб серый FL ЭКО-шпон', img: 'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_dub_ser.jpg'},
     {name: 'Ясень перламутровый FL', img: 'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_yasen_pearl.jpg'},
     {name: 'Ясень серебристый FL', img: 'http://www.optimaporte.ru/assets/pictures/catalog/yasen_serebr.jpg'},
     {name: 'Белый лёд ЭКО-шпон', img: 'http://www.optimaporte.ru/assets/pictures/catalog/ekoshpon_bel.jpg'}

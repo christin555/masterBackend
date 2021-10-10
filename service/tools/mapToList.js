@@ -13,8 +13,8 @@ const mapToList = ({products, category = {}, categoryHead = [], prices}) => {
 
     return products.map(({imgs, ...product}) => {
         product.price = pricesProducts[product.id];
-        const img = imgs && (imgs.find(({isMain}) => isMain) || {});
-        product.img = img.src;
+        const img = imgs && (imgs.find(({isMain}) => isMain) || {}) || {};
+        product.img = img.src ;
         product.isDoor = img.isDoor;
         product.imgForHover = imgs && (imgs.find(({isForHover}) => isForHover) || {}).src;
 

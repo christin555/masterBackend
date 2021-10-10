@@ -3,7 +3,7 @@ const {categorySetFunc} = require('./categorySetFunc');
 
 module.exports = {
     mapToBD: ({products, categories, fields, collections}) => {
-        const collectionsObject = array2Object(collections, 'nameDealer');
+        const collectionsObject = array2Object(collections, 'nameDealer', true);
         const categoriesObject = array2Object(categories, 'alias');
         const imgs = [];
 
@@ -16,9 +16,8 @@ module.exports = {
                 }
             });
 
-
-            if(collectionsObject && item.collection && collectionsObject[item.collection]){
-                itemBd.collectionId = collectionsObject[item.collection].id;
+            if(collectionsObject && item.collection && collectionsObject[item.collection.toLowerCase()]){
+                itemBd.collectionId = collectionsObject[item.collection.toLowerCase()].id;
             }
 
             categorySetFunc && categorySetFunc({itemBd, item, categoriesObject});

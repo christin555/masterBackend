@@ -21,7 +21,6 @@ module.exports = {
             .whereNull('categories.deleted_at')
             .andWhere('isLast', true);
 
-        console.log(categoryUnder.toQuery());
         return categoryUnder;
     }
 };

@@ -148,7 +148,7 @@ exports.up = (knex) => Promise.all([
             .string('residentialWarranty')
             .comment('Срок службы в жилых помещениях');
 
-        table.timestamp("deleted_at");
+        table.timestamp("deleted_at", {useTz: false});
         table.timestamps();
 
         table.unique(['name', 'categoryId', 'collectionId', 'code']);

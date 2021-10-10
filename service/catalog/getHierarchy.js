@@ -61,8 +61,6 @@ module.exports = {
             };
         }).sort((a, b) => a.level - b.level);
 
-        console.log(category.isLast);
-
         if(nameProduct){
             hierarchy.push({name: nameProduct});
         }

@@ -13,10 +13,11 @@ router.get('/parsing/startArteast', getMethod(() => 'startArteast'));
 router.get('/parsing/startDeart', getMethod(() => 'startDeart'));
 router.get('/parsing/startModuleo', getMethod(() => 'startModuleo'));
 router.get('/parsing/startOptima', getMethod(() => 'startOptima'));
+router.get('/parsing/startDecoria/:docid', getMethod(() => 'startDecoria'));
+router.get('/parsing/startAlsa', getMethod(() => 'startAlsa'));
+router.get('/parsing/startAlpine', getMethod(() => 'startAlpine'));
 
 router.get('/articles/getArticles', getMethod(() => 'getArticles'));
-
-router.get('/parsing/startDecoria/:docid', getMethod(() => 'startDecoria'));
 
 router.post('/upload', (query) => getMethod('upload', query));
 

@@ -25,7 +25,7 @@ module.exports = {
         console.log('urls are got');
 
         const products = await getProducts({links});
-        console.log('products are got', products);
+        console.log('products are got');
 
         const categories = await getCategories({knex});
         console.log('start Tarkett - categories are got');

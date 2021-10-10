@@ -4,8 +4,6 @@ module.exports = {
     callme: async ({body, knex}) => {
         const {phone, product, name} = body;
 
-        console.log(product);
-
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,

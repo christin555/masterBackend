@@ -15,10 +15,11 @@ const {startDeart} = require('./parsing/floor/Deart/start');
 const {startOptima} = require('./parsing/doors/Optima/start');
 const {startArteast} = require('./parsing/floor/Arteast/start');
 const {startTarkett} = require('./parsing/floor/Tarkett/start');
-const {getArticles} = require('./articles/getArticles');
+const {startAlsa} = require('./parsing/floor/Alsafloor/start');
+const {startAlpine} = require('./parsing/floor/Alpinefloor/start');
 
 const {callme} = require('./send/callme');
-
+const {getArticles} = require('./articles/getArticles');
 const {upload} = require('./upload');
 
 module.exports = {
@@ -37,6 +38,8 @@ module.exports = {
     startOptima,
     startArteast,
     startTarkett,
+    startAlsa,
+    startAlpine,
 
     callme,
 

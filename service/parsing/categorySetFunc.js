@@ -1,14 +1,11 @@
 module.exports = {
     categorySetFunc: ({itemBd, item, categoriesObject}) => {
-
         if (item._categoryType.toLowerCase() === 'ламинат') {
             itemBd.categoryId = categoriesObject['laminate'].id;
         }
 
-
         if (item._categoryType.toLowerCase() === 'кварцвинил') {
             const {connectionType} = itemBd;
-            console.log(connectionType);
 
             if (connectionType) {
                 if (connectionType.toLowerCase().includes("клеев")) {

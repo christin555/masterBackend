@@ -41,8 +41,6 @@ module.exports = {
             }
         });
 
-        console.log(fieldsFilter);
-
         return fieldsFilter;
     }
 };

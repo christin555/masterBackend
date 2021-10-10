@@ -19,10 +19,8 @@ module.exports = {
         }
 
         if (categoryId) {
-            query.where('categoryId', categoryId);
+            query.where('products.categoryId', categoryId);
         }
-
-        console.log(filter);
 
         if (filter) {
             Object.entries(filter).forEach(([key, value]) => {

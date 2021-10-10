@@ -20,7 +20,6 @@ module.exports = {
 
         productsHtml.filter(Boolean).forEach(({data: dataProduct}) => {
             if (dataProduct) {
-                // console.log(dataProduct);
                 const p = cheerio.load(dataProduct);
                 const name = p('h1[itemprop="name"]:first').text().trim();
                 const artic = p('[itemprop="sku"]:first').text().trim();
