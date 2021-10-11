@@ -34,7 +34,7 @@ module.exports = {
             return array;
         }, []);
 
-        Promise.all(imgToInsert.map(({path, origSrc}) => saveImg(origSrc, path)));
+        saveImgs(imgToInsert);
 
         //когда-нибудь переделай, пожалуйста, ну реально кровь из глаз идет аж...
         await knex('media')
@@ -60,4 +60,18 @@ module.exports = {
     }
 };
 
+const saveImgs = (imgs) => {
+    const delayIncrement = 500;
+    let delay = 0;
+    const promises = [];
 
+    imgs.forEach(({path, origSrc}) => {
+        promises.push(
+            new Promise(resolve => setTimeout(resolve, delay))
+                .then(() => saveImg(origSrc, path))
+        );
+        delay += delayIncrement;
+    });
+
+    Promise.all(promises);
+};
