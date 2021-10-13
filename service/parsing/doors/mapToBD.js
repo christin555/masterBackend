@@ -29,7 +29,7 @@ module.exports = {
                 });
                 itemBd.finishingMaterial = finishingMaterial;
 
-                imgs.push({name: itemBd.name, isDoor: true, imgs: item.finishingMaterial.map(({img}) =>img)});
+                imgs.push({name: itemBd.name, isDoor: true, imgs: item.finishingMaterial.map(({img}) => img)});
             }
 
             return itemBd;

@@ -193,38 +193,38 @@ const collections = [
     },
 
     //tarkett
-    {name: "Nordica New", nameDealer: "Nordica New", brand: "tarkett"},
-    {name: "Navigator", nameDealer: "Navigator", brand: "tarkett"},
-    {name: "Gallery", nameDealer: "Gallery", brand: "tarkett"},
-    {name: "Gallery Mini", nameDealer: "Gallery Mini", brand: "tarkett"},
-    {name: "Dynasty", nameDealer: "Dynasty", brand: "tarkett"},
-    {name: "Pilot", nameDealer: "Pilot", brand: "tarkett"},
-    {name: "Poem", nameDealer: "Poem", brand: "tarkett"},
-    {name: "Estetica", nameDealer: "Estetica", brand: "tarkett"},
-    {name: "Ballet", nameDealer: "Ballet", brand: "tarkett"},
-    {name: "Cruise", nameDealer: "Cruise", brand: "tarkett"},
-    {name: "Cinema", nameDealer: "Cinema", brand: "tarkett"},
-    {name: "Intermezzo", nameDealer: "Intermezzo", brand: "tarkett"},
-    {name: "Woodstock Family", nameDealer: "Woodstock Family", brand: "tarkett"},
-    {name: "Robinson", nameDealer: "Robinson", brand: "tarkett"},
-    {name: "Fiesta", nameDealer: "Fiesta", brand: "tarkett"},
-    {name: "Holiday", nameDealer: "Holiday", brand: "tarkett"},
-    {name: "Germany", nameDealer: "Germany", brand: "tarkett"},
-    {name: "France", nameDealer: "France", brand: "tarkett"},
-    {name: "Первая Сибирская", nameDealer: "Первая Сибирская", brand: "tarkett"},
-    {name: "Первая Уральская", nameDealer: "Первая Уральская", brand: "tarkett"},
-    {name: "VERNISSAGE", nameDealer: "VERNISSAGE", brand: "tarkett"},
-    {name: "WOODSTOCK Pr.", nameDealer: "WOODSTOCK Pr.", brand: "tarkett"},
+    {name: 'Nordica New', nameDealer: 'Nordica New', brand: 'tarkett'},
+    {name: 'Navigator', nameDealer: 'Navigator', brand: 'tarkett'},
+    {name: 'Gallery', nameDealer: 'Gallery', brand: 'tarkett'},
+    {name: 'Gallery Mini', nameDealer: 'Gallery Mini', brand: 'tarkett'},
+    {name: 'Dynasty', nameDealer: 'Dynasty', brand: 'tarkett'},
+    {name: 'Pilot', nameDealer: 'Pilot', brand: 'tarkett'},
+    {name: 'Poem', nameDealer: 'Poem', brand: 'tarkett'},
+    {name: 'Estetica', nameDealer: 'Estetica', brand: 'tarkett'},
+    {name: 'Ballet', nameDealer: 'Ballet', brand: 'tarkett'},
+    {name: 'Cruise', nameDealer: 'Cruise', brand: 'tarkett'},
+    {name: 'Cinema', nameDealer: 'Cinema', brand: 'tarkett'},
+    {name: 'Intermezzo', nameDealer: 'Intermezzo', brand: 'tarkett'},
+    {name: 'Woodstock Family', nameDealer: 'Woodstock Family', brand: 'tarkett'},
+    {name: 'Robinson', nameDealer: 'Robinson', brand: 'tarkett'},
+    {name: 'Fiesta', nameDealer: 'Fiesta', brand: 'tarkett'},
+    {name: 'Holiday', nameDealer: 'Holiday', brand: 'tarkett'},
+    {name: 'Germany', nameDealer: 'Germany', brand: 'tarkett'},
+    {name: 'France', nameDealer: 'France', brand: 'tarkett'},
+    {name: 'Первая Сибирская', nameDealer: 'Первая Сибирская', brand: 'tarkett'},
+    {name: 'Первая Уральская', nameDealer: 'Первая Уральская', brand: 'tarkett'},
+    {name: 'VERNISSAGE', nameDealer: 'VERNISSAGE', brand: 'tarkett'},
+    {name: 'WOODSTOCK Pr.', nameDealer: 'WOODSTOCK Pr.', brand: 'tarkett'},
 
     //alpinefloor
-    {name: "Stone", brand: "alpine"},
-    {name: "Classic", brand: "alpine"},
-    {name: "Expressive", brand: "alpine"},
-    {name: "Grand Sequoia", brand: "alpine"},
-    {name: "Parquet Light", brand: "alpine"},
-    {name: "Sequoia", brand: "alpine"},
-    {name: "Intense", brand: "alpine"},
-    {name: "Easy Line", brand: "alpine"},
+    {name: 'Stone', brand: 'alpine'},
+    {name: 'Classic', brand: 'alpine'},
+    {name: 'Expressive', brand: 'alpine'},
+    {name: 'Grand Sequoia', brand: 'alpine'},
+    {name: 'Parquet Light', brand: 'alpine'},
+    {name: 'Sequoia', brand: 'alpine'},
+    {name: 'Intense', brand: 'alpine'},
+    {name: 'Easy Line', brand: 'alpine'}
 
 ];
 
@@ -273,7 +273,7 @@ const articles = [
             '✅ Пробка — лучший природный теплоизолятор. В отличие от любых других настенных покрытий, пробка имеет комнатную температуру: прекрасно сохраняет тепло зимой и прохладу летом \\n\n' +
             '✅ Экологичность.Пробка абсолютно безвредна для здоровья человека.',
         title: 'ПРОБКОВОЕ ПОКРЫТИЕ'
-    },
+    }
 ];
 
 const media = [
@@ -366,7 +366,7 @@ const catalogItems = [
                 type: 'checkbox',
                 values: {
                     name: 'brands',
-                    entity: 'table',
+                    entity: 'table'
                 }
             },
             {

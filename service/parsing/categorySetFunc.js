@@ -8,11 +8,11 @@ module.exports = {
             const {connectionType} = itemBd;
 
             if (connectionType) {
-                if (connectionType.toLowerCase().includes("клеев")) {
+                if (connectionType.toLowerCase().includes('клеев')) {
                     itemBd.categoryId = categoriesObject['quartzvinyl_kleevay'].id;
                 }
 
-                if (connectionType.toLowerCase().includes("замков")) {
+                if (connectionType.toLowerCase().includes('замков')) {
                     itemBd.categoryId = categoriesObject['quartzvinyl_zamkovay'].id;
                 }
             }

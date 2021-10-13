@@ -1,9 +1,6 @@
 module.exports = {
-    getFinishingMaterials: async ({knex}) => {
-        const finishingMaterials = await knex('finishingMaterialDoors')
+    getFinishingMaterials: ({knex}) => {
+        return knex('finishingMaterialDoors')
             .select(['id', 'name']);
-         
-
-        return finishingMaterials;
     }
 };

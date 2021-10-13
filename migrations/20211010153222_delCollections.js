@@ -1,4 +1,3 @@
-
 const collectionsForHide = [
     'France',
     'Germany',
@@ -18,6 +17,6 @@ exports.up = async(knex) => {
 
 };
 
-exports.down = function(knex) {
-  
+exports.down = () => {
+
 };
