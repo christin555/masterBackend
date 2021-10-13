@@ -1,4 +1,4 @@
-const FileSystem = require('../../utils/FileSystem');
+const {FileSystem} = require('./FileSystem');
 const path = require('path');
 
 class ReadIterator {
@@ -17,4 +17,4 @@ class ReadIterator {
     }
 }
 
-module.exports = ReadIterator;
+module.exports = {ReadIterator};

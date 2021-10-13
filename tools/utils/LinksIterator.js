@@ -1,16 +1,15 @@
 const axios = require('axios');
 const http = require('http');
 const https = require('https');
-
-const sleep = (ms) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
-};
+const {Utils: {sleep}} = require('./Utils');
 
 class LinksIterator {
+    /**
+     * @param {string} baseUrl
+     * @param {string[]} urls
+     * @param {Object} opt
+     * @param {number}[opt.ms = 1000] opt.ms
+     */
     constructor(baseUrl, urls, opt) {
         const agentOpt = {
             keepAlive: true,
@@ -25,7 +24,7 @@ class LinksIterator {
         axios.defaults.httpAgent = new http.Agent(agentOpt);
         axios.defaults.baseURL = baseUrl;
 
-        this.ms = opt.ms;
+        this.ms = opt.ms || 1000;
     }
 
     async* [Symbol.asyncIterator]() {
@@ -45,4 +44,4 @@ class LinksIterator {
     }
 }
 
-module.exports = LinksIterator;
+module.exports = {LinksIterator};
