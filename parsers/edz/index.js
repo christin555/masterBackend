@@ -1,4 +1,4 @@
-const {FileSystem} = require('../../utils');
+const {FileSystem} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {BaseParser} = require('../BaseParser');
 

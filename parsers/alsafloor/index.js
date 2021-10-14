@@ -1,6 +1,6 @@
 const {
     FileSystem
-} = require('../../utils');
+} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {BaseParser} = require('../BaseParser');
 

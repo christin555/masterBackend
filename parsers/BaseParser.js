@@ -1,7 +1,7 @@
 const {
     Utils,
     LinksIterator
-} = require('../utils');
+} = require('./utils');
 
 class BaseParser {
     /**
