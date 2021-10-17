@@ -19,7 +19,7 @@ const {Transformer} = require('./save/Transformer');
 const {startParse} = require('./edz');
 const {logger} = require('../utils/Logger');
 
-const parseFull = async() => {
+const start = async() => {
     const strategy = new Strategy();
     const parser = new BaseParser(
         baseUrl,
@@ -40,7 +40,6 @@ const parseFull = async() => {
         const products = new Transformer({alsafloor, edz}).map();
         const saver = new SaveProducts(products, knex, logger);
 
-
         // FileSystem.saveToJSON('matches', products);
 
         await saver.save();
@@ -49,5 +48,5 @@ const parseFull = async() => {
     }
 };
 
-parseFull();
+module.exports = {start};
 

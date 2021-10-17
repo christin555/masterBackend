@@ -18,6 +18,10 @@ class Utils {
     static isDev() {
         return process.env.ENV !== 'development' || true;
     }
+
+    static matchStr(s1, s2) {
+        return s1.toLowerCase().indexOf(s2.toLowerCase()) > -1;
+    }
 }
 
 module.exports = {Utils};

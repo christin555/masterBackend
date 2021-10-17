@@ -3,9 +3,9 @@ const {
     CODE_IDX,
     collectionMatch,
     delProps,
-    propsToDB,
-    yesBool
+    propsToDB
 } = require('./consts');
+const {Utils} = require('../../utils');
 
 
 class Transformer {
@@ -44,8 +44,8 @@ class Transformer {
         const mainName = this.fixMainName(product.name);
 
         const aPr = this.products.alsafloor.find(({name, collection, code}) => {
-            return this.has(mainName, name) &&
-                this.has(mainName, collection);
+            return Utils.matchStr(mainName, name) &&
+                Utils.matchStr(mainName, collection);
         });
 
         if (aPr !== undefined) {
@@ -81,22 +81,18 @@ class Transformer {
         };
     }
 
-    has(s1, s2) {
-        return s1.toLowerCase().indexOf(s2.toLowerCase()) > -1;
-    }
-
     fixMainName(name) {
         let _name = name;
 
-        if (this.has(name, 'Пралин')) {
+        if (Utils.matchStr(name, 'Пралин')) {
             _name = name.replace('Пралин', 'Пролин');
         }
 
-        if (this.has(name, 'Left')) {
+        if (Utils.matchStr(name, 'Left')) {
             _name = name.replace('Left', '');
         }
 
-        if (this.has(name, 'Right')) {
+        if (Utils.matchStr(name, 'Right')) {
             _name = name.replace('Right', '');
         }
 

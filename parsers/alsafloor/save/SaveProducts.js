@@ -36,6 +36,8 @@ class SaveProducts {
 
     async getCategories() {
         this.categories = await getCategories({knex: this.knex});
+
+        this.logger.debug('init categories');
     }
 
     async getCollections() {
@@ -46,6 +48,8 @@ class SaveProducts {
         });
 
         this.collections = array2Object(this.collections, 'name');
+
+        this.logger.debug('init collections');
     }
 
     async saveImages() {
