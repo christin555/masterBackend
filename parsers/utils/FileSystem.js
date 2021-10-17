@@ -1,4 +1,5 @@
 const fs = require('fs');
+const {Utils} = require('./Utils');
 
 class FileSystem {
     static mkdirP(path) {
@@ -19,10 +20,21 @@ class FileSystem {
         FileSystem._save(path, content);
     }
 
-    static saveToJSON(path, content) {
-        const ext = '.json';
+    /**
+     *
+     * @param path
+     * @param content
+     * @param {Object} opts
+     * @param {boolean} [opts.ignoreDev = false] opts.ignoreDev
+     */
+    static saveToJSON(path, content, opts = {}) {
+        const ext = '.ignore.json';
 
-        FileSystem._save(`${path}${ext}`, JSON.stringify(content));
+        if (Utils.isDev() || opts.ignoreDev) {
+            FileSystem._save(`${path}${ext}`, JSON.stringify(content));
+        } else {
+            console.log('save in prod');
+        }
     }
 
     static load(path) {

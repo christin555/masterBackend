@@ -40,6 +40,15 @@ class Strategy {
             desc.push({key, value});
         });
 
+        const headFloor = html.querySelector('.product-icon-heatedfloor');
+
+        if (headFloor !== undefined) {
+            desc.push({
+                key: 'Теплый пол',
+                value: true
+            });
+        }
+
         resJSON.desc = desc;
 
         return resJSON;

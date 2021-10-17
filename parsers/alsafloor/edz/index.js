@@ -1,6 +1,6 @@
-const {FileSystem} = require('../utils');
+const {FileSystem, Utils} = require('../../utils');
 const {Strategy} = require('./Strategy');
-const {BaseParser} = require('../BaseParser');
+const {BaseParser} = require('../../BaseParser');
 
 const baseUrl = 'https://e-dz.ru';
 
@@ -14,7 +14,7 @@ const urls = [
     '/catalog/osmoze-medium'
 ];
 
-const parseFull = async() => {
+const startParse = async() => {
     const strategy = new Strategy();
     // Для получения всех данных
     const _urls = urls.map((url) => `${url}?per-page=96`);
@@ -27,7 +27,11 @@ const parseFull = async() => {
 
     const items = await parser.parse();
 
-    FileSystem.saveToJSON('all', items);
+    // FileSystem.saveToJSON('../edz', items);
+
+    return items;
 };
 
-parseFull();
+module.exports = {
+    startParse
+};

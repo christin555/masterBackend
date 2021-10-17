@@ -14,6 +14,10 @@ class Utils {
             }, ms);
         });
     };
+
+    static isDev() {
+        return process.env.ENV !== 'development' || true;
+    }
 }
 
 module.exports = {Utils};

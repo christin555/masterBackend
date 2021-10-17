@@ -50,15 +50,14 @@ class Strategy {
 
         $.querySelectorAll(selectors.additionalDesc)
             .forEach((el) => {
-                const descStr = el.textContent;
+                const descStr = this.toText(el);
                 const [key, value] = descStr.split(':');
 
                 if (!key) {
                     desc.push({key: value, value});
                 } else {
-                    desc.push({key, value});
+                    desc.push({key: key.trim(), value});
                 }
-
             });
 
 
@@ -69,7 +68,13 @@ class Strategy {
     }
 
     elText(sel, el) {
-        return el.querySelector(sel)?.textContent?.trim();
+        return this.toText(el.querySelector(sel));
+    }
+
+    toText(el) {
+        return el?.textContent
+            .trim()
+            .replace(';', '');
     }
 }
 
