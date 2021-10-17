@@ -1,11 +1,10 @@
-
 module.exports = {
-    upload: async ({params, knex, files}) => {
+    upload: async({files}) => {
         const imageFile = files.file;
 
         try {
             await imageFile.mv(`public/${imageFile.name}`);
-        } catch (error) {
+        } catch(error) {
             return error;
         }
 

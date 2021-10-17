@@ -1,9 +1,4 @@
-const {entity} = require('../../enums');
-const {getProductsOfCategory} = require('../products/getProducts');
-const {getFirstLevels} = require('./getFirstLevels');
-const {getNextLevelCategory} = require('./getNextLevelCategory');
-
-fields = [
+const fields = [
     'id',
     'name',
     'level',

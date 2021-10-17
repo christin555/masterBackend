@@ -1,10 +1,10 @@
-const {verifyPassword, findOneByEmail, hashPassword} = require("../auth");
-const knex = require("../knex/index");
-const jwt = require("jsonwebtoken");
+const {verifyPassword, findOneByEmail, hashPassword} = require('../auth');
+const knex = require('../knex/index');
+const jwt = require('jsonwebtoken');
 const {secretKey} = require('../config');
 const {getUser} = require('../service');
 
-exports.register = async (req, res) => {
+exports.register = async(req, res) => {
     const {
         firstName,
         secondName,
@@ -18,10 +18,10 @@ exports.register = async (req, res) => {
 
     if (!password || !email || !firstName || !secondName || !lastName) {
         return res.status(200).json({
-            message: "error!"
+            message: 'error!'
         });
     }
-    
+
     const user = {
         firstName,
         secondName,
@@ -33,32 +33,34 @@ exports.register = async (req, res) => {
     };
     const hashedPassword = await hashPassword(password);
 
-    const result = await knex("users").insert({
-        ...user,
-        password: hashedPassword,
-        isAdmin: false
-    }).returning('id')
-        .then(async ([data]) =>{
-            const user = await getUser({params: {id: data}, knex});
+    const newVar = async([data]) => {
+        const user = await getUser({params: {id: data}, knex});
 
-            user.token = jwt.sign({id: data}, secretKey, {expiresIn: '24h'});
+        user.token = jwt.sign({id: data}, secretKey, {expiresIn: '24h'});
 
-            res.status(200).json({
-                message: "success! created account for new user",
-                user
-            });
-        })
-        .catch(error => {
-            console.log(error);
-            return res.status(500).json({
-                message: error.code === "23505" ? "Email is exist!" : "Error!"
-            });
+        res.status(200).json({
+            message: 'success! created account for new user',
+            user
         });
-
-
+    };
+    const onrejected = error => {
+        console.log(error);
+        return res.status(500).json({
+            message: error.code === '23505' ? 'Email is exist!' : 'Error!'
+        });
+    };
+    return knex('users')
+        .insert({
+            ...user,
+            password: hashedPassword,
+            isAdmin: false
+        })
+        .returning('id')
+        .then(newVar)
+        .catch(onrejected);
 };
 
-exports.login = async (req, res) => {
+exports.login = async(req, res) => {
     const {
         email,
         password
@@ -69,30 +71,31 @@ exports.login = async (req, res) => {
         return res;
     }
 
-    const user = await findOneByEmail(email)
-        .then(async (result) => {
-            const isVerified = await verifyPassword(password, result.password);
-            if (isVerified) {
-                const response = await getUser({params: {id: result.id}, knex});
-                console.log(2);
-                response.token = jwt.sign({id: result.id}, secretKey, {expiresIn: '24h'});
-                res.status(200).json(response);
-            } else {
-                res.status(400).json({
-                    message: "Auth is failed"
-                });
-            }
-
-        }
-        )
-        .catch((err) => {
-            console.log(err);
-            return res.status(500).json({
-                message: err
+    const onfulfilled = async(result) => {
+        const isVerified = await verifyPassword(password, result.password);
+        if (isVerified) {
+            const response = await getUser({params: {id: result.id}, knex});
+            console.log(2);
+            response.token = jwt.sign({id: result.id}, secretKey, {expiresIn: '24h'});
+            res.status(200).json(response);
+        } else {
+            res.status(400).json({
+                message: 'Auth is failed'
             });
         }
-        );
 
-    return res;
+    };
+    const onrejected = (err) => {
+        console.log(err);
+        return res.status(500).json({
+            message: err
+        });
+    };
+
+    const user = await findOneByEmail(email)
+        .then(onfulfilled)
+        .catch(onrejected);
+
+    return user;
 };
 

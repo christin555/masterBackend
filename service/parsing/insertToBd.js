@@ -1,7 +1,5 @@
 const {array2Object} = require('../tools/array2Object');
 const {entity} = require('../../enums');
-const fs = require("fs");
-const axios = require("axios");
 const {saveImg} = require('./saveImg');
 
 module.exports = {
