@@ -17,8 +17,7 @@ const urls = [
 const knex = require('../../knex');
 const {Transformer} = require('./save/Transformer');
 const {startParse} = require('./edz');
-const alsafloor = require('./alsafloor.ignore.json');
-const edz = require('./edz.ignore.json');
+const {logger} = require('../utils/Logger');
 
 const parseFull = async() => {
     const strategy = new Strategy();
@@ -29,21 +28,20 @@ const parseFull = async() => {
         {ms: 500, msBetweenUrl: 250}
     );
 
-    // const alsafloor = await parser.parse();
-    // const edz = await startParse();
+    const alsafloor = await parser.parse();
+    const edz = await startParse();
 
+    // Можно сохранить промежуточные результаты для экспериментов
+    // Чтобы не парсить каждый раз
     // FileSystem.saveToJSON('alsafloor', alsafloor);
     // FileSystem.saveToJSON('edz', edz);
-
-    const logger = {
-        debug: console.log
-    };
 
     try {
         const products = new Transformer({alsafloor, edz}).map();
         const saver = new SaveProducts(products, knex, logger);
 
-        FileSystem.saveToJSON('matches', products);
+
+        // FileSystem.saveToJSON('matches', products);
 
         await saver.save();
     } finally {
