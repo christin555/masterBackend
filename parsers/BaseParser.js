@@ -29,7 +29,13 @@ class BaseParser {
 
         const itemsLinks = new Map();
 
-        for await (const {url, data} of iterator) {
+        for await (const iter of iterator) {
+            if (iter.error) {
+                continue;
+            }
+
+            const {url, data} = iter;
+
             itemsLinks.set(url, this.strategy.collectAllLinks(data));
         }
 
@@ -57,7 +63,13 @@ class BaseParser {
 
         const items = [];
 
-        for await (const {data} of iterator) {
+        for await (const iter of iterator) {
+            if (iter.error) {
+                continue;
+            }
+
+            const {data} = iter;
+
             items.push(this.strategy.collectItem(data));
         }
 

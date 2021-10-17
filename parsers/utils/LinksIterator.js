@@ -15,14 +15,18 @@ class LinksIterator {
             keepAlive: true,
             maxFreeSockets: 3,
             scheduling: 'fifo',
-            timeout: 5 * 1000
+            timeout: 5 * 1000,
+            rejectUnauthorized: false
         };
 
         this.urls = urls;
+        this.baseUrl = baseUrl;
 
-        axios.defaults.httpsAgent = new https.Agent(agentOpt);
-        axios.defaults.httpAgent = new http.Agent(agentOpt);
-        axios.defaults.baseURL = baseUrl;
+        this.axios = axios.create({
+            baseURL: baseUrl,
+            httpsAgent: new https.Agent(agentOpt),
+            httpAgent: new http.Agent(agentOpt)
+        });
 
         this.ms = opt.ms || 1000;
     }
@@ -30,15 +34,15 @@ class LinksIterator {
     async* [Symbol.asyncIterator]() {
         for (const url of this.urls) {
             try {
-                const {data, status} = await axios
+                const {data, status} = await this.axios
                     .get(url);
 
                 console.log(`${url} is up, status: ${status}`);
-
                 yield {url, data};
                 await sleep(this.ms);
-            } catch(e) {
-                yield `${url} is down, error ${e.message}`;
+            } catch(error) {
+                console.log(`skip ${this.baseUrl} ${url} cause ${error.message}`);
+                yield {error};
             }
         }
     }

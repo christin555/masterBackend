@@ -1,4 +1,3 @@
-const {FileSystem, Utils} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {BaseParser} = require('../BaseParser');
 const {SaveProducts} = require('./save/SaveProducts');
@@ -16,10 +15,12 @@ const urls = [
 
 const knex = require('../../knex');
 const {Transformer} = require('./save/Transformer');
-const {startParse} = require('./edz');
+const {start: edzStart} = require('./edz');
 const {logger} = require('../utils/Logger');
 
 const start = async() => {
+    logger.debug('start alsafloor');
+
     const strategy = new Strategy();
     const parser = new BaseParser(
         baseUrl,
@@ -28,21 +29,28 @@ const start = async() => {
         {ms: 500, msBetweenUrl: 250}
     );
 
-    const alsafloor = await parser.parse();
-    const edz = await startParse();
-
-    // Можно сохранить промежуточные результаты для экспериментов
-    // Чтобы не парсить каждый раз
-    // FileSystem.saveToJSON('alsafloor', alsafloor);
-    // FileSystem.saveToJSON('edz', edz);
-
     try {
+        const [
+            alsafloor,
+            edz
+        ] = await Promise.all([
+            parser.parse(),
+            edzStart()
+        ]);
+
+        // Можно сохранить промежуточные результаты для экспериментов
+        // Чтобы не парсить каждый раз
+        // FileSystem.saveToJSON('alsafloor', alsafloor);
+        // FileSystem.saveToJSON('edz', edz);
+
         const products = new Transformer({alsafloor, edz}).map();
         const saver = new SaveProducts(products, knex, logger);
 
         // FileSystem.saveToJSON('matches', products);
 
         await saver.save();
+    } catch(e) {
+        console.log(`Parser is broke ${e.message}`);
     } finally {
         await knex.destroy();
     }

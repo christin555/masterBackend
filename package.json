@@ -8,7 +8,8 @@
     "devstart": "nodemon -r dotenv/config server.js",
     "knex": "./node_modules/.bin/knex",
     "eslint": "eslint",
-    "prodstart": "pm2 start server.js"
+    "prodstart": "pm2 start server.js",
+    "parse": "node parsers/cli.js"
   },
   "author": "",
   "license": "ISC",
