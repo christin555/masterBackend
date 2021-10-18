@@ -2,11 +2,11 @@ const {parseUrls} = require('./parseUrls');
 const {parse} = require('./parse');
 const {fields} = require('./fields');
 
-const {getCollections} = require('../../getCollections');
-const {getCategories} = require('../../getCategories');
-const {mapToBD} = require('../../mapToBD');
-const {insertToBd} = require('../../insertToBd');
-const {categorySetFunc} = require('../../categorySetFunc');
+const {getCollections} = require('../../service/parsing/getCollections');
+const {getCategories} = require('../../service/parsing/getCategories');
+const {mapToBD} = require('../../service/parsing/mapToBD');
+const {insertToBd} = require('../../service/parsing/insertToBd');
+const {categorySetFunc} = require('../../service/parsing/categorySetFunc');
 
 const collectionUrls = [
     'grand-sequoia',

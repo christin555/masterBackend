@@ -1,11 +1,11 @@
 const {parseUrls} = require('./parseUrls');
 const {parse} = require('./parse');
-const {getCollections} = require('../../getCollections');
-const {mapToBD} = require('../../mapToBD');
-const {insertToBd} = require('../../insertToBd');
+const {getCollections} = require('../../service/parsing/getCollections');
+const {mapToBD} = require('../../service/parsing/mapToBD');
+const {insertToBd} = require('../../service/parsing/insertToBd');
 const {fields} = require('./fields');
-const {getCategories} = require('../../getCategories');
-const {categorySetFunc} = require('../../categorySetFunc');
+const {getCategories} = require('../../service/parsing/getCategories');
+const {categorySetFunc} = require('../../service/parsing/categorySetFunc');
 
 const collectionUrls = [
     'https://deartfloor.ru/catalog/deart-optim/',

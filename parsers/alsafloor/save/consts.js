@@ -6,7 +6,7 @@ const collectionMatch = {
 };
 
 // Свойства которые надо удалить
-// Делаем объектом, т.к. это быстрее чем цикл
+// Делаем объектом, т.к. это delProps.includes
 const delProps = {
     'Скидка': true,
     'Фаска': true,
