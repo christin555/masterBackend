@@ -2,6 +2,14 @@ const fs = require('fs');
 const {Utils} = require('./Utils');
 
 class FileSystem {
+    static findRoot() {
+
+    }
+
+    static writePipe(path) {
+        return fs.createWriteStream(path);
+    }
+
     static mkdirP(path) {
         fs.mkdirSync(path, {recursive: true});
     }

@@ -13,6 +13,8 @@ const urls = [
     '/ru_RU/search/collections-json?dependencyField-region_id=RU72&filter-category_b2b%5B%5D=%D0%9B%D0%B0%D0%BC%D0%B8%D0%BD%D0%B0%D1%82&page=2'
 ];
 
+const res = require('./tarkett.ignore.json');
+
 const start = async() => {
     try {
         const [collections, categories] = await Promise.all([
@@ -29,7 +31,7 @@ const start = async() => {
             {ms: 1000, msBetweenUrl: 500}
         );
 
-        const res = await parser.parse();
+        // const res = await parser.parse();
 
         logger.debug('parse is successful');
 
@@ -49,5 +51,7 @@ const start = async() => {
         await knex.destroy();
     }
 };
+
+start()
 
 module.exports = {start};
