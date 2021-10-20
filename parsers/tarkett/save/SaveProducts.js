@@ -17,14 +17,8 @@ class SaveProducts {
     }
 
     async save() {
-        // const readyProducts = this.insert.map();
-
         this.logger.debug('products ready to insert');
-
-        // await insertToBd(this.knex, readyProducts);
-
         await this.insert.insert();
-
         this.logger.debug('products successful inserted');
     }
 }

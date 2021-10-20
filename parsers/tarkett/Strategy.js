@@ -56,7 +56,7 @@ class Strategy {
         return {
             collection,
             name: `${collection} ${sku_color_name}`,
-            imgs: [`https://www.tarkett.ru/media/img/large/${sku_thumbnail}`],
+            images: [`https://www.tarkett.ru/media/img/large/${sku_thumbnail}`],
             color_tone,
             sku_locking_system,
             sku_commercial_classification,

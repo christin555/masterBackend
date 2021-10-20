@@ -3,7 +3,8 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const {Utils} = require('./Utils');
-const {resolve} = require('path');
+const {resolve, dirname, basename} = require('path');
+const {FileSystem} = require('./FileSystem');
 
 const agentOpt = {
     keepAlive: true,
@@ -14,7 +15,9 @@ const agentOpt = {
 };
 
 class ImageSaver {
-    constructor() {
+    constructor(logger, ms) {
+        this.logger = logger;
+
         this.axios = axios.create({
             httpsAgent: new https.Agent(agentOpt),
             httpAgent: new http.Agent(agentOpt),
@@ -22,23 +25,55 @@ class ImageSaver {
             responseType: 'stream',
             method: 'get'
         });
+
+        this.ms = ms || 400;
+
+        this.root = FileSystem.findRoot();
     }
 
-    setImages(images) {
-        this.images = images;
-    }
+    async save(images) {
+        // При первом запуске папки с картинками может и не быть
+        // поэтому создаём папку static/images/ динамически
+        // если такая папка уже будет существовать, то код ничего не делает
+        const path = dirname(images[0].src);
+        FileSystem.mkdirP(resolve(this.root, path));
 
-    async save() {
-        for (const {src, url} of this.images) {
-            const image = await this.axios.get(encodeURI(decodeURI(url)));
-            const actualPath = resolve(__dirname, '../../', src);
+        const failed = [];
 
-            image.data.pipe(fs.createWriteStream(actualPath));
+        for (const {src, url} of images) {
+            try {
+                await this.downloadImage(url, src);
+            } catch(err) {
+                this.logger.error(`download ${url} is failed reason: ${err.message}`);
 
-            console.log(`save ${actualPath} ${url}`);
-
-            await Utils.sleep(400);
+                failed.push(basename(src));
+            } finally {
+                await Utils.sleep(this.ms);
+            }
         }
+
+        return failed;
+    }
+
+    async downloadImage(url, src) {
+        const image = await this.axios
+            .get(encodeURI(decodeURI(url)));
+
+        // Генерируем полный путь до папки
+        const actualPath = resolve(this.root, src);
+        const ws = fs.createWriteStream(actualPath);
+
+        ws.on('error', (err) => {
+            this.logger.error('Error occurred when save image on disk', err);
+        });
+
+        // По окончанию сохранения изображения закрываем стрим
+        ws.on('finish', () => {
+            this.logger.debug(`save ${actualPath} ${url}`);
+            ws.close();
+        });
+
+        image.data.pipe(ws);
     }
 }
 

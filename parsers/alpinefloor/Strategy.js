@@ -9,6 +9,10 @@ const selectors = {
 };
 
 class Strategy {
+    constructor(baseUrl) {
+        this.baseUrl = baseUrl;
+    }
+
     collectAllLinks(content) {
         const $ = parse(content);
 
@@ -30,7 +34,8 @@ class Strategy {
 
         resJSON.images = this.collectImages(html);
         resJSON.name = this.collectDetail(html);
-        resJSON.desc = this.collectChars(html);
+
+        Object.assign(resJSON, this.collectChars(html));
 
         resJSON.collection = html('[class="list-box__link list-box__link_active"]')
             .first()
@@ -60,7 +65,7 @@ class Strategy {
         $(selectors.img).each((_, img) => {
             const src = img.attribs['data-src'];
 
-            images.push(src);
+            images.push(this.baseUrl + src);
         });
 
         return images;
@@ -81,13 +86,13 @@ class Strategy {
     }
 
     collectChars($) {
-        const chars = [];
+        const chars = {};
 
         $(selectors.chars).each((_, char) => {
             const key = $(char).children().first().text();
             const value = $(char).children().last().text();
 
-            chars.push({key, value});
+            chars[key] = value;
         });
 
         return chars;

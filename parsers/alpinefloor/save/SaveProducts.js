@@ -1,8 +1,7 @@
-const {mapToBD} = require('../../../service/parsing/mapToBD');
 const {fields} = require('./consts');
-const {insertToBd} = require('../../../service/parsing/insertToBd');
 const {getCategories} = require('../../../service/parsing/getCategories');
 const {getCollections} = require('../../../service/parsing/getCollections');
+const {Insert} = require('../../utils');
 
 class SaveProducts {
     constructor(products, {knex, logger}) {
@@ -24,17 +23,17 @@ class SaveProducts {
     async save() {
         await this.init();
 
-        const readyProducts = mapToBD({
-            products: this.products,
+        const inserter = new Insert({
+            items: this.products,
             collections: this.collections,
             categories: this.categories,
-            fields
+            fields,
+            logger: this.logger,
+            knex: this.knex
         });
 
         this.logger.debug('products ready to insert');
-
-        await insertToBd(this.knex, readyProducts);
-
+        await inserter.insert();
         this.logger.debug('products successful inserted');
     }
 }

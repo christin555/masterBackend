@@ -2,65 +2,38 @@ const {array2Object} = require('../../service/tools/array2Object');
 const {ImageHashIterator} = require('./ImageIterator');
 const {entity} = require('../../enums');
 const {ImageSaver} = require('./ImageSaveIterator');
-const pp = require('path');
+const {join} = require('path');
 
 class Insert {
     constructor({items, fields, collections, categories, knex, logger}) {
         this.fields = fields;
         this.items = items;
-        this.categories = array2Object(categories, 'alias');
-        this.collections = array2Object(collections, 'nameDealer', true);
         this.knex = knex;
         this.logger = logger;
 
-        this.imageIter = new ImageHashIterator('https://google.com');
-        this.imageSaver = new ImageSaver();
+        this.collections = array2Object(collections, 'nameDealer', true);
+        this.categories = array2Object(categories, 'alias');
 
-        this.images = {};
-        this.imagesForDownload = [];
+        this.images = new ImageHashIterator();
+        this.imageSaver = new ImageSaver(logger);
     }
 
     async insert() {
         this.prepareItems();
 
-        await this.insertProducts();
+        const insertedProducts = await this.insertProducts();
 
-        this.imageIter.setImages(this.images);
+        const {
+            imagesToDownload,
+            imagesToInsert
+        } = this.prepareImages(insertedProducts);
 
-        const obj = array2Object(this.insertedProducts, 'name');
+        await this.saveImagesToDB(imagesToInsert);
+        await this.saveImagesToDisk(imagesToDownload);
 
-        const imgsToInsert = [];
-        const imgsToDownload = [];
-
-        for (const {name, images} of this.imageIter) {
-            images.forEach(({path, url}, idx) => {
-                const src = pp.join('static', 'images', String(entity.PRODUCT), path);
-                const img = {
-                    entity: entity.PRODUCT,
-                    entityId: obj[name].id,
-                    src
-                };
-
-                if (idx === 0) {
-                    img.isMain = true;
-                }
-
-                if (idx === 1) {
-                    img.isForHover = true;
-                }
-
-                imgsToInsert.push(img);
-                imgsToDownload.push({
-                    src,
-                    url
-                });
-            });
+        if (this.failed) {
+            await this.deleteFailed();
         }
-
-        await this.knex('media').insert(imgsToInsert);
-
-        this.imageSaver.setImages(imgsToDownload);
-        this.imageSaver.save();
     }
 
     prepareItems() {
@@ -125,24 +98,90 @@ class Insert {
     }
 
     fillImages(item) {
-        const {name, imgs} = item;
+        const {name, images} = item;
 
-        if (item.imgs) {
-            this.images[name] = imgs;
-            this.imagesForDownload.push(...imgs);
+        if (images) {
+            this.images.push(name, images);
         }
     }
 
-    prepareImages() {
+    prepareImages(insertedProducts) {
+        const obj = array2Object(insertedProducts, 'name');
 
+        const imagesToInsert = [];
+        const imagesToDownload = [];
+
+        const generator = this.generateImage(obj);
+
+        for (const {name, images} of this.images) {
+            images.forEach(({path, url}, idx) => {
+                const image = generator(name, path, idx);
+
+                imagesToInsert.push(image);
+
+                imagesToDownload.push({
+                    src: image.src,
+                    url
+                });
+            });
+        }
+
+        return {imagesToInsert, imagesToDownload};
     }
 
-    async insertProducts() {
-        this.insertedProducts = await this.knex('products')
+    generateImage(obj) {
+        return (name, path, idx) => {
+            const img = {
+                entity: entity.PRODUCT,
+                entityId: obj[name].id,
+                src: `static/images/${String(entity.PRODUCT)}/${path}`
+            };
+
+            if (idx === 0) {
+                img.isMain = true;
+            }
+
+            if (idx === 1) {
+                img.isForHover = true;
+            }
+
+            return img;
+        };
+    }
+
+    insertProducts() {
+        this.logger.debug(`insert products(${this.readyItems.length})`);
+
+        return this.knex('products')
             .insert(this.readyItems)
             .onConflict(['name', 'categoryId', 'collectionId', 'code'])
             .merge()
             .returning(['id', 'name', 'code']);
+    }
+
+    async saveImagesToDisk(imagesToDownload) {
+        this.logger.debug('save images to disk');
+
+        this.failed = await this.imageSaver.save(imagesToDownload);
+    }
+
+    deleteFailed() {
+        this.logger.debug(`failed(${this.failed.length}) delete`);
+
+        const f = this.failed.map((file) => `'%${file}'`);
+        // Названия файлов генерируются на нашей стороне
+        // поэтому можно не бояться инъекций
+        const sql = `src like any (ARRAY[${f}])`;
+
+        return this.knex('media')
+            .whereRaw(sql)
+            .delete();
+    }
+
+    saveImagesToDB(imagesToInsert) {
+        this.logger.debug('insert images');
+
+        return this.knex('media').insert(imagesToInsert);
     }
 }
 

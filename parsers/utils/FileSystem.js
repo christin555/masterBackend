@@ -1,9 +1,23 @@
 const fs = require('fs');
 const {Utils} = require('./Utils');
 
-class FileSystem {
-    static findRoot() {
+const createDotByLevel = (level) => {
+    if (level === 0) {
+        return '.';
+    }
 
+    return '../'.repeat(level);
+};
+
+class FileSystem {
+    static findRoot(level = 0) {
+        const dirs = FileSystem.syncReaddir(createDotByLevel(level));
+
+        if (dirs.includes('package.json')) {
+            return createDotByLevel(level);
+        }
+
+        return FileSystem.findRoot(level + 1);
     }
 
     static writePipe(path) {
@@ -21,6 +35,10 @@ class FileSystem {
 
         ws.on('finish', () => {
             console.log('success save');
+        });
+
+        ws.on('error', (err) => {
+            console.log('error', err);
         });
     }
 

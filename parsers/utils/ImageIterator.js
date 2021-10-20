@@ -2,8 +2,16 @@ const crypto = require('crypto');
 const path = require('path');
 
 class ImageHashIterator {
-    setImages(images) {
-        this.images = images;
+    constructor() {
+        this.images = {};
+    }
+
+    /**
+     * @param {string} key
+     * @param {string[]} images
+     */
+    push(key, images) {
+        this.images[key] = images;
     }
 
     * [Symbol.iterator]() {

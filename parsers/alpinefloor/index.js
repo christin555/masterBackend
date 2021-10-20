@@ -7,15 +7,17 @@ const knex = require('../../knex');
 const baseUrl = 'https://alpinefloor.su';
 
 const urls = [
-    '/catalog/grand-sequoia',
-    '/catalog/expressive',
-    '/catalog/light-parquet',
-    '/catalog/intense',
-    '/catalog/classic-collection',
-    '/catalog/collection-easy-line',
-    '/catalog/the-sequoia-collection',
-    '/catalog/collection-stone'
+    // '/catalog/grand-sequoia',
+    '/catalog/expressive'
+    // '/catalog/light-parquet',
+    // '/catalog/intense',
+    // '/catalog/classic-collection',
+    // '/catalog/collection-easy-line',
+    // '/catalog/the-sequoia-collection',
+    // '/catalog/collection-stone'
 ];
+
+const products = require('./alpinefloor.ignore.json');
 
 const start = async() => {
     console.log('start Alpinefloor');
@@ -24,13 +26,13 @@ const start = async() => {
         const parser = new BaseParser(
             baseUrl,
             urls,
-            new Strategy(),
+            new Strategy(baseUrl),
             {ms: 500, msBetweenUrl: 250}
         );
 
-        const products = await parser.parse();
+        // const products = await parser.parse();
 
-        FileSystem.saveToJSON('alpinefloor', products);
+        // FileSystem.saveToJSON('alpinefloor', products);
 
         const saver = new SaveProducts(
             products,
@@ -39,11 +41,13 @@ const start = async() => {
 
         await saver.save();
     } catch(e) {
-        console.log(e);
+        console.log('Error when parse', e.message);
     } finally {
         await knex.destroy();
     }
 };
+
+start();
 
 module.exports = {
     start
