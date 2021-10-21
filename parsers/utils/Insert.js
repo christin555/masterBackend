@@ -2,7 +2,6 @@ const {array2Object} = require('../../service/tools/array2Object');
 const {ImageHashIterator} = require('./ImageIterator');
 const {entity} = require('../../enums');
 const {ImageSaver} = require('./ImageSaveIterator');
-const {join} = require('path');
 
 class Insert {
     constructor({items, fields, collections, categories, knex, logger}) {

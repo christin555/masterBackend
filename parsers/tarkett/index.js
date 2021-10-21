@@ -31,7 +31,7 @@ const start = async() => {
             {ms: 1000, msBetweenUrl: 500}
         );
 
-        // const res = await parser.parse();
+        const res = await parser.parse();
 
         logger.debug('parse is successful');
 
@@ -51,7 +51,5 @@ const start = async() => {
         await knex.destroy();
     }
 };
-
-start();
 
 module.exports = {start};
