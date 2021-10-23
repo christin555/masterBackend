@@ -37,8 +37,8 @@ class Strategy {
         const resJSON = {};
         const desc = [];
 
-        resJSON.images = $.querySelectorAll(selectors.images)
-            .map((el) => el.attributes.src);
+        resJSON.images = $.querySelectorAll(selectors.imagesLink)
+            .map((el) => el.attributes.href);
 
         $.querySelectorAll(selectors.itemDesc)
             .forEach((el) => {
