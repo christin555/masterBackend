@@ -26,5 +26,4 @@ const fields = {
     'width': 'width'
 };
 
-
 module.exports = {fields};

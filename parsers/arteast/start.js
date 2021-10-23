@@ -2,11 +2,11 @@ const {getUrls} = require('./getUrls');
 const {getProducts} = require('./getProducts');
 const {fields} = require('./fields');
 
-const {getCollections} = require('../../getCollections');
-const {getCategories} = require('../../getCategories');
-const {mapToBD} = require('../../mapToBD');
-const {insertToBd} = require('../../insertToBd');
-const {categorySetFunc} = require('../../categorySetFunc');
+const {getCollections} = require('../../service/parsing/getCollections');
+const {getCategories} = require('../../service/parsing/getCategories');
+const {mapToBD} = require('../../service/parsing/mapToBD');
+const {insertToBd} = require('../../service/parsing/insertToBd');
+const {categorySetFunc} = require('../../service/parsing/categorySetFunc');
 
 const URL = 'https://arteast.pro:8443/api/products?per_page=60&type=quartz_vinyl&/catalog/quartz_vinylconst';
 //https://arteast.pro:8443/api/product/710-at

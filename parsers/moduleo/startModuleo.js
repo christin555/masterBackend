@@ -2,12 +2,12 @@ const axios = require("axios");
 const cheerio = require('cheerio');
 const {getURL} = require('./getURL');
 const {parse} = require('./parse');
-const {mapToBD} = require('../../mapToBD');
-const {getCategories} = require('../../getCategories');
-const {insertToBd} = require('../../insertToBd');
+const {mapToBD} = require('../../service/parsing/mapToBD');
+const {getCategories} = require('../../service/parsing/getCategories');
+const {insertToBd} = require('../../service/parsing/insertToBd');
 const {fields} = require('./fields');
-const {getCollections} = require('../../getCollections');
-const {categorySetFunc} = require('../../categorySetFunc');
+const {getCollections} = require('../../service/parsing/getCollections');
+const {categorySetFunc} = require('../../service/parsing/categorySetFunc');
 
 module.exports = {
     startModuleo: async ({body, knex}) => {

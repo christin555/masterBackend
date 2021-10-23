@@ -34,7 +34,7 @@ module.exports = {
 
         saveImgs(imgToInsert);
 
-        //когда-нибудь переделай, пожалуйста, ну реально кровь из глаз идет аж...
+        // когда-нибудь переделай, пожалуйста, ну реально кровь из глаз идет аж...
         await knex('media')
             .insert(
                 imgToInsert.map(({entity, entityId, src, isDoor, isMain, isForHover}) => {
