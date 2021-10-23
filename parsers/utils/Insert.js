@@ -179,6 +179,10 @@ class Insert {
     deleteFailed() {
         this.logger.debug(`failed(${this.failed.length}) delete`);
 
+        if (!this.failed.length) {
+            return;
+        }
+
         const f = this.failed.map((file) => `'%${file}'`);
         // Названия файлов генерируются на нашей стороне
         // поэтому можно не бояться инъекций
