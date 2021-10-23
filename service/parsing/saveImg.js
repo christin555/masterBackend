@@ -1,5 +1,5 @@
-const fs = require("fs");
-const axios = require("axios");
+const fs = require('fs');
+const axios = require('axios');
 const https = require('https');
 
 const httpsAgent = new https.Agent({
@@ -8,12 +8,12 @@ const httpsAgent = new https.Agent({
 
 module.exports = {
     saveImg: (img, path) => axios({
-        method: "get",
+        method: 'get',
         url: encodeURI(decodeURI(img)),
-        responseType: "stream",
+        responseType: 'stream',
         maxRedirects: 500,
         httpsAgent
-    }).then(function (response) {
+    }).then((response) => {
         response.data.pipe(fs.createWriteStream(path));
     }).catch(error => {
         console.log(error);

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const {
     categories,
     brands,
@@ -13,20 +13,20 @@ const {
 } = require('./migrationsData/initData');
 const {array2Object} = require('../service/tools/array2Object');
 
-exports.up = async (knex) => {
+exports.up = async(knex) => {
     const [_catalogs, _categories, _brands] = await Promise.all([
         knex.table('catalogs').insert(catalogs).returning(['name', 'id']),
         knex.table('categories').insert(categories).returning(['alias', 'id']),
         knex.table('brands').insert(brands).returning(['alias', 'id']),
         knex.table('finishingMaterialDoors').insert(finishingMaterialDoors),
         knex.table('media').insert(media),
-        knex.table('articles').insert(articles),
+        knex.table('articles').insert(articles)
     ]);
 
     const catalogObject = array2Object(_catalogs, 'name');
     const categoriesObject = array2Object(_categories, 'alias');
     const brandsObject = array2Object(_brands, 'alias');
-    
+
     const catItems = catalogItems.reduce((array, {items, name}) => {
         const newItems = [];
 
@@ -73,7 +73,7 @@ exports.up = async (knex) => {
     return Promise.all([
         knex.table('hierarchy').insert(hierItems),
         knex.table('collections').insert(
-            collections.map(({brand, nameDealer, name, category,...item}) => {
+            collections.map(({brand, nameDealer, name, category, ...item}) => {
                 return {
                     ...item,
                     name,
@@ -82,7 +82,7 @@ exports.up = async (knex) => {
                     brandId: brandsObject[brand].id
                 };
             })),
-        knex.table('catalogItemsCategory').insert(_conditions),
+        knex.table('catalogItemsCategory').insert(_conditions)
     ]);
 };
 

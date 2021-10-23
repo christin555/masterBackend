@@ -16,7 +16,7 @@ module.exports = {
                 }
             });
 
-            if(collectionsObject && item.collection && collectionsObject[item.collection.toLowerCase()]){
+            if (collectionsObject && item.collection && collectionsObject[item.collection.toLowerCase()]) {
                 itemBd.collectionId = collectionsObject[item.collection.toLowerCase()].id;
             }
 

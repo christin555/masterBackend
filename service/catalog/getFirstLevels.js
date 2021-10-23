@@ -1,6 +1,6 @@
 module.exports = {
-    getFirstLevels: async ({knex}) =>
-        knex("categories").select([
+    getFirstLevels: ({knex}) =>
+        knex('categories').select([
             'name',
             'img',
             'level',

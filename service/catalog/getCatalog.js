@@ -1,9 +1,9 @@
-const {entity} = require('../../enums');
 const {getProducts} = require('../products/getProducts');
 const {getFirstLevels} = require('./getFirstLevels');
 const {getNextLevelCategory} = require('./getNextLevelCategory');
+
 module.exports = {
-    getCatalog: async ({body, knex}) => {
+    getCatalog: async({body, knex}) => {
         const {searchParams} = body;
         const {category, search} = searchParams;
 
@@ -11,12 +11,12 @@ module.exports = {
             return getFirstLevels({knex});
         }
 
-        if(search){
+        if (search) {
             return getProducts({knex, body});
         }
 
-        if(category) {
-            const {id: categoryId, isLast} = await knex("categories")
+        if (category) {
+            const {id: categoryId, isLast} = await knex('categories')
                 .first([
                     'id',
                     'name',

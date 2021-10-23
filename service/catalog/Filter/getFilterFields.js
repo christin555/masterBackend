@@ -1,18 +1,17 @@
 module.exports = {
-    getFilterFields: async ({body, knex}) => {
+    getFilterFields: async({body, knex}) => {
         const {category, values = {}} = body;
 
-        if(!category){
+        if (!category) {
             return [];
         }
 
-        console.log(category);
         const {id: categoryId} = await knex('categories')
             .first('id')
             .where('alias', category);
-        
+
         values.categoryId = categoryId;
-        
+
         const [fields, catalogItems] = await Promise.all([
             knex('catalogItemsCategory')
                 .pluck('catalogItemId')
@@ -28,33 +27,31 @@ module.exports = {
         const categoryFields = catalogItems.filter(({id}) => fields.includes(id));
         const objectTablesValues = await getObjectTablesValues({categoryFields, knex, values});
 
-        const fieldsFilter =  categoryFields.map(({name, ...item}) => {
-            
-            if(objectTablesValues[name])
+        return categoryFields.map(({name, ...item}) => {
+            if (objectTablesValues[name]) {
                 return {
                     name,
                     ...item,
                     values: objectTablesValues[name]
                 };
-            else {
+            } else {
                 return {name, ...item};
             }
         });
-
-        return fieldsFilter;
     }
 };
-getObjectTablesValues = async ({categoryFields, knex, values}) => {
+
+const getObjectTablesValues = async({categoryFields, knex, values}) => {
     const tableFields = categoryFields.filter(({values}) => values.entity === 'table');
-    const tables = await Promise.all(tableFields.map(({values: {name, filterBy}}) =>{
+    const tables = await Promise.all(tableFields.map(({values: {name, filterBy}}) => {
         const query = knex(name).select();
-        
-        if(filterBy){
+
+        if (filterBy) {
             filterBy.forEach((filterColumn) => {
-                if(values[filterColumn]){
+                if (values[filterColumn]) {
                     query.where(filterColumn, values[filterColumn]);
                 }
-            }) ;
+            });
         }
         return query;
     }));
