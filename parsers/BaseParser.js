@@ -45,7 +45,7 @@ class BaseParser {
         for (const [, linksSet] of itemsLinks.entries()) {
             const data = await this.collectItems(linksSet);
 
-            res.push(data);
+            res.push(data.filter(Boolean));
 
             await Utils.sleep(msBetweenUrl);
         }

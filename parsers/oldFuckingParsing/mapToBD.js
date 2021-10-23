@@ -1,4 +1,4 @@
-const {array2Object} = require('../tools/array2Object');
+const {array2Object} = require('../../service/tools/array2Object');
 const {categorySetFunc} = require('./categorySetFunc');
 
 module.exports = {

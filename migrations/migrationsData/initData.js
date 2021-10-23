@@ -47,16 +47,17 @@ const categories = [
         alias: 'quartzvinyl_kleevay',
         isLast: true,
         img: 'https://fontanero.com.ua/wp-content/uploads/2021/07/vinil.jpg'
+    },
+    {
+        name: 'Спортивные покрытия',
+        level: 2,
+        alias: 'sport',
+        isLast: true,
+        img: 'https://www.tarkett.ru/media/img/large/IN_TEE_OMNISPORTS_V65.jpg'
     }
 ];
 
 const collections = [
-    //decoria
-    {
-        name: 'EcoriA Click',
-        brand: 'decoria'
-    },
-
     //deart
     {
         name: 'DeART Strong',
@@ -215,6 +216,11 @@ const collections = [
     {name: 'Первая Уральская', nameDealer: 'Первая Уральская', brand: 'tarkett'},
     {name: 'VERNISSAGE', nameDealer: 'VERNISSAGE', brand: 'tarkett'},
     {name: 'WOODSTOCK Pr.', nameDealer: 'WOODSTOCK Pr.', brand: 'tarkett'},
+    //спорт покрытия
+    {name: 'MULTIFLEX M', brand: 'tarkett'},
+    {name: 'OMNISPORTS R35', brand: 'tarkett'},
+    {name: 'OMNISPORTS R65', brand: 'tarkett'},
+    {name: 'OMNISPORTS R83', brand: 'tarkett'},
 
     //alpinefloor
     {name: 'Stone', brand: 'alpine'},
@@ -391,15 +397,13 @@ const conditions = [
 const brands = [
     {
         name: 'Moduleo',
-        alias: 'moduleo'
+        alias: 'moduleo',
+        weight: 6
     },
     {
         name: 'ART EAST',
-        alias: 'arteast'
-    },
-    {
-        name: 'DECORIA',
-        alias: 'decoria'
+        alias: 'arteast',
+        weight: 5
     },
     {
         name: 'Оптима Порте',
@@ -407,22 +411,25 @@ const brands = [
     },
     {
         name: 'DEART',
-        alias: 'deart'
+        alias: 'deart',
+        weight: 4
     },
     {
         name: 'Tarkett',
-        alias: 'tarkett'
+        alias: 'tarkett',
+        weight: 3
     },
     {
         name: 'Alpine Floor',
-        alias: 'alpine'
+        alias: 'alpine',
+        weight: 2
     }
 ];
 
 const hierarchy = [
     {
         head: 'floors',
-        under: ['laminate', 'keramogranit', 'quartzvinyl']
+        under: ['laminate', 'keramogranit', 'quartzvinyl', 'sport']
     },
     {
         head: 'quartzvinyl',

@@ -23,7 +23,12 @@ const fields = {
     'total_thickness': 'totalThickness',
     'underfloor_heating': 'withHeatingFloor',
     'weight_per_box': 'packageWeight',
-    'width': 'width'
+    'width': 'width',
+    basis_weight: 'basisWeight',
+    lacquer_gloss_level: 'glossLevel',
+    surface_treatment: 'protectiveLayer',
+    wear_layer_thickness: 'wearThickness'
+
 };
 
 module.exports = {fields};

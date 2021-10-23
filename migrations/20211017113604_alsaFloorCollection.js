@@ -1,6 +1,7 @@
 const brand = {
     name: 'Alsafloor',
-    alias: 'alsafloor'
+    alias: 'alsafloor',
+    weight: 1
 };
 
 const collections = (brandId) => {

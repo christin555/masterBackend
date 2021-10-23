@@ -30,13 +30,13 @@ class Insert {
         await this.saveImagesToDB(imagesToInsert);
         await this.saveImagesToDisk(imagesToDownload);
 
-        if (this.failed) {
+        if (this.failed?.length) {
             await this.deleteFailed();
         }
     }
 
     prepareItems() {
-        this.readyItems = this.items.map((item) => {
+        this.readyItems = this.getUniqArray(this.items.map((item) => {
             const _item = this.createNewItemWithKeys(item);
 
             _item.collectionId = this.getCollection(item);
@@ -45,7 +45,19 @@ class Insert {
             this.fillImages(item);
 
             return _item;
+        }));
+    }
+
+    getUniqArray(_items) {
+        const items = _items.filter(Boolean);
+        const uniqObjectItems = {};
+
+        items.forEach((item) => {
+            const key = [item.name, item.collectionId, item.categoryId, item.code].join();
+            uniqObjectItems[key] = item;
         });
+
+        return Object.values(uniqObjectItems);
     }
 
     createNewItemWithKeys(item) {
@@ -71,8 +83,12 @@ class Insert {
     }
 
     getCategory(item) {
-        const lowerCategory = item._categoryType.toLowerCase();
+        const lowerCategory = item._categoryType?.toLowerCase();
         let categoryId;
+
+        if (lowerCategory === 'спортивные напольные покрытия') {
+            categoryId = this.categories['sport'].id;
+        }
 
         if (lowerCategory === 'ламинат') {
             categoryId = this.categories['laminate'].id;
@@ -138,10 +154,6 @@ class Insert {
 
             if (idx === 0) {
                 img.isMain = true;
-            }
-
-            if (idx === 1) {
-                img.isForHover = true;
             }
 
             return img;

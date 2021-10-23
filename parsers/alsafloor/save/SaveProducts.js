@@ -1,7 +1,9 @@
-const {getCategories} = require('../../../service/parsing/getCategories');
-const {getCollections} = require('../../../service/parsing/getCollections');
+const {getCategories} = require('../../oldFuckingParsing/getCategories');
+const {getCollections} = require('../../oldFuckingParsing/getCollections');
 const {array2Object} = require('../../../service/tools/array2Object');
 const {entity} = require('../../../enums');
+const {Insert} = require("../../utils");
+const {fields} = require("./consts");
 
 const collectionMatch = {
     'Herringbone': 'Creative Baton Rompu/Herringbone'
@@ -23,8 +25,30 @@ class SaveProducts {
         // Инициализируем основные данные
         await this.init();
 
+        this.inserter = new Insert({
+            items: this.products,
+            collections: [],
+            categories: [],
+            fields,
+            logger: this.logger,
+            knex: this.knex
+        });
+
         await this.saveProducts();
-        await this.saveImages();
+
+        const {
+            imagesToDownload,
+            imagesToInsert
+        } = this.inserter.prepareImages(this.insertedData);
+
+        await this.inserter.saveImagesToDB(imagesToInsert);
+        await this.inserter.saveImagesToDisk(imagesToDownload);
+
+        if (this.inserter.failed?.length) {
+            await this.inserter.deleteFailed();
+        }
+
+        this.logger.debug('work is canceled');
     }
 
     async init() {
@@ -73,7 +97,7 @@ class SaveProducts {
         this.logger.debug('finish prepare');
         this.insertedData = await this.knex('products')
             .insert(this.products)
-            .returning(['id', 'name']);
+            .returning(['id', 'name', 'code']);
         this.logger.debug('finish insert');
     }
 
@@ -95,7 +119,7 @@ class SaveProducts {
             item.collectionId = collectionId;
             item.collection = collectionName;
 
-            this.productsImages[item.name] = item.images;
+            this.inserter.fillImages(item);
 
             // Удаляем ненужные данные для инсерта
             delete item.images;

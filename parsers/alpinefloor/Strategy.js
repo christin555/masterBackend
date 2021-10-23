@@ -42,6 +42,10 @@ class Strategy {
             .text()
             .trim();
 
+        if(resJSON.collection === 'Сопутствующие товары'){
+            return null;
+        }
+
         resJSON.code = html(selectors.code)
             .first()
             .text()
@@ -49,10 +53,10 @@ class Strategy {
 
         resJSON._categoryType = 'кварцвинил';
 
-        if (resJSON['Способ укладки'] === 'на клей к основанию пола') {
+        if (resJSON['Способ укладки']?.toLowerCase().includes('клей')){
             resJSON.connectionType = 'Клеевой';
         }
-        if (resJSON['Способ укладки'] === 'Плавающий (click замок)') {
+        if (resJSON['Способ укладки']?.toLowerCase().includes('замок')) {
             resJSON.connectionType = 'Замковый';
         }
 

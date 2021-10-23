@@ -29,7 +29,6 @@ const start = async() => {
         );
 
         const products = await parser.parse();
-
         // FileSystem.saveToJSON('alpinefloor', products);
 
         const saver = new SaveProducts(

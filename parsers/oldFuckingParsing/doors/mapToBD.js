@@ -1,4 +1,4 @@
-const {array2Object} = require('../../tools/array2Object');
+const {array2Object} = require('../../../service/tools/array2Object');
 
 module.exports = {
     mapToBD: ({products, categories, fields, collections, finishingMaterials}) => {

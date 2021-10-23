@@ -11,6 +11,7 @@ module.exports = {
             .select([
                 'products.*',
                 'brands.name as brand',
+                'brands.weight',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
             .leftJoin('media', function() {
@@ -21,10 +22,12 @@ module.exports = {
             })
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
-            .whereNull('deleted_at')
+            .whereNull('products.deleted_at')
+            .whereNull('collections.deleted_at')
             .limit(limit)
             .offset(offset * limit)
-            .groupBy(['products.id', 'brands.name']);
+            .orderBy('weight')
+            .groupBy(['products.id', 'brands.name', 'brands.weight']);
 
         await setSearchParams({query, knex, searchParams});
 

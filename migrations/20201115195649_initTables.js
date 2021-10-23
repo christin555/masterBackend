@@ -166,6 +166,7 @@ exports.up = (knex) => Promise.all([
         table.increments('id');
         table.string('name');
         table.string('alias');
+        table.integer('weight');
     }),
 
     knex.schema.createTable('catalogItems', table => {
@@ -185,6 +186,7 @@ exports.up = (knex) => Promise.all([
             .comment('Название в прайсах');
         table.integer('brandId');
         table.integer('categoryId');
+        table.timestamp('deleted_at');
     }),
 
     knex.schema.createTable('prices', table => {

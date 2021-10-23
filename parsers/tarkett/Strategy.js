@@ -87,7 +87,10 @@ class Strategy {
             underfloor_heating,
             weight_per_box,
             width,
-            format_type
+            format_type,
+            surface_treatment,
+            lacquer_gloss_level,
+            wear_layer_thickness
         } = item.sku_technical_caracteristics;
 
         return {
@@ -106,7 +109,10 @@ class Strategy {
             total_thickness,
             underfloor_heating,
             weight_per_box,
-            width
+            width,
+            surface_treatment,
+            lacquer_gloss_level,
+            wear_layer_thickness
         };
     }
 }

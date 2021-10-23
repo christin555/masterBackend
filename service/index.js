@@ -8,16 +8,6 @@ const {getFilterFields} = require('./catalog/Filter/getFilterFields');
 
 const {getProduct} = require('./products/getProduct');
 
-//parsing
-const {startModuleo} = require('../parsers/Moduleo/startModuleo');
-const {startDecoria} = require('./parsing/floor/Decoria/start');
-const {startDeart} = require('../parsers/Deart/start');
-const {startOptima} = require('../parsers/Optima/start');
-const {startArteast} = require('../parsers/Arteast/start');
-const {startTarkett} = require('../parsers/Tarkett/start');
-const {startAlsa} = require('./parsing/floor/Alsafloor/start');
-const {startAlpine} = require('../parsers/Alpinefloor/start');
-
 const {callme} = require('./send/callme');
 const {getArticles} = require('./articles/getArticles');
 const {upload} = require('./upload');
@@ -31,15 +21,6 @@ module.exports = {
     getFilterFields,
 
     getProduct,
-
-    startModuleo,
-    startDecoria,
-    startDeart,
-    startOptima,
-    startArteast,
-    startTarkett,
-    startAlsa,
-    startAlpine,
 
     callme,
 
