@@ -17,7 +17,7 @@ module.exports = {
                 const hash = crypto.createHash('md5').update(url);
                 const ext = path.extname(url);
                 const pathimg = hash.digest('hex') + ext;
-                const src = `static/images/${String(entity.PRODUCT)}/${pathimg}`;
+                const src = `/static/images/${String(entity.PRODUCT)}/${pathimg}`;
 
                 imagesToDownload.push({
                     src: src,

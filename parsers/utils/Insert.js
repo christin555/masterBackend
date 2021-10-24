@@ -149,7 +149,7 @@ class Insert {
             const img = {
                 entity: entity.PRODUCT,
                 entityId: obj[name].id,
-                src: `static/images/${String(entity.PRODUCT)}/${path}`
+                src: `/static/images/${String(entity.PRODUCT)}/${path}`
             };
 
             if (idx === 0) {
