@@ -2,7 +2,7 @@ const {getCategoryUnder} = require('../catalog/getCategoryUnder');
 
 module.exports = {
     setSearchParams: async({query, knex, searchParams}) => {
-        const {search, categoryId, filter} = searchParams;
+        const {search, categoryId, filter, categoryIds} = searchParams;
 
         if (search) {
             const categoryIds = await knex('categories')
@@ -21,6 +21,10 @@ module.exports = {
 
         if (categoryId) {
             query.where('products.categoryId', categoryId);
+        }
+
+        if (categoryIds) {
+            query.whereIn('products.categoryId', categoryIds);
         }
 
         if (filter) {

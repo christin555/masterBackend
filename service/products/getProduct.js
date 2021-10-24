@@ -19,6 +19,7 @@ module.exports = {
                 'products.categoryId',
                 'collection',
                 'finishingMaterial',
+                'brands.name as brand',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
                 ...fieldsName
             ])
@@ -29,8 +30,9 @@ module.exports = {
                 });
             })
             .leftJoin('collections', 'collections.id', 'collectionId')
+            .leftJoin('brands', 'brands.id', 'brandId')
             .where('products.id', id)
-            .groupBy(['products.id', 'products.name', 'collections.name']);
+            .groupBy(['products.id', 'products.name', 'collections.name', 'brands.name']);
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
         //const catagories = await getNextLevelCategory({knex, categoryId: product.categoryId});
