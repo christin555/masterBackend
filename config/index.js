@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = {
-    secretKey: 'coconutSecretKey2020',
     development: {
         client: 'pg',
         connection: {

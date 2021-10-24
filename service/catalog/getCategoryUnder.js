@@ -4,7 +4,7 @@ module.exports = {
             .withRecursive('tmp', (qb) => {
                 qb.select(['under', 'head'])
                     .from('hierarchy')
-                    .whereIn('under', categoryIds)
+                    .whereIn('head', categoryIds)
                     .unionAll((sqb) => {
                         sqb
                             .select(['hierarchy.under', 'hierarchy.head'])

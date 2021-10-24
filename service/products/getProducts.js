@@ -25,7 +25,7 @@ module.exports = {
             .whereNull('products.deleted_at')
             .whereNull('collections.deleted_at')
             .limit(limit)
-            .offset(offset * limit)
+            .offset(offset)
             .orderBy('weight')
             .groupBy(['products.id', 'brands.name', 'brands.weight']);
 
