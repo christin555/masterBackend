@@ -20,7 +20,7 @@ module.exports = {
                 itemBd.collectionId = collectionsObject[item.collection.toLowerCase()].id;
             }
 
-            categorySetFunc && categorySetFunc({itemBd, item, categoriesObject});
+            categorySetFunc({itemBd, item, categoriesObject});
 
             item.imgs && imgs.push({name: itemBd.name, imgs: item.imgs});
 

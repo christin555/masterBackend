@@ -1,10 +1,10 @@
 const {parse} = require('./parse');
 const {fields} = require('./fields');
-const {getCollections} = require('../../getCollections');
-const {getCategories} = require('../../getCategories');
-const {getFinishingMaterials} = require('../getFinishingMaterials');
-const {mapToBD} = require('../mapToBD');
-const {insertToBd} = require('../../insertToBd');
+const {getCollections} = require('../../service/parsing/getCollections');
+const {getCategories} = require('../../service/parsing/getCategories');
+const {getFinishingMaterials} = require('../../service/parsing/doors/getFinishingMaterials');
+const {mapToBD} = require('../../service/parsing/doors/mapToBD');
+const {insertToBd} = require('../../service/parsing/insertToBd');
 
 const URL = 'http://www.optimaporte.ru/doors';
 
