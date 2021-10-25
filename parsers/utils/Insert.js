@@ -86,6 +86,8 @@ class Insert {
         const lowerCategory = item._categoryType?.toLowerCase();
         let categoryId;
 
+        console.log(item);
+
         if (lowerCategory === 'спортивные напольные покрытия') {
             categoryId = this.categories['sport'].id;
         }
@@ -94,16 +96,16 @@ class Insert {
             categoryId = this.categories['laminate'].id;
         }
 
-        if (lowerCategory === 'кварцвинил') {
+        if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {
             const {connectionType} = item;
             const lowerConnection = connectionType?.toLowerCase();
 
             if (connectionType) {
-                if (lowerConnection.includes('клеев')) {
+                if (lowerConnection.includes('кле')) {
                     categoryId = this.categories['quartzvinyl_kleevay'].id;
                 }
 
-                if (lowerConnection.includes('замков')) {
+                if (lowerConnection.includes('замк')) {
                     categoryId = this.categories['quartzvinyl_zamkovay'].id;
                 }
             }

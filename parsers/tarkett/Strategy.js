@@ -101,6 +101,7 @@ class Strategy {
             construction_process,
             furniture_leg_effect,
             installation_method,
+            connectionType: installation_method,
             items_per_box,
             length,
             professional_warranty,

@@ -1,6 +1,5 @@
 const {setSearchParams} = require('../tools/setSearchParams');
 const {getCategoryByAlias} = require("../catalog/getCategoryByAlias");
-const {getNextLevelCategory} = require("../catalog/getNextLevelCategory");
 const {getCategoryUnder} = require("../catalog/getCategoryUnder");
 
 module.exports = {
@@ -27,6 +26,8 @@ module.exports = {
         }
 
         await setSearchParams({query, knex, searchParams});
+
+        console.log(query.toQuery());
 
         const {count} = await query;
 

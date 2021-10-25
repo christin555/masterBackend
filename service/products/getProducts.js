@@ -7,6 +7,8 @@ module.exports = {
         const {searchParams, limit, offset} = body;
         const prices = [];
 
+        console.log(searchParams);
+
         const query = knex('products')
             .select([
                 'products.*',
