@@ -47,16 +47,17 @@ const categories = [
         alias: 'quartzvinyl_kleevay',
         isLast: true,
         img: 'https://fontanero.com.ua/wp-content/uploads/2021/07/vinil.jpg'
+    },
+    {
+        name: 'Спортивные покрытия',
+        level: 2,
+        alias: 'sport',
+        isLast: true,
+        img: 'https://www.tarkett.ru/media/img/large/IN_TEE_OMNISPORTS_V65.jpg'
     }
 ];
 
 const collections = [
-    //decoria
-    {
-        name: 'EcoriA Click',
-        brand: 'decoria'
-    },
-
     //deart
     {
         name: 'DeART Strong',
@@ -193,38 +194,43 @@ const collections = [
     },
 
     //tarkett
-    {name: "Nordica New", nameDealer: "Nordica New", brand: "tarkett"},
-    {name: "Navigator", nameDealer: "Navigator", brand: "tarkett"},
-    {name: "Gallery", nameDealer: "Gallery", brand: "tarkett"},
-    {name: "Gallery Mini", nameDealer: "Gallery Mini", brand: "tarkett"},
-    {name: "Dynasty", nameDealer: "Dynasty", brand: "tarkett"},
-    {name: "Pilot", nameDealer: "Pilot", brand: "tarkett"},
-    {name: "Poem", nameDealer: "Poem", brand: "tarkett"},
-    {name: "Estetica", nameDealer: "Estetica", brand: "tarkett"},
-    {name: "Ballet", nameDealer: "Ballet", brand: "tarkett"},
-    {name: "Cruise", nameDealer: "Cruise", brand: "tarkett"},
-    {name: "Cinema", nameDealer: "Cinema", brand: "tarkett"},
-    {name: "Intermezzo", nameDealer: "Intermezzo", brand: "tarkett"},
-    {name: "Woodstock Family", nameDealer: "Woodstock Family", brand: "tarkett"},
-    {name: "Robinson", nameDealer: "Robinson", brand: "tarkett"},
-    {name: "Fiesta", nameDealer: "Fiesta", brand: "tarkett"},
-    {name: "Holiday", nameDealer: "Holiday", brand: "tarkett"},
-    {name: "Germany", nameDealer: "Germany", brand: "tarkett"},
-    {name: "France", nameDealer: "France", brand: "tarkett"},
-    {name: "Первая Сибирская", nameDealer: "Первая Сибирская", brand: "tarkett"},
-    {name: "Первая Уральская", nameDealer: "Первая Уральская", brand: "tarkett"},
-    {name: "VERNISSAGE", nameDealer: "VERNISSAGE", brand: "tarkett"},
-    {name: "WOODSTOCK Pr.", nameDealer: "WOODSTOCK Pr.", brand: "tarkett"},
+    {name: 'Nordica New', nameDealer: 'Nordica New', brand: 'tarkett'},
+    {name: 'Navigator', nameDealer: 'Navigator', brand: 'tarkett'},
+    {name: 'Gallery', nameDealer: 'Gallery', brand: 'tarkett'},
+    {name: 'Gallery Mini', nameDealer: 'Gallery Mini', brand: 'tarkett'},
+    {name: 'Dynasty', nameDealer: 'Dynasty', brand: 'tarkett'},
+    {name: 'Pilot', nameDealer: 'Pilot', brand: 'tarkett'},
+    {name: 'Poem', nameDealer: 'Poem', brand: 'tarkett'},
+    {name: 'Estetica', nameDealer: 'Estetica', brand: 'tarkett'},
+    {name: 'Ballet', nameDealer: 'Ballet', brand: 'tarkett'},
+    {name: 'Cruise', nameDealer: 'Cruise', brand: 'tarkett'},
+    {name: 'Cinema', nameDealer: 'Cinema', brand: 'tarkett'},
+    {name: 'Intermezzo', nameDealer: 'Intermezzo', brand: 'tarkett'},
+    {name: 'Woodstock Family', nameDealer: 'Woodstock Family', brand: 'tarkett'},
+    {name: 'Robinson', nameDealer: 'Robinson', brand: 'tarkett'},
+    {name: 'Fiesta', nameDealer: 'Fiesta', brand: 'tarkett'},
+    {name: 'Holiday', nameDealer: 'Holiday', brand: 'tarkett'},
+    {name: 'Germany', nameDealer: 'Germany', brand: 'tarkett'},
+    {name: 'France', nameDealer: 'France', brand: 'tarkett'},
+    {name: 'Первая Сибирская', nameDealer: 'Первая Сибирская', brand: 'tarkett'},
+    {name: 'Первая Уральская', nameDealer: 'Первая Уральская', brand: 'tarkett'},
+    {name: 'VERNISSAGE', nameDealer: 'VERNISSAGE', brand: 'tarkett'},
+    {name: 'WOODSTOCK Pr.', nameDealer: 'WOODSTOCK Pr.', brand: 'tarkett'},
+    //спорт покрытия
+    {name: 'MULTIFLEX M', brand: 'tarkett'},
+    {name: 'OMNISPORTS R35', brand: 'tarkett'},
+    {name: 'OMNISPORTS R65', brand: 'tarkett'},
+    {name: 'OMNISPORTS R83', brand: 'tarkett'},
 
     //alpinefloor
-    {name: "Stone", brand: "alpine"},
-    {name: "Classic", brand: "alpine"},
-    {name: "Expressive", brand: "alpine"},
-    {name: "Grand Sequoia", brand: "alpine"},
-    {name: "Parquet Light", brand: "alpine"},
-    {name: "Sequoia", brand: "alpine"},
-    {name: "Intense", brand: "alpine"},
-    {name: "Easy Line", brand: "alpine"},
+    {name: 'Stone', brand: 'alpine'},
+    {name: 'Classic', brand: 'alpine'},
+    {name: 'Expressive', brand: 'alpine'},
+    {name: 'Grand Sequoia', brand: 'alpine'},
+    {name: 'Parquet Light', brand: 'alpine'},
+    {name: 'Sequoia', brand: 'alpine'},
+    {name: 'Intense', brand: 'alpine'},
+    {name: 'Easy Line', brand: 'alpine'}
 
 ];
 
@@ -273,7 +279,7 @@ const articles = [
             '✅ Пробка — лучший природный теплоизолятор. В отличие от любых других настенных покрытий, пробка имеет комнатную температуру: прекрасно сохраняет тепло зимой и прохладу летом \\n\n' +
             '✅ Экологичность.Пробка абсолютно безвредна для здоровья человека.',
         title: 'ПРОБКОВОЕ ПОКРЫТИЕ'
-    },
+    }
 ];
 
 const media = [
@@ -366,7 +372,7 @@ const catalogItems = [
                 type: 'checkbox',
                 values: {
                     name: 'brands',
-                    entity: 'table',
+                    entity: 'table'
                 }
             },
             {
@@ -391,15 +397,13 @@ const conditions = [
 const brands = [
     {
         name: 'Moduleo',
-        alias: 'moduleo'
+        alias: 'moduleo',
+        weight: 6
     },
     {
         name: 'ART EAST',
-        alias: 'arteast'
-    },
-    {
-        name: 'DECORIA',
-        alias: 'decoria'
+        alias: 'arteast',
+        weight: 5
     },
     {
         name: 'Оптима Порте',
@@ -407,22 +411,25 @@ const brands = [
     },
     {
         name: 'DEART',
-        alias: 'deart'
+        alias: 'deart',
+        weight: 4
     },
     {
         name: 'Tarkett',
-        alias: 'tarkett'
+        alias: 'tarkett',
+        weight: 3
     },
     {
         name: 'Alpine Floor',
-        alias: 'alpine'
+        alias: 'alpine',
+        weight: 2
     }
 ];
 
 const hierarchy = [
     {
         head: 'floors',
-        under: ['laminate', 'keramogranit', 'quartzvinyl']
+        under: ['laminate', 'keramogranit', 'quartzvinyl', 'sport']
     },
     {
         head: 'quartzvinyl',

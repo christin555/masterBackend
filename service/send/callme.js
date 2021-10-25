@@ -1,7 +1,7 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 
 module.exports = {
-    callme: async ({body, knex}) => {
+    callme: async({body}) => {
         const {phone, product, name} = body;
 
         const transporter = nodemailer.createTransport({
@@ -11,8 +11,8 @@ module.exports = {
             secure: true,
             auth: {
                 user: 'masterpola72t@gmail.com',
-                pass: 'master568100',
-            },
+                pass: 'master568100'
+            }
         });
 
 
@@ -35,12 +35,12 @@ module.exports = {
 
         const info = await transporter.sendMail({
             from: 'ash12hka@gmail.com',
-            to: "kriska_555@mail.ru",
-            subject: "Заявка на обратный звонок ✔",
+            to: 'kriska_555@mail.ru',
+            subject: 'Заявка на обратный звонок ✔',
             text: text,
             html: emailHtml
         });
 
-        console.log("Message sent: %s", info.messageId);
+        console.log('Message sent: %s', info.messageId);
     }
 };

@@ -1,34 +1,34 @@
-"use strict";
+'use strict';
 
 exports.up = (knex) => Promise.all([
-    knex.schema.createTable("categories", table => {
-        table.increments("id")
+    knex.schema.createTable('categories', table => {
+        table.increments('id')
             .primary();
-        table.string("name")
+        table.string('name')
             .notNullable();
-        table.integer("level")
+        table.integer('level')
             .notNullable();
-        table.string("alias")
+        table.string('alias')
             .notNullable()
             .unique();
-        table.boolean("isLast");
-        table.string("img");
-        table.string("description");
-        table.timestamp("deleted_at");
+        table.boolean('isLast');
+        table.string('img');
+        table.string('description');
+        table.timestamp('deleted_at');
         table.timestamps();
 
-        table.index("alias");
+        table.index('alias');
     }),
 
-    knex.schema.createTable("products", table => {
-        table.increments("id")
+    knex.schema.createTable('products', table => {
+        table.increments('id')
             .primary();
-        table.integer("categoryId");
-        table.string("name")
+        table.integer('categoryId');
+        table.string('name')
             .notNullable();
-        table.text("description");
-        table.string("resistanceClass");
-        table.string("size");
+        table.text('description');
+        table.string('resistanceClass');
+        table.string('size');
         table.string('metersInPackage')
             .comment('М2 В УПАК');
         table.integer('collectionId');
@@ -148,114 +148,116 @@ exports.up = (knex) => Promise.all([
             .string('residentialWarranty')
             .comment('Срок службы в жилых помещениях');
 
-        table.timestamp("deleted_at", {useTz: false});
+        table.timestamp('deleted_at', {useTz: false});
         table.timestamps();
 
         table.unique(['name', 'categoryId', 'collectionId', 'code']);
-        table.index("id");
-        table.index("categoryId");
+        table.index('id');
+        table.index('categoryId');
     }),
 
-    knex.schema.createTable("catalogs", table => {
-        table.increments("id");
-        table.string("title");
-        table.string("name");
+    knex.schema.createTable('catalogs', table => {
+        table.increments('id');
+        table.string('title');
+        table.string('name');
     }),
 
-    knex.schema.createTable("brands", table => {
-        table.increments("id");
-        table.string("name");
-        table.string("alias");
+    knex.schema.createTable('brands', table => {
+        table.increments('id');
+        table.string('name');
+        table.string('alias');
+        table.integer('weight');
     }),
 
-    knex.schema.createTable("catalogItems", table => {
-        table.increments("id");
-        table.integer("catalogId");
-        table.jsonb("item");
+    knex.schema.createTable('catalogItems', table => {
+        table.increments('id');
+        table.integer('catalogId');
+        table.jsonb('item');
     }),
 
-    knex.schema.createTable("collections", table => {
-        table.increments("id");
-        table.string("name")
+    knex.schema.createTable('collections', table => {
+        table.increments('id');
+        table.string('name')
             .comment('Название на нашем сайте')
             .notNullable();
-        table.string("nameDealer")
+        table.string('nameDealer')
             .notNullable();
-        table.string("priceName")
+        table.string('priceName')
             .comment('Название в прайсах');
-        table.integer("brandId");
-        table.integer("categoryId");
+        table.integer('brandId');
+        table.integer('categoryId');
+        table.timestamp('deleted_at');
     }),
 
-    knex.schema.createTable("prices", table => {
-        table.integer("entity");
-        table.integer("entityId")
+    knex.schema.createTable('prices', table => {
+        table.integer('entity');
+        table.integer('entityId')
             .notNullable();
-        table.integer("price")
+        table.integer('price')
             .notNullable();
-        table.integer("oldPrice");
+        table.integer('oldPrice');
         table.unique(['entity', 'entityId']);
     }),
 
-    knex.schema.createTable("finishingMaterialDoors", table => {
-        table.increments("id");
-        table.string("name")
+    knex.schema.createTable('finishingMaterialDoors', table => {
+        table.increments('id');
+        table.string('name')
             .unique()
             .notNullable();
-        table.string("img");
+        table.string('img');
     }),
 
-    knex.schema.createTable("articles", table => {
-        table.increments("id");
-        table.string("title");
-        table.text("content");
+    knex.schema.createTable('articles', table => {
+        table.increments('id');
+        table.string('title');
+        table.text('content');
     }),
 
-    knex.schema.createTable("media", table => {
-        table.integer("entity");
-        table.integer("entityId")
+    knex.schema.createTable('media', table => {
+        table.integer('entity');
+        table.integer('entityId')
             .notNullable();
-        table.string("src", 500)
+        table.string('src', 500)
             .notNullable();
-        table.string("type");
-        table.boolean("isMain");
-        table.boolean("isForHover");
-        table.boolean("isDoor");
+        table.string('type');
+        table.boolean('isMain');
+        table.boolean('isForHover');
+        table.boolean('isDoor');
     }),
 
-    knex.schema.createTable("hierarchy", table => {
-        table.integer("head")
+    knex.schema.createTable('hierarchy', table => {
+        table.integer('head')
             .notNullable();
-        table.integer("under")
+        table.integer('under')
             .notNullable()
             .unique();
     }),
 
-    knex.schema.createTable("catalogItemsCategory", table => {
-        table.integer("catalogId")
+    knex.schema.createTable('catalogItemsCategory', table => {
+        table.integer('catalogId')
             .notNullable();
-        table.integer("catalogItemId")
+        table.integer('catalogItemId')
             .notNullable();
-        table.integer("categoryId")
+        table.integer('categoryId')
             .notNullable();
     }),
 
-    knex.schema.createTable("actions", table => {
-        table.increments("id")
+    knex.schema.createTable('actions', table => {
+        table.increments('id')
             .primary();
-        table.integer("entity")
+        table.integer('entity')
             .notNullable();
-        table.integer("entityId")
+        table.integer('entityId')
             .notNullable();
-        table.string("title");
-        table.string("desc");
-        table.timestamp("deleted_at");
+        table.string('title');
+        table.string('desc');
+        table.timestamp('deleted_at');
         table.timestamps();
-        table.index("id");
+        table.index('id');
     })
 ]);
 
-exports.down = function (knex) {
+exports.down = function(knex) {
     return Promise.all([
         knex.schema.dropTable('categories'),
         knex.schema.dropTable('products'),
