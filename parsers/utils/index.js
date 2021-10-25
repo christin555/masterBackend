@@ -5,6 +5,7 @@ const {logger} = require('./Logger');
 const {Insert} = require('./Insert');
 const {ImageHashIterator} = require('./ImageIterator');
 const {ImageSaver} = require('./ImageSaveIterator');
+const {InsertImages} = require('./InsertImages');
 
 module.exports = {
     FileSystem,
@@ -13,5 +14,6 @@ module.exports = {
     logger,
     Insert,
     ImageHashIterator,
-    ImageSaver
+    ImageSaver,
+    InsertImages
 };

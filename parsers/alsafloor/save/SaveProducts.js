@@ -1,9 +1,7 @@
 const {getCategories} = require('../../oldFuckingParsing/getCategories');
 const {getCollections} = require('../../oldFuckingParsing/getCollections');
 const {array2Object} = require('../../../service/tools/array2Object');
-const {entity} = require('../../../enums');
-const {Insert} = require("../../utils");
-const {fields} = require("./consts");
+const {InsertImages} = require('../../utils');
 
 const collectionMatch = {
     'Herringbone': 'Creative Baton Rompu/Herringbone'
@@ -19,36 +17,16 @@ class SaveProducts {
         this.products = products;
         this.knex = knex;
         this.logger = logger;
+
+        this.insertImages = new InsertImages(knex, logger);
     }
 
     async save() {
         // Инициализируем основные данные
         await this.init();
-
-        this.inserter = new Insert({
-            items: this.products,
-            collections: [],
-            categories: [],
-            fields,
-            logger: this.logger,
-            knex: this.knex
-        });
-
         await this.saveProducts();
 
-        const {
-            imagesToDownload,
-            imagesToInsert
-        } = this.inserter.prepareImages(this.insertedData);
-
-        await this.inserter.saveImagesToDB(imagesToInsert);
-        await this.inserter.saveImagesToDisk(imagesToDownload);
-
-        if (this.inserter.failed?.length) {
-            await this.inserter.deleteFailed();
-        }
-
-        this.logger.debug('work is canceled');
+        await this.insertImages.insert(this.insertedData);
     }
 
     async init() {
@@ -76,22 +54,6 @@ class SaveProducts {
         this.logger.debug('init collections');
     }
 
-    async saveImages() {
-        const toInsert = this.insertedData.flatMap(({name, id}) => {
-            return this.productsImages[name].map((src, idx) => ({
-                entity: entity.PRODUCT,
-                entityId: id,
-                src: src,
-                // Первая картинка главная по умолчанию
-                isMain: idx === 0 ? true : undefined
-            }));
-        });
-
-        this.logger.debug('prepare images');
-        await this.knex('media').insert(toInsert);
-        this.logger.debug('finish media insert');
-    }
-
     async saveProducts() {
         this.prepareProducts();
         this.logger.debug('finish prepare');
@@ -105,8 +67,6 @@ class SaveProducts {
         const categoryId = this.categories
             .find(({alias}) => alias === 'laminate').id;
 
-        this.productsImages = {};
-
         this.products.forEach((item) => {
             const {
                 id: collectionId,
@@ -119,7 +79,7 @@ class SaveProducts {
             item.collectionId = collectionId;
             item.collection = collectionName;
 
-            this.inserter.fillImages(item);
+            this.insertImages.fillImages(item);
 
             // Удаляем ненужные данные для инсерта
             delete item.images;
