@@ -1,8 +1,14 @@
 const {getCategoryUnder} = require('../catalog/getCategoryUnder');
 
+const filterFields = [
+    'finishingMaterial',
+    'collectionId'
+];
+
 module.exports = {
     setSearchParams: async({query, knex, searchParams}) => {
-        const {search, categoryId, filter, categoryIds} = searchParams;
+        const {categoryId, filter, categoryIds} = searchParams;
+        const {search} = filter;
 
         if (search) {
             const categoryIds = await knex('categories')
@@ -18,7 +24,6 @@ module.exports = {
                     .orWhereIn('products.categoryId', [...categoryIds, ...categoryIdsLast]);
             });
         }
-
         if (categoryId) {
             query.where('products.categoryId', categoryId);
         }
@@ -29,7 +34,7 @@ module.exports = {
 
         if (filter) {
             Object.entries(filter).forEach(([key, value]) => {
-                if (key && value) {
+                if (key && value && filterFields.includes(key)) {
                     if (Array.isArray(value) && value.length) {
                         if (key === 'finishingMaterial') {
                             query.where(key, '&&', value);
