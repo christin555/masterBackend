@@ -3,7 +3,6 @@ const {parse} = require('node-html-parser');
 const selectors = {
     link: 'a.catalog-collection-item-link',
     imagesLink: 'a.catalog-images-item-link',
-    images: 'img.catalog-images-item-img',
     itemDescText: '.item-desc-text',
     itemDescValue: '.item-desc-value',
     name: 'h1.block-title',
