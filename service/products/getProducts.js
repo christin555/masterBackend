@@ -1,13 +1,17 @@
 const {entity} = require('../../enums');
 const {mapToList} = require('../tools/mapToList');
 const {setSearchParams} = require('../tools/setSearchParams');
+const {Laminate} = require('../catalog/Filter/filters/laminate');
+const {createSearch} = require('./searchHandlers');
+
+const filtersHandlers = {
+    laminate: Laminate
+};
 
 module.exports = {
-    getProducts: async({knex, body}) => {
+    getProducts: async({knex, body, category}) => {
         const {searchParams, limit, offset} = body;
         const prices = [];
-
-        console.log(searchParams);
 
         const query = knex('products')
             .select([
@@ -31,7 +35,15 @@ module.exports = {
             .orderBy('weight')
             .groupBy(['products.id', 'brands.name', 'brands.weight']);
 
-        await setSearchParams({query, knex, searchParams});
+        const searchInstance = createSearch(category, knex, searchParams.filter);
+
+        if (searchInstance) {
+            await searchInstance.setFilterToQuery(query);
+        } else {
+            await setSearchParams({query, knex, searchParams});
+        }
+
+        console.log(query.toQuery());
 
         const products = await query;
 

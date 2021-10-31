@@ -2,7 +2,8 @@ const {getCategoryUnder} = require('../catalog/getCategoryUnder');
 
 const filterFields = [
     'finishingMaterial',
-    'collectionId'
+    'collectionId',
+    // 'brandId'
 ];
 
 module.exports = {

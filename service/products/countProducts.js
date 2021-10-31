@@ -1,6 +1,7 @@
 const {setSearchParams} = require('../tools/setSearchParams');
 const {getCategoryByAlias} = require("../catalog/getCategoryByAlias");
 const {getCategoryUnder} = require("../catalog/getCategoryUnder");
+const {createSearch} = require('./searchHandlers');
 
 module.exports = {
     countProducts: async({body, knex}) => {
@@ -25,9 +26,13 @@ module.exports = {
             }
         }
 
-        await setSearchParams({query, knex, searchParams});
+        const searchInstance = createSearch(category, knex, searchParams.filter);
 
-        console.log(query.toQuery());
+        if (searchInstance) {
+            await searchInstance.setFilterToQuery(query);
+        } else {
+            await setSearchParams({query, knex, searchParams});
+        }
 
         const {count} = await query;
 

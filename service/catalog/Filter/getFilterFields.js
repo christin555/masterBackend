@@ -1,66 +1,84 @@
-module.exports = {
-    getFilterFields: async({body, knex}) => {
-        const {category, values = {}} = body;
+const doorsFilterValues = async(knex) => {
+    const sql = `
+        select json_build_object(
+                 'collections',
+                 (
+                     select array_agg(json_build_object('id', id, 'name', name))
+                     from collections
+                     where "categoryId" = (
+                         select id
+                         from categories
+                         where alias = 'doors'
+                     )
+                 ),
+                 'finishingMaterials',
+                 (
+                     select array_agg(json_build_object('id', id, 'name', name))
+                     from "finishingMaterialDoors"
+                 )
+                   ) as
+        values
+    `;
 
-        if (!category) {
-            return [];
-        }
+    const {rows: [res]} = await knex.raw(sql);
 
-        const {id: categoryId} = await knex('categories')
-            .first('id')
-            .where('alias', category);
-
-        values.categoryId = categoryId;
-
-        const [fields, catalogItems] = await Promise.all([
-            knex('catalogItemsCategory')
-                .pluck('catalogItemId')
-                .leftJoin('catalogs', 'catalogs.id', 'catalogId')
-                .where('categoryId', categoryId)
-                .where('catalogs.name', 'filterFields'),
-            knex('catalogItems')
-                .pluck('item')
-                .leftJoin('catalogs', 'catalogs.id', 'catalogId')
-                .where('catalogs.name', 'filterFields')
-        ]);
-
-        const categoryFields = catalogItems.filter(({id}) => fields.includes(id));
-        const objectTablesValues = await getObjectTablesValues({categoryFields, knex, values});
-
-        return categoryFields.map(({name, ...item}) => {
-            if (objectTablesValues[name]) {
-                return {
-                    name,
-                    ...item,
-                    values: objectTablesValues[name]
-                };
-            } else {
-                return {name, ...item};
-            }
-        });
-    }
+    return res.values;
 };
 
-const getObjectTablesValues = async({categoryFields, knex, values}) => {
-    const tableFields = categoryFields.filter(({values}) => values.entity === 'table');
-    const tables = await Promise.all(tableFields.map(({values: {name, filterBy}}) => {
-        const query = knex(name).select();
+const floorsFilterValues = (body, knex) => {
 
-        if (filterBy) {
-            filterBy.forEach((filterColumn) => {
-                if (values[filterColumn]) {
-                    query.where(filterColumn, values[filterColumn]);
-                }
-            });
+};
+
+const laminateFilterValues = async(knex) => {
+    const sql = `json_object_agg(laminate_fields.field, laminate_fields.values) as values`;
+
+    const {values} = await knex('laminate_fields').first(knex.raw(sql));
+
+    return values;
+};
+
+const stonewareFilterValues = (body, knex) => {
+
+};
+
+const quartzVinylTileFilterValues = (body, knex) => {
+
+};
+
+const quartzVinylTileLockFilterValues = (body, knex) => {
+
+};
+
+const quartzVinylTileGlueFilterValues = (body, knex) => {
+
+};
+
+const sportFilterValues = (body, knex) => {
+
+};
+
+
+const filtersHandlers = {
+    doors: doorsFilterValues,
+    floors: floorsFilterValues,
+    laminate: laminateFilterValues,
+    keramogranit: stonewareFilterValues,
+    quartzvinyl: quartzVinylTileFilterValues,
+    quartzvinyl_zamkovay: quartzVinylTileLockFilterValues,
+    quartzvinyl_kleevay: quartzVinylTileGlueFilterValues,
+    sport: sportFilterValues
+};
+
+module.exports = {
+    getFilterFields: async({body, knex}) => {
+        const {category} = body;
+
+        const handler = filtersHandlers[category];
+
+        if (!handler) {
+            throw new Error('Unhandled category');
         }
-        return query;
-    }));
 
-    const objectTables = {};
-
-    tableFields.forEach(({name}, index) => {
-        objectTables[name] = tables[index];
-    });
-
-    return objectTables;
+        return handler(knex);
+    }
 };
