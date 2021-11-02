@@ -49,7 +49,7 @@ const start = async () => {
 
             columns.forEach((column, index) => {
                 const alias = column[1];
-                worksheet.cell(row, index +1).string(product[alias].toString());
+                worksheet.cell(row, index +1).string(product[alias]?.toString());
             });
         });
     });
