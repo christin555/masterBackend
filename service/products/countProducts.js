@@ -30,9 +30,9 @@ module.exports = {
 
         if (searchInstance) {
             await searchInstance.setFilterToQuery(query);
-        } else {
-            await setSearchParams({query, knex, searchParams});
         }
+
+        await setSearchParams({query, knex, searchParams});
 
         const {count} = await query;
 

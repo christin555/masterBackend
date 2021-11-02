@@ -4,10 +4,6 @@ const {setSearchParams} = require('../tools/setSearchParams');
 const {Laminate} = require('../catalog/Filter/filters/laminate');
 const {createSearch} = require('./searchHandlers');
 
-const filtersHandlers = {
-    laminate: Laminate
-};
-
 module.exports = {
     getProducts: async({knex, body, category}) => {
         const {searchParams, limit, offset} = body;
@@ -39,11 +35,9 @@ module.exports = {
 
         if (searchInstance) {
             await searchInstance.setFilterToQuery(query);
-        } else {
-            await setSearchParams({query, knex, searchParams});
         }
 
-        console.log(query.toQuery());
+        await setSearchParams({query, knex, searchParams});
 
         const products = await query;
 

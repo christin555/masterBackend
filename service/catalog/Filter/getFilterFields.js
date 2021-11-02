@@ -30,8 +30,12 @@ const floorsFilterValues = (body, knex) => {
 };
 
 const laminateFilterValues = async(knex) => {
+    // Вообще бы конечно лучше обновлять триггером, может когда-нибудь...
+    await knex.raw(`refresh materialized view laminate_fields`);
+
     const sql = `json_object_agg(laminate_fields.field, laminate_fields.values) as values`;
 
+    // laminate_fields - это материализованная таблица, которая собирает данные для полей фильтра
     const {values} = await knex('laminate_fields').first(knex.raw(sql));
 
     return values;

@@ -28,10 +28,6 @@ class Laminate {
         query.whereIn('brandId', filter);
     }
 
-    setCollectionId(query, filter) {
-        query.whereIn('collectionId', filter);
-    }
-
     setColor(query, filter) {
         query.whereRaw(
             `"color" in (${this.queryFields('color')})`,
@@ -70,9 +66,6 @@ class Laminate {
                 break;
             case 'brandId':
                 this.setBrandId(query, filter);
-                break;
-            case 'collectionId':
-                this.setCollectionId(query, filter);
                 break;
             case 'width':
                 this.setWidth(query, filter);
