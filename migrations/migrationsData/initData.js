@@ -90,10 +90,6 @@ const collections = [
         brand: 'arteast'
     },
     {
-        name: 'ART STONE STANDARD',
-        brand: 'arteast'
-    },
-    {
         name: 'ART STONE',
         brand: 'arteast'
     },
@@ -123,21 +119,9 @@ const collections = [
         brand: 'moduleo'
     },
     {
-        name: 'SELECT',
-        nameDealer: 'Moduleo Select',
-        priceName: 'SELECT DRYBACK',
-        brand: 'moduleo'
-    },
-    {
         name: 'TRANSFORM',
         nameDealer: 'Moduleo Transform',
         priceName: 'TRANSFORM CLICK',
-        brand: 'moduleo'
-    },
-    {
-        name: 'TRANSFORM',
-        nameDealer: 'Moduleo Transform',
-        priceName: 'TRANSFORM DRYBACK',
         brand: 'moduleo'
     },
     {
@@ -147,27 +131,9 @@ const collections = [
         brand: 'moduleo'
     },
     {
-        name: 'IMPRESS',
-        nameDealer: 'Moduleo Impress',
-        priceName: 'IMPRESS DRYBACK',
-        brand: 'moduleo'
-    },
-    {
-        name: 'IMPRESS',
-        nameDealer: 'Moduleo Impress',
-        priceName: 'IMPRESS DRYBACK (CIR)',
-        brand: 'moduleo'
-    },
-    {
         name: 'PARQUETRY',
         nameDealer: 'Moduleo Parquetry',
         priceName: 'PARQUETRY short plank',
-        brand: 'moduleo'
-    },
-    {
-        name: 'PARQUETRY',
-        nameDealer: 'Moduleo Parquetry',
-        priceName: 'PARQUETRY small plank',
         brand: 'moduleo'
     },
 

@@ -35,6 +35,10 @@ class Strategy {
         resJSON.images = this.collectImages(html);
         resJSON.name = this.collectDetail(html);
 
+        if (resJSON.name.indexOf('(без') > 0) {
+            return null;
+        }
+
         Object.assign(resJSON, this.collectChars(html));
 
         resJSON.collection = html('[class="list-box__link list-box__link_active"]')
@@ -76,17 +80,7 @@ class Strategy {
     }
 
     collectDetail($) {
-        let value = $(selectors.detailHead).text().trim();
-
-        if (value.indexOf('ЕСО') > 0) {
-            value = value.substring(0, value.indexOf('ЕСО'));
-        }
-
-        if (value.indexOf('(без') > 0) {
-            value = value.substring(0, value.indexOf('(без'));
-        }
-
-        return value;
+        return $(selectors.detailHead).text().trim();
     }
 
     collectChars($) {

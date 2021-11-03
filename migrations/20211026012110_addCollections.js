@@ -23,7 +23,9 @@ exports.up = async(knex) => {
         .where('alias', 'tarkett');
 
     await knex('collections')
-        .insert(collections(id));
+        .insert(collections(id))
+        .onConflict(['name', 'brandId'])
+        .merge();
 };
 
 exports.down = knex => {

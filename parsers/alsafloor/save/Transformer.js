@@ -21,45 +21,46 @@ class Transformer {
     }
 
     map() {
-        this.products.alsafloor.forEach(this.mapAlsafloor);
-        this.products.edz.forEach(this.mapEdz.bind(this));
+        this.products.alsafloor.forEach(this.mapAlsafloor.bind(this));
 
         return Object.values(this.final);
     }
 
     mapAlsafloor(product) {
-        const collection = product.desc[COLLECTION_IDX].value;
+        let collection = product.desc[COLLECTION_IDX].value;
         const code = product.desc[CODE_IDX].value;
 
         if (collectionMatch[collection]) {
-            product.collection = collectionMatch[collection];
-        } else {
-            product.collection = collection;
+            collection = collectionMatch[collection];
         }
 
-        product.code = code;
-    }
+        const ePr = this.products.edz.find(({name}) => {
+            const mainName = this.fixMainName(name);
 
-    mapEdz(product) {
-        const mainName = this.fixMainName(product.name);
-
-        const aPr = this.products.alsafloor.find(({name, collection, code}) => {
-            return Utils.matchStr(mainName, name) &&
+            return Utils.matchStr(mainName, product.name) &&
                 Utils.matchStr(mainName, collection);
-        });
+        }) || {};
 
-        if (aPr !== undefined) {
-            product.name = aPr.collection + ' ' + aPr.name;
-            product.collection = aPr.collection;
-            product.code = aPr.code;
-            product.images = aPr.images;
-            product.desc = product.desc.concat(aPr.desc)
-                .filter(this.filterFinalDesc)
-                .map(this.mapDescProps);
+        const name = collection + ' ' + product.name;
 
-            this.final[mainName] = product;
-        } else {
-            console.log('missing product', mainName);
+        if (ePr.desc) {
+            product.desc = product.desc.concat(ePr.desc);
+        }
+
+        const desc = product.desc
+            .filter(this.filterFinalDesc)
+            .map(this.mapDescProps);
+
+        this.final[name] = {
+            images: product.images,
+            collection,
+            code,
+            name: product.name,
+            desc
+        };
+
+        if (!Object.values(ePr).length) {
+            console.log('missing product in edz', name);
         }
     }
 

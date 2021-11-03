@@ -167,6 +167,8 @@ exports.up = (knex) => Promise.all([
         table.string('name');
         table.string('alias');
         table.integer('weight');
+
+        table.unique(['name']);
     }),
 
     knex.schema.createTable('catalogItems', table => {
@@ -187,6 +189,8 @@ exports.up = (knex) => Promise.all([
         table.integer('brandId');
         table.integer('categoryId');
         table.timestamp('deleted_at');
+
+        table.unique(['name', 'brandId']);
     }),
 
     knex.schema.createTable('prices', table => {
