@@ -43,8 +43,6 @@ const start = async() => {
         // FileSystem.saveToJSON('alsafloor', alsafloor);
         // FileSystem.saveToJSON('edz', edz);
 
-        console.log(alsafloor);
-
         const products = new Transformer({alsafloor, edz}).map();
         const saver = new SaveProducts(products, knex, logger);
 

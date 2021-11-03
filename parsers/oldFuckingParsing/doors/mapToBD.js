@@ -19,7 +19,6 @@ module.exports = {
 
             itemBd.categoryId = categoryId;
 
-            console.log(item);
             itemBd.alias = `doors_${translitRuEn(item.collection)}_${translitRuEn(item.name)}`.toLowerCase();
             item.alias = itemBd.alias;
 

@@ -8,14 +8,14 @@ const baseUrl = 'https://agt.com.ru/';
 
 const urls = [
     'laminat-agt-kolelkcziya-spark',
-    // 'laminat-agt-kolelkcziya-effect-premium',
-    // 'laminat-agt-kolelkcziya-concept',
-    // 'laminat-agt-kolelkcziya-effect-elegance',
-    // 'laminat-agt-kolelkcziya-natura-slim',
-    // 'laminat-agt-kolelkcziya-armonia-natura-slim',
-    // 'laminat-agt-kolelkcziya-armonia-natura-large',
-    // 'laminat-agt-kolelkcziya-natura-ultra-line',
-    // 'laminat-agt-kolelkcziya-natura-line'
+    'laminat-agt-kolelkcziya-effect-premium',
+    'laminat-agt-kolelkcziya-concept',
+    'laminat-agt-kolelkcziya-effect-elegance',
+    'laminat-agt-kolelkcziya-natura-slim',
+    'laminat-agt-kolelkcziya-armonia-natura-slim',
+    'laminat-agt-kolelkcziya-armonia-natura-large',
+    'laminat-agt-kolelkcziya-natura-ultra-line',
+    'laminat-agt-kolelkcziya-natura-line'
 ];
 
 const start = async() => {
