@@ -21,11 +21,11 @@ class ImageHashIterator {
             const images = [];
 
             for (const imgUrl of imgs) {
-                // const hash = crypto.createHash('md5').update(imgUrl);
+                const hash = crypto.createHash('md5').update(imgUrl);
                 const ext = path.extname(imgUrl);
 
                 images.push({
-                    path: alias + ext,
+                    path: hash.digest('hex') + ext,
                     url: imgUrl
                 });
             }
