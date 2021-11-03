@@ -18,7 +18,7 @@ module.exports = {
         if (product) {
             ({categoryId, name: nameProduct} = await knex("products")
                 .first(['categoryId', 'name'])
-                .where('id', product));
+                .where('alias', product));
 
             category = await knex("categories")
                 .first(fields)
