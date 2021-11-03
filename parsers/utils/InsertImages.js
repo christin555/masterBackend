@@ -30,34 +30,38 @@ class InsertImages {
     }
 
     fillImages(item) {
-        const {alias, images} = item;
+        const {name, images} = item;
 
-        if (!alias || !images) {
-            throw new Error(`alias and images are required for fill`);
+        if (!name || !images) {
+            throw new Error(`name and images are required for fill`);
         }
 
         if (images) {
-            this.images.push(alias, images);
+            this.images.push(name, images);
         }
     }
 
     prepareImages(insertedProducts) {
-        const obj = array2Object(insertedProducts, 'alias');
+        const obj = array2Object(insertedProducts, 'name');
+
         const imagesToInsert = [];
         const imagesToDownload = [];
 
         const generator = this.generateImage(obj);
 
-        for (const {alias, images} of this.images) {
+        for (const {name, images} of this.images) {
             images.forEach(({path, url}, idx) => {
-                const image = generator(alias, path, idx);
+                const image = generator(name, path, idx);
+
                 imagesToInsert.push(image);
+
                 imagesToDownload.push({
                     src: image.src,
                     url
                 });
             });
         }
+
         return {imagesToInsert, imagesToDownload};
     }
 
