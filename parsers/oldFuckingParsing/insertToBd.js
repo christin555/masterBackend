@@ -5,9 +5,9 @@ module.exports = {
     insertToBd: async (knex, {readyToInsert, imgs}, prices) => {
         const products = await knex('products')
             .insert(readyToInsert)
-            .onConflict(['name', 'categoryId', 'collectionId', 'code'])
+            .onConflict(['alias'])
             .merge()
-            .returning(['id', 'name', 'code']);
+            .returning(['alias']);
 
 
         await imagesWorker({products, knex, imgs});

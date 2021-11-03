@@ -7,16 +7,17 @@ const {logger} = require('../utils/Logger');
 
 module.exports = {
     imagesWorker: async ({knex, products, imgs}) => {
-        const imgsObject = array2Object(imgs, 'name');
+        const imgsObject = array2Object(imgs, 'alias');
         const imgToInsert = [];
         const imagesToDownload = [];
 
-        products.forEach(({name, id}) => {
-            const imgsProducts = imgsObject[name].imgs.map((url, index) => {
+        products.forEach(({alias}) => {
+            const imgsProducts = imgsObject[alias].imgs.map((url, index) => {
 
-                const hash = crypto.createHash('md5').update(url);
+                // const hash = crypto.createHash('md5').update(url);
                 const ext = path.extname(url);
-                const pathimg = hash.digest('hex') + ext;
+                // const pathimg = hash.digest('hex') + ext;
+                const pathimg = alias + ext;
                 const src = `/static/images/${String(entity.PRODUCT)}/${pathimg}`;
 
                 imagesToDownload.push({

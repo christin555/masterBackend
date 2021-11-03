@@ -15,23 +15,23 @@ class ImageHashIterator {
     }
 
     * [Symbol.iterator]() {
-        for (const name in this.images) {
-            const imgs = this.images[name];
+        for (const alias in this.images) {
+            const imgs = this.images[alias];
 
             const images = [];
 
             for (const imgUrl of imgs) {
-                const hash = crypto.createHash('md5').update(imgUrl);
+                // const hash = crypto.createHash('md5').update(imgUrl);
                 const ext = path.extname(imgUrl);
 
                 images.push({
-                    path: hash.digest('hex') + ext,
+                    path: alias + ext,
                     url: imgUrl
                 });
             }
 
             yield {
-                name,
+                alias,
                 images
             };
         }

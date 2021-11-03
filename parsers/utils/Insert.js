@@ -1,5 +1,6 @@
 const {array2Object} = require('../../service/tools/array2Object');
 const {InsertImages} = require('./InsertImages');
+const {translitRuEn} = require("../../service/tools/transliter");
 
 class Insert {
     constructor({items, fields, collections, categories, knex, logger}) {
@@ -28,6 +29,9 @@ class Insert {
 
             _item.collectionId = this.getCollection(item);
             _item.categoryId = this.getCategory(item);
+
+            _item.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(_item.name)}`.toLowerCase();
+            item.alias = _item.alias;
 
             this.imageInsert.fillImages(item);
 
@@ -104,9 +108,9 @@ class Insert {
 
         return this.knex('products')
             .insert(this.readyItems)
-            .onConflict(['name', 'categoryId', 'collectionId', 'code'])
+            .onConflict(['alias'])
             .merge()
-            .returning(['id', 'name', 'code']);
+            .returning(['alias', 'id']);
     }
 }
 
