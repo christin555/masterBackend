@@ -14,10 +14,9 @@ module.exports = {
         products.forEach(({alias}) => {
             const imgsProducts = imgsObject[alias].imgs.map((url, index) => {
 
-                // const hash = crypto.createHash('md5').update(url);
+                const hash = crypto.createHash('md5').update(url);
                 const ext = path.extname(url);
-                // const pathimg = hash.digest('hex') + ext;
-                const pathimg = alias + ext;
+                const pathimg = hash.digest('hex') + ext;
                 const src = `/static/images/${String(entity.PRODUCT)}/${pathimg}`;
 
                 imagesToDownload.push({
