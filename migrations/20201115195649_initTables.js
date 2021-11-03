@@ -151,7 +151,11 @@ exports.up = (knex) => Promise.all([
         table.timestamp('deleted_at', {useTz: false});
         table.timestamps();
 
-        table.unique(['name', 'categoryId', 'collectionId', 'code']);
+        table.string('alias')
+            .notNullable()
+            .comment('алиас');
+
+        table.unique(['alias']);
         table.index('id');
         table.index('categoryId');
     }),
