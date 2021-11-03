@@ -2,7 +2,7 @@ const {entity} = require('../../enums');
 
 module.exports = {
     getProduct: async({params, knex}) => {
-        const {id} = params;
+        const {alias} = params;
 
         const fields = await knex('catalogItems')
             .pluck('item')
@@ -38,7 +38,7 @@ module.exports = {
             })
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
-            .where('products.id', id)
+            .where('products.alias', alias)
             .groupBy(['products.id', 'products.name', 'collections.name', 'brands.name', 'prices.price']);
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
