@@ -25,7 +25,7 @@ class ImageHashIterator {
                 const ext = path.extname(imgUrl);
 
                 images.push({
-                    path: alias + ext,
+                    path: hash.digest('hex') + ext,
                     url: imgUrl
                 });
             }
