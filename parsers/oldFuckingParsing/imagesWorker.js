@@ -11,7 +11,7 @@ module.exports = {
         const imgToInsert = [];
         const imagesToDownload = [];
 
-        products.forEach(({alias}) => {
+        products.forEach(({alias, id}) => {
             const imgsProducts = imgsObject[alias].imgs.map((url, index) => {
 
                 const hash = crypto.createHash('md5').update(url);
@@ -28,7 +28,7 @@ module.exports = {
                     entity: entity.PRODUCT,
                     entityId: id,
                     src: src,
-                    isDoor: imgsObject[name].isDoor
+                    isDoor: imgsObject[alias].isDoor
                 };
             });
 

@@ -1,4 +1,5 @@
 const {array2Object} = require('../../../service/tools/array2Object');
+const {translitRuEn} = require("../../../service/tools/transliter");
 
 module.exports = {
     mapToBD: ({products, categories, fields, collections, finishingMaterials}) => {
@@ -18,6 +19,11 @@ module.exports = {
 
             itemBd.categoryId = categoryId;
 
+            console.log(item);
+            itemBd.alias = `doors_${translitRuEn(item.collection)}_${translitRuEn(item.name)}`.toLowerCase();
+            item.alias = itemBd.alias;
+
+
             if (collectionsObject && item.collection && collectionsObject[item.collection]) {
                 itemBd.collectionId = collectionsObject[item.collection].id;
             }
@@ -29,7 +35,7 @@ module.exports = {
                 });
                 itemBd.finishingMaterial = finishingMaterial;
 
-                imgs.push({name: itemBd.name, isDoor: true, imgs: item.finishingMaterial.map(({img}) => img)});
+                imgs.push({alias: itemBd.alias, isDoor: true, imgs: item.finishingMaterial.map(({img}) => img)});
             }
 
             return itemBd;

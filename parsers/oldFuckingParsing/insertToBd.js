@@ -7,8 +7,7 @@ module.exports = {
             .insert(readyToInsert)
             .onConflict(['alias'])
             .merge()
-            .returning(['alias']);
-
+            .returning(['alias', 'id']);
 
         await imagesWorker({products, knex, imgs});
         if (prices) {
@@ -23,8 +22,6 @@ module.exports = {
             await knex('prices')
                 .insert(pricesProducts);
         }
-        //  .onConflict(['name', 'categoryId'])
-        //   .merge();
     }
 };
 
