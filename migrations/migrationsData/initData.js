@@ -39,7 +39,7 @@ const categories = [
         level: 3,
         alias: 'quartzvinyl_zamkovay',
         isLast: true,
-        img: 'https://polmodern.ru/media/Statia%20KvarzVinil/kvarc-vinilovaya-plitka-dlya-pola-15.jpg'
+        img: 'https://i.parket-sale.ru/i/c/3/plitka-pvh-vinilam-gibrid-probka-dub-ipr-10-066-6.jpg'
     },
     {
         name: 'Клеевая',

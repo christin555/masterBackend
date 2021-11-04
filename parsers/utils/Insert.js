@@ -33,6 +33,7 @@ class Insert {
             _item.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(_item.name)}`.toLowerCase();
             item.alias = _item.alias;
 
+            console.log(item.alias)
             this.imageInsert.fillImages(item);
 
             return _item;
