@@ -7,7 +7,7 @@ module.exports = {
             host: 'localhost',
             database: 'master',
             user: 'postgres',
-            password: '3133',
+            password: 'root',
             port: '5432'
         },
         pool: {
