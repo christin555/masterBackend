@@ -14,6 +14,7 @@ module.exports = {
         const product = await knex('products')
             .first([
                 'products.id',
+                'products.alias',
                 'products.name',
                 'products.description',
                 'products.categoryId',
@@ -39,7 +40,7 @@ module.exports = {
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
             .where('products.alias', alias)
-            .groupBy(['products.id', 'products.name', 'collections.name', 'brands.name', 'prices.price']);
+            .groupBy(['products.alias', 'products.id', 'products.name', 'collections.name', 'brands.name', 'prices.price']);
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
         //const catagories = await getNextLevelCategory({knex, categoryId: product.categoryId});
