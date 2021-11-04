@@ -74,7 +74,6 @@ class FileSystem {
             console.log(e);
         }
     }
-
     static syncReaddir(dir) {
         return fs.readdirSync(dir, {encoding: 'utf-8'});
     }
