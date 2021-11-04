@@ -2,7 +2,7 @@ const knex = require('../knex');
 const excel = require('excel4node');
 
 const columns = [
-    ['id', 'id'],
+    ['alias', 'alias'],
     ['Название', 'name'],
     ['Бренд', 'brand'],
     ['Категория', 'category'],
@@ -16,7 +16,7 @@ const start = async () => {
 
     const products = await knex('products')
         .select([
-            'products.id',
+            'products.alias',
             'products.name',
             'categories.name as category',
             'collections.name as collection',

@@ -30,28 +30,28 @@ class InsertImages {
     }
 
     fillImages(item) {
-        const {name, images} = item;
+        const {alias, images} = item;
 
-        if (!name || !images) {
+        if (!alias || !images) {
             throw new Error(`name and images are required for fill`);
         }
 
         if (images) {
-            this.images.push(name, images);
+            this.images.push(alias, images);
         }
     }
 
     prepareImages(insertedProducts) {
-        const obj = array2Object(insertedProducts, 'name');
+        const obj = array2Object(insertedProducts, 'alias');
 
         const imagesToInsert = [];
         const imagesToDownload = [];
 
         const generator = this.generateImage(obj);
 
-        for (const {name, images} of this.images) {
+        for (const {alias, images} of this.images) {
             images.forEach(({path, url}, idx) => {
-                const image = generator(name, path, idx);
+                const image = generator(alias, path, idx);
 
                 imagesToInsert.push(image);
 
@@ -70,7 +70,7 @@ class InsertImages {
             const img = {
                 entity: entity.PRODUCT,
                 entityId: obj[name].id,
-                src: `static/images/${String(entity.PRODUCT)}/${path}`
+                src: `/static/images/${String(entity.PRODUCT)}/${path}`
             };
 
             // TODO переделать в таблице на order

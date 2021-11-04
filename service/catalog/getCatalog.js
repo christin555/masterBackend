@@ -15,7 +15,7 @@ module.exports = {
         //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
         if (!category && !search) {
             categories = await getFirstLevels({knex});
-            products = await getProducts({knex, body});
+            products = await getProducts({knex, body, category});
         }
 
         if (category) {
@@ -31,10 +31,10 @@ module.exports = {
                 searchParams.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
             }
 
-            products = await getProducts({knex, body});
+            products = await getProducts({knex, body, category});
         } else if(search){
             categories = await getFirstLevels({knex});
-            products = await getProducts({knex, body});
+            products = await getProducts({knex, body, category});
         }
 
 

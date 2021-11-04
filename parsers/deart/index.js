@@ -25,16 +25,16 @@ const start = async({knex}) => {
     console.log('start Deart - products are got');
 
     const categories = await getCategories({knex});
-    console.log('start Decoria - categories are got');
+    console.log('start Deart - categories are got');
 
     const collections = await getCollections({knex});
-    console.log('start Decoria - collections are got');
+    console.log('start Deart - collections are got');
 
     const readyproducts = mapToBD({products, categorySetFunc, categories, fields, collections});
-    console.log('start Decoria - readyproducts are got');
+    console.log('start Deart - readyproducts are got');
 
     await insertToBd(knex, readyproducts);
-    console.log('start Decoria - readyproducts are inserted');
+    console.log('start Deart - readyproducts are inserted');
 
     return !problemCards.length && 'все хорошо!' || `возникли проблемы в ${problemCards}`;
 };

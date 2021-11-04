@@ -1,11 +1,10 @@
 const axios = require("axios");
 const cheerio = require('cheerio');
-const {getURL} = require('./getURL');
 
 module.exports = {
-    parse: async ({URL, problemCards}) => {
+    parse: async ({ URL,problemCards }) => {
         const productLinks = [];
-        const {data} = await axios.get(URL);
+        const { data } = await axios.get(URL);
         const $ = cheerio.load(data);
         const products = [];
 
@@ -17,8 +16,6 @@ module.exports = {
 
         console.log('startModuleo - 2, get cards');
 
-        const tlink = productLinks.slice(0, 5);
-
         const productsHtml = await Promise.all(productLinks.map((productLink) => axios.get(productLink).catch(function (error) {
             console.log(error.toJSON());
             problemCards.push(productLink);
@@ -26,7 +23,7 @@ module.exports = {
 
         console.log('startModuleo - 3, get data');
 
-        productsHtml.filter(Boolean).forEach(({data: dataProduct}) => {
+        productsHtml.filter(Boolean).forEach(({ data: dataProduct }) => {
             if (dataProduct) {
                 const p = cheerio.load(dataProduct);
                 const name = p('h1[data-webid="product-name"]:first').text().trim();
@@ -39,13 +36,13 @@ module.exports = {
                 p('[data-webid="technical-property"]').each(function () {
                     const prop = p(p(this).children()[0]).text().trim();
                     const val = p(p(this).children()[1]).text().trim();
-                    chars.push({[prop]: val});
+                    chars.push({ [prop]: val });
                 });
 
                 p('[data-webid="thumbnails-container"]').each(function () {
                     (p(this).find('img')).each(function () {
                         let img = encodeURI(decodeURI(p(this).attr('data-desktop-src')));
-                        img = img.substring(0, img.indexOf("mw")) + 'mw=722';
+                        img = img.substring(0,img.indexOf("mw")) + 'mw=722';
                         imgs.push(img);
                     });
                 });
@@ -58,10 +55,10 @@ module.exports = {
 
                     p('[data-webid="available-in-property"]').each(function () {
                         let prop = p(p(this).children()[0]).text().trim();
-                        prop = prop.substring(0, prop.indexOf(":"));
+                        prop = prop.substring(0,prop.indexOf(":"));
 
                         const val = p(p(this).children()[1]).text().trim();
-                        available[name].push({[prop]: val});
+                        available[name].push({ [prop]: val });
                     });
                 });
 
@@ -85,6 +82,6 @@ module.exports = {
     }
 };
 
-const getProperites = (array) => array.reduce((object, item) => {
-    return {...object, ...item};
-}, {});
+const getProperites = (array) => array.reduce((object,item) => {
+    return { ...object,...item };
+},{});

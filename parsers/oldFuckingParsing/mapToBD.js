@@ -1,6 +1,6 @@
 const {array2Object} = require('../../service/tools/array2Object');
 const {categorySetFunc} = require('./categorySetFunc');
-const {translitRuEn} = require("../../../service/tools/transliter");
+const {translitRuEn} = require("../../service/tools/transliter");
 
 module.exports = {
     mapToBD: ({products, categories, fields, collections}) => {
@@ -21,12 +21,12 @@ module.exports = {
                 itemBd.collectionId = collectionsObject[item.collection.toLowerCase()].id;
             }
 
-            itemBd.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(item.name)}`.toLowerCase();
+            itemBd.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(item.name)}_${translitRuEn(itemBd?.thickness || itemBd?.connectionType || '')}`.toLowerCase();
             item.alias = itemBd.alias;
-
+            
             categorySetFunc({itemBd, item, categoriesObject});
 
-            item.imgs && imgs.push({name: itemBd.name, imgs: item.imgs});
+            item.imgs && imgs.push({alias: itemBd.alias, imgs: item.imgs});
 
             return itemBd;
         });

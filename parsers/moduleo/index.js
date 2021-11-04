@@ -26,6 +26,7 @@ const start = async({knex}) => {
     const readyproducts = mapToBD({products, categorySetFunc, categories, fields, collections});
     console.log('startModuleo - readyproducts are got');
 
+
     await insertToBd(knex, readyproducts);
     console.log('startModuleo - readyproducts are inserted');
 
