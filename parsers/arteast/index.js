@@ -7,7 +7,10 @@ const {fields} = require("./fields");
 const {categorySetFunc} = require("../oldFuckingParsing/categorySetFunc");
 const {insertToBd} = require("../oldFuckingParsing/insertToBd");
 
-const URL = 'https://arteast.pro:8443/api/products?per_page=60&type=quartz_vinyl&/catalog/quartz_vinylconst';
+const URLs = [
+    'https://arteast.pro:8443/api/products?per_page=60&type=quartz_vinyl&/catalog/quartz_vinylconst',
+    'https://arteast.pro:8443/api/products?per_page=60&type=stone_polymer'
+];
 //https://arteast.pro:8443/api/product/710-at
 
 const start = async ({knex}) => {
@@ -15,7 +18,7 @@ const start = async ({knex}) => {
 
     console.log('start startArteast');
 
-    const links = await getUrls({URL});
+    const links = await getUrls({URLs});
     const products = await getProducts({links});
     console.log('urls are got');
 
