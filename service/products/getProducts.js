@@ -6,13 +6,12 @@ const {createSearch} = require('./searchHandlers');
 
 module.exports = {
     getProducts: async({knex, body, category}) => {
-        const {searchParams, limit, offset} = body;
-        const prices = [];
-
+        const {filter, limit, offset} = body;
         const query = knex('products')
             .select([
                 'products.*',
                 'brands.name as brand',
+                'categories.name as category',
                 'collections.name as collection',
                 'brands.weight',
                 'prices.price',
@@ -24,6 +23,7 @@ module.exports = {
                     this.on('media.entity', '=', entity.PRODUCT);
                 });
             })
+            .leftJoin('categories', 'categories.id', 'categoryId')
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
             .leftJoin('prices', function() {
@@ -42,16 +42,17 @@ module.exports = {
                 'brands.name',
                 'brands.weight',
                 'collections.name',
-                'prices.price'
+                'prices.price',
+                'categories.name'
             ]);
 
-        const searchInstance = createSearch(category, knex, searchParams.filter);
+        const searchInstance = createSearch(category, knex, filter);
 
         if (searchInstance) {
             await searchInstance.setFilterToQuery(query);
         }
 
-        await setSearchParams({query, knex, searchParams});
+        await setSearchParams({query, knex, filter});
 
         const products = await query;
 

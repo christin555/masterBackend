@@ -6,16 +6,19 @@ const {getCategoryUnder} = require('./getCategoryUnder');
 
 module.exports = {
     getCatalog: async ({body, knex}) => {
-        const {searchParams} = body;
-        const {category, filter: {search} = {}} = searchParams;
+        const {searchParams, limit, offset} = body;
+        const {category, filter = {}} = searchParams;
         let categories;
         let products;
 
+        const bodyProducts = {
+            limit, offset, filter
+        };
 
         //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
-        if (!category && !search) {
+        if (!category && !filter?.search) {
             categories = await getFirstLevels({knex});
-            products = await getProducts({knex, body, category});
+            products = await getProducts({knex, body: bodyProducts, category});
         }
 
         if (category) {
@@ -23,20 +26,19 @@ module.exports = {
 
             //Если уровень последний, то ниже уже нет категорий, поэтому возввращаем только товары
             if (isLast) {
-                searchParams.categoryIds = [categoryId];
+                filter.categoryIds = [categoryId];
             }
             //Иначе получаем ирерархию категорий и айдишники подкатегорий и их товары
             else {
                 categories = await getNextLevelCategory({knex, categoryId});
-                searchParams.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
+                filter.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
             }
 
-            products = await getProducts({knex, body, category});
-        } else if(search){
+            products = await getProducts({knex, body: bodyProducts, category});
+        } else if(filter?.search){
             categories = await getFirstLevels({knex});
-            products = await getProducts({knex, body, category});
+            products = await getProducts({knex, body: bodyProducts, category});
         }
-
 
         return {categories, products};
     }
