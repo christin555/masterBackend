@@ -86,6 +86,10 @@ class Insert {
             categoryId = this.categories['laminate'].id;
         }
 
+        if (lowerCategory.includes('паркет')) {
+            categoryId = this.categories['parquet'].id;
+        }
+
         if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {
             const {connectionType} = item;
             const lowerConnection = connectionType?.toLowerCase();
