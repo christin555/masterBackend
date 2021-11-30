@@ -11,7 +11,7 @@ module.exports = {
             secure: true,
             auth: {
                 user: 'masterpola72t@gmail.com',
-                pass: 'master568100'
+                pass: 'master060200'
             }
         });
 
@@ -24,18 +24,20 @@ module.exports = {
          `;
 
         if (product) {
+            const img = `https://master-pola.com${product.img}`;
+
             text += `Код товара: ${product.id}, ${product.name}`;
             emailHtml += ` 
                  <div> 
                      <h4> Товар ${product.name}, код товара на сайте:${product.id}</h4>
-                     <img src=${product.img} height="400px"/>
+                     <img src=${img} height="400px"/>
                   </div>
         `;
         }
 
         const info = await transporter.sendMail({
-            from: 'ash12hka@gmail.com',
-            to: 'kriska_555@mail.ru',
+            from: 'masterpola72t@gmail.com',
+            to: 'masterpola72@mail.ru',
             subject: 'Заявка на обратный звонок ✔',
             text: text,
             html: emailHtml

@@ -1,14 +1,13 @@
 'use strict';
 
 module.exports = {
-    secretKey: 'coconutSecretKey2020',
     development: {
         client: 'pg',
         connection: {
             host: 'localhost',
             database: 'master',
             user: 'postgres',
-            password: 'root',
+            password: '3133',
             port: '5432'
         },
         pool: {
@@ -25,9 +24,9 @@ module.exports = {
     production: {
         client: 'pg',
         connection: {
-            database: 'production',
-            user: 'te',
-            password: 'password'
+            database: 'master',
+            user: 'postgres',
+            password: '3133'
         },
         pool: {
             min: 2,

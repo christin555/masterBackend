@@ -2,6 +2,7 @@ const {getCategories} = require('../../oldFuckingParsing/getCategories');
 const {getCollections} = require('../../oldFuckingParsing/getCollections');
 const {array2Object} = require('../../../service/tools/array2Object');
 const {InsertImages} = require('../../utils');
+const {translitRuEn} = require("../../../service/tools/transliter");
 
 const collectionMatch = {
     'Herringbone': 'Creative Baton Rompu/Herringbone'
@@ -59,7 +60,9 @@ class SaveProducts {
         this.logger.debug('finish prepare');
         this.insertedData = await this.knex('products')
             .insert(this.products)
-            .returning(['id', 'name', 'code']);
+            .onConflict(['alias'])
+            .merge()
+            .returning(['alias', 'id']);
         this.logger.debug('finish insert');
     }
 
@@ -73,11 +76,13 @@ class SaveProducts {
                 name: collectionName
             } = this.findCollectionFromDB(item);
 
+
             Object.assign(item, this.descToObject(item));
 
             item.categoryId = categoryId;
             item.collectionId = collectionId;
             item.collection = collectionName;
+            item.alias = `laminate_${translitRuEn(item?.collection || '')}_${translitRuEn(item?.name || '')}`.toLowerCase();
 
             this.insertImages.fillImages(item);
 

@@ -15,8 +15,8 @@ class ImageHashIterator {
     }
 
     * [Symbol.iterator]() {
-        for (const name in this.images) {
-            const imgs = this.images[name];
+        for (const alias in this.images) {
+            const imgs = this.images[alias];
 
             const images = [];
 
@@ -31,7 +31,7 @@ class ImageHashIterator {
             }
 
             yield {
-                name,
+                alias,
                 images
             };
         }

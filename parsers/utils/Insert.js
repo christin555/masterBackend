@@ -1,5 +1,6 @@
 const {array2Object} = require('../../service/tools/array2Object');
 const {InsertImages} = require('./InsertImages');
+const {translitRuEn} = require("../../service/tools/transliter");
 
 class Insert {
     constructor({items, fields, collections, categories, knex, logger}) {
@@ -29,6 +30,10 @@ class Insert {
             _item.collectionId = this.getCollection(item);
             _item.categoryId = this.getCategory(item);
 
+            _item.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(_item.name)}`.toLowerCase();
+            item.alias = _item.alias;
+
+            console.log(item.alias)
             this.imageInsert.fillImages(item);
 
             return _item;
@@ -81,16 +86,20 @@ class Insert {
             categoryId = this.categories['laminate'].id;
         }
 
-        if (lowerCategory === 'кварцвинил') {
+        if (lowerCategory.includes('паркет')) {
+            categoryId = this.categories['parquet'].id;
+        }
+
+        if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {
             const {connectionType} = item;
             const lowerConnection = connectionType?.toLowerCase();
 
             if (connectionType) {
-                if (lowerConnection.includes('клеев')) {
+                if (lowerConnection.includes('кле')) {
                     categoryId = this.categories['quartzvinyl_kleevay'].id;
                 }
 
-                if (lowerConnection.includes('замков')) {
+                if (lowerConnection.includes('замк')) {
                     categoryId = this.categories['quartzvinyl_zamkovay'].id;
                 }
             }
@@ -104,9 +113,9 @@ class Insert {
 
         return this.knex('products')
             .insert(this.readyItems)
-            .onConflict(['name', 'categoryId', 'collectionId', 'code'])
+            .onConflict(['alias'])
             .merge()
-            .returning(['id', 'name', 'code']);
+            .returning(['alias', 'id']);
     }
 }
 

@@ -14,7 +14,11 @@ const urls = [
     '/catalog/classic-collection',
     '/catalog/collection-easy-line',
     '/catalog/the-sequoia-collection',
-    '/catalog/collection-stone'
+    '/catalog/collection-stone',
+    '/catalog/grand-stone',
+    '/catalog/the-collection-of-real-wood',
+    '/catalog/premium-xl',
+    '/catalog/solo'
 ];
 
 const start = async() => {

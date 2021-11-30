@@ -9,7 +9,8 @@
     "knex": "./node_modules/.bin/knex",
     "eslint": "eslint",
     "prodstart": "pm2 start server.js",
-    "parse": "node parsers/cli.js"
+    "parse": "node parsers/cli.js",
+    "extract": "node extract/cli.js"
   },
   "author": "",
   "license": "ISC",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "axios": "^0.21.3",
+    "excel4node": "^1.7.2",
     "husky": "^4.2.5",
     "needle": "^3.0.0",
     "node-html-parser": "^4.1.5",

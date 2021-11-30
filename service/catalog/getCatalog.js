@@ -1,41 +1,45 @@
 const {getProducts} = require('../products/getProducts');
 const {getFirstLevels} = require('./getFirstLevels');
 const {getNextLevelCategory} = require('./getNextLevelCategory');
+const {getCategoryByAlias} = require('./getCategoryByAlias');
+const {getCategoryUnder} = require('./getCategoryUnder');
 
 module.exports = {
-    getCatalog: async({body, knex}) => {
-        const {searchParams} = body;
-        const {category, search} = searchParams;
+    getCatalog: async ({body, knex}) => {
+        const {searchParams, limit, offset} = body;
+        const {category, filter = {}} = searchParams;
+        let categories;
+        let products;
 
-        if (!category && !search) {
-            return getFirstLevels({knex});
-        }
+        const bodyProducts = {
+            limit, offset, filter
+        };
 
-        if (search) {
-            return getProducts({knex, body});
+        //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
+        if (!category && !filter?.search) {
+            categories = await getFirstLevels({knex});
+            products = await getProducts({knex, body: bodyProducts, category});
         }
 
         if (category) {
-            const {id: categoryId, isLast} = await knex('categories')
-                .first([
-                    'id',
-                    'name',
-                    'img',
-                    'level',
-                    'alias',
-                    'description',
-                    'isLast'
-                ])
-                .where('alias', category);
+            const {id: categoryId, isLast} = await getCategoryByAlias({knex, alias: category});
 
+            //Если уровень последний, то ниже уже нет категорий, поэтому возввращаем только товары
             if (isLast) {
-                searchParams.categoryId = categoryId;
-                return getProducts({knex, body});
-            } else {
-                return getNextLevelCategory({knex, categoryId});
+                filter.categoryIds = [categoryId];
             }
+            //Иначе получаем ирерархию категорий и айдишники подкатегорий и их товары
+            else {
+                categories = await getNextLevelCategory({knex, categoryId});
+                filter.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
+            }
+
+            products = await getProducts({knex, body: bodyProducts, category});
+        } else if(filter?.search){
+            categories = await getFirstLevels({knex});
+            products = await getProducts({knex, body: bodyProducts, category});
         }
 
-        return [];
+        return {categories, products};
     }
 };
