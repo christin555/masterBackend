@@ -1,14 +1,14 @@
 const knex = require('../knex');
 const excel = require('excel4node');
+const {entity} = require("../enums");
 
 const columns = [
     ['alias', 'alias'],
     ['Название', 'name'],
     ['Бренд', 'brand'],
-    ['Категория', 'category'],
     ['Коллекция', 'collection'],
-    ['Тип соедеинения', 'connectionType'],
-    ['Общая толщина/толщина', 'totalThickness']
+    ['Общая толщина/толщина', 'totalThickness'],
+    ['Цена', 'price']
 ];
 
 const start = async () => {
@@ -23,7 +23,14 @@ const start = async () => {
             'products.connectionType',
             'products.totalThickness',
             'brands.name as brand',
+            'prices.price'
         ])
+        .leftJoin('prices', function () {
+            this.on(function () {
+                this.on('prices.entityId', '=', 'products.id');
+                this.on('prices.entity', '=', entity.PRODUCT);
+            });
+        })
         .leftJoin('categories', 'categories.id', 'categoryId')
         .leftJoin('collections', 'collections.id', 'collectionId')
         .leftJoin('brands', 'brands.id', 'brandId')
@@ -54,8 +61,9 @@ const start = async () => {
         });
     });
 
-    workbook.write('Excel.xlsx');
+    workbook.write('Цены.xlsx');
     console.log('End extracting');
+   // process.exit()
 };
 
 productsGroup = (products) => products.reduce((acc, val) => {

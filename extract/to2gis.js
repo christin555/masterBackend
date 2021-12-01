@@ -3,29 +3,14 @@ const excel = require('excel4node');
 const {entity} = require("../enums");
 
 const columns = [
-    ['id'],
-    ['title', 'name'],
-    ['description'],
-    ['price'],
-    ['brand'],
-    ['availability'],
-    ['condition'],
-    ['link'],
-    ['fb_product_category'],
-    ['google_product_category'],
-    ['image_link'],
-    ['status'],
-    ['additional_image_link'],
+    ['Наименование товара', 'name'],
+    ['Описание', 'description'],
+    ['Цена', 'price'],
+    ['Категория', 'category'],
+    ['Ссылка на товар на сайте магазина', 'link'],
+    ['Ссылка на картинку', 'image_link'],
+    ['Описание', 'description']
 ];
-
-const status = 'active';
-const fb_cat = {
-    'laminate_qvarz': 1459,
-    other: 1454
-};
-const condition = 'new';
-const availability = 'available for order';
-const google_product_category = 2826;
 
 const start = async () => {
     console.log('start extracting products to insta');
@@ -50,7 +35,7 @@ const start = async () => {
 
     });
 
-    workbook.write('inst.xlsx');
+    workbook.write('2gis.xlsx');
     console.log('End extracting');
 };
 
@@ -88,20 +73,14 @@ const getProducts = async (knex) => {
 
     return products.map(({alias, collection, name, category, imgs, ...item}) => {
         const image_link = `https://master-pola.com${imgs[0]?.src}`;
-        const additional_image_link = imgs?.slice(1).map(({src}) => `https://master-pola.com${src}`).join(',');
 
         return {
             ...item,
-            condition,
-            availability,
-            google_product_category,
-            status,
             link: `https://master-pola.com/product/${alias}`,
             name: name.length < 65 ? `${name} | ${collection}` : name,
             image_link,
-            additional_image_link,
-            fb_product_category: ['laminate', 'quartzvinyl_kleevay', 'quartzvinyl_zamkovay'].includes(category) ?
-                fb_cat['laminate_qvarz'] : fb_cat['other']
+            category: 'laminate' === category ?
+                'Ламинат' : 'Кварцвиниловая плитка'
         };
     });
 };
