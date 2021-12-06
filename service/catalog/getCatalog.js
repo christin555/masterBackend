@@ -6,6 +6,7 @@ const {getCategoryUnder} = require('./getCategoryUnder');
 
 module.exports = {
     getCatalog: async ({body, knex}) => {
+        console.log(body);
         const {searchParams, limit, offset} = body;
         const {category, filter = {}} = searchParams;
         let categories;

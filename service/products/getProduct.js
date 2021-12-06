@@ -44,7 +44,7 @@ module.exports = {
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
         //const catagories = await getNextLevelCategory({knex, categoryId: product.categoryId});
-        if (product.finishingMaterial && product.finishingMaterial.length) {
+        if (product?.finishingMaterial && product.finishingMaterial.length) {
             const finishingMaterial = await knex('finishingMaterialDoors')
                 .select()
                 .whereIn('id', product.finishingMaterial);

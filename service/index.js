@@ -11,6 +11,8 @@ const {getFilterFields} = require('./catalog/Filter/getFilterFields');
 
 const {callme} = require('./send/callme');
 const {getArticles} = require('./articles/getArticles');
+const {getArticle} = require('./articles/getArticle');
+
 const {upload} = require('./upload');
 
 module.exports = {
@@ -27,4 +29,5 @@ module.exports = {
     callme,
 
     getArticles,
+    getArticle
 };
