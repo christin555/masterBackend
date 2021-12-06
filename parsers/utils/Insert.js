@@ -90,6 +90,10 @@ class Insert {
             categoryId = this.categories['parquet'].id;
         }
 
+        if (lowerCategory.includes('керамогранит')) {
+            categoryId = this.categories['keramogranit'].id;
+        }
+
         if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {
             const {connectionType} = item;
             const lowerConnection = connectionType?.toLowerCase();
