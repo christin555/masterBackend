@@ -37,12 +37,13 @@ module.exports = {
 
         const info = await transporter.sendMail({
             from: 'masterpola72t@gmail.com',
-            to: 'masterpola72@mail.ru',
+            to: 'kriska_555@mail.ru',
             subject: 'Заявка на обратный звонок ✔',
             text: text,
             html: emailHtml
         });
 
         console.log('Message sent: %s', info.messageId);
+        return {}
     }
 };

@@ -10,6 +10,7 @@ router.get('/products/get/:alias', getMethod(() => 'getProduct'));
 router.post('/products/getPopular', getMethod(() => 'getPopular'));
 
 router.get('/articles/getArticles', getMethod(() => 'getArticles'));
+router.post('/article/get', getMethod(() => 'getArticle'));
 
 router.post('/upload', (query) => getMethod('upload', query));
 

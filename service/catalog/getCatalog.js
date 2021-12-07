@@ -16,7 +16,7 @@ module.exports = {
         };
 
         //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
-        if (!category && !filter?.search) {
+        if (!category && !filter?.fastfilter) {
             categories = await getFirstLevels({knex});
             products = await getProducts({knex, body: bodyProducts, category});
         }
@@ -35,7 +35,7 @@ module.exports = {
             }
 
             products = await getProducts({knex, body: bodyProducts, category});
-        } else if(filter?.search){
+        } else if(filter?.fastfilter){
             categories = await getFirstLevels({knex});
             products = await getProducts({knex, body: bodyProducts, category});
         }

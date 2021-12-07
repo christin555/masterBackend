@@ -19,7 +19,7 @@ module.exports = {
                 'products.description',
                 'products.categoryId',
                 'prices.price as price',
-                'collection',
+                'collectionName',
                 'finishingMaterial',
                 'brands.name as brand',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
@@ -44,7 +44,7 @@ module.exports = {
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
         //const catagories = await getNextLevelCategory({knex, categoryId: product.categoryId});
-        if (product.finishingMaterial && product.finishingMaterial.length) {
+        if (product?.finishingMaterial && product.finishingMaterial.length) {
             const finishingMaterial = await knex('finishingMaterialDoors')
                 .select()
                 .whereIn('id', product.finishingMaterial);

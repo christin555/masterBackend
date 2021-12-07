@@ -16,7 +16,7 @@ class Laminate {
               from laminate_fields
               where field = '${field}'
               ) as t
-          where (t.value ->> 'id'):: int in (:filter:)
+          where (t.value ->> 'id')::int = any(:filter)
         `;
     };
 
@@ -60,24 +60,26 @@ class Laminate {
         const entries = Object.entries(this.filter);
 
         for (const [key, filter] of entries) {
+            const arrFilter= [].concat(filter);
+
             switch (key) {
             case 'withHeatingFloor':
                 this.setWithHeatingFloor(query);
                 break;
             case 'brandId':
-                this.setBrandId(query, filter);
+                this.setBrandId(query, arrFilter);
                 break;
             case 'width':
-                this.setWidth(query, filter);
+                this.setWidth(query, arrFilter);
                 break;
             case 'thickness':
-                this.setThickness(query, filter);
+                this.setThickness(query, arrFilter);
                 break;
             case 'color':
-                this.setColor(query, filter);
+                this.setColor(query, arrFilter);
                 break;
             case 'resistanceClass':
-                this.setResistanceClass(query, filter);
+                this.setResistanceClass(query, arrFilter);
                 break;
             }
         }

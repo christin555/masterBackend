@@ -10,6 +10,7 @@ module.exports = {
             .count('products.id')
             .first()
             .leftJoin('collections', 'collections.id', 'collectionId')
+            .leftJoin('categories', 'categories.id', 'products.categoryId')
             .whereNull('products.deleted_at')
             .whereNull('collections.deleted_at');
 
@@ -31,8 +32,10 @@ module.exports = {
         if (searchInstance) {
             await searchInstance.setFilterToQuery(query);
         }
+        console.log(searchParams);
+        await setSearchParams({query, knex, filter: searchParams.filter});
 
-        await setSearchParams({query, knex, searchParams});
+        console.log(query.toQuery());
 
         const {count} = await query;
 

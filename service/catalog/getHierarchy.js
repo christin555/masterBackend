@@ -8,6 +8,7 @@ const fields = [
 
 module.exports = {
     getHierarchy: async ({body, knex}) => {
+        console.log(body);
         const {category: alias, product} = body;
         let category, nameProduct, categoryId;
 
