@@ -1,8 +1,8 @@
 const {entity} = require('../../enums');
 
 module.exports = {
-    getArticle: async({params, knex}) => {
-        const {alias} = params;
+    getArticle: async({body, knex}) => {
+        const {alias} = body;
 
         return knex('articles')
             .first([
