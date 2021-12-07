@@ -6,7 +6,6 @@ const {getCategoryUnder} = require('./getCategoryUnder');
 
 module.exports = {
     getCatalog: async ({body, knex}) => {
-        console.log(body);
         const {searchParams, limit, offset} = body;
         const {category, filter = {}} = searchParams;
         let categories;
@@ -17,7 +16,7 @@ module.exports = {
         };
 
         //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
-        if (!category && !filter?.search) {
+        if (!category && !filter?.fastfilter) {
             categories = await getFirstLevels({knex});
             products = await getProducts({knex, body: bodyProducts, category});
         }
@@ -36,7 +35,7 @@ module.exports = {
             }
 
             products = await getProducts({knex, body: bodyProducts, category});
-        } else if(filter?.search){
+        } else if(filter?.fastfilter){
             categories = await getFirstLevels({knex});
             products = await getProducts({knex, body: bodyProducts, category});
         }

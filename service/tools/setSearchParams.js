@@ -8,19 +8,20 @@ const filterFields = [
 
 module.exports = {
     setSearchParams: async({query, knex, filter = {}}) => {
-        const {categoryId, categoryIds} = filter;
+        const {categoryId, categoryIds, fastfilter} = filter;
 
-        if (filter.search) {
+        if (fastfilter) {
             const categoryIds = await knex('categories')
                 .pluck('id')
-                .whereRaw('name ~* ?', search);
+                .whereRaw('name ~* ?', fastfilter);
             const categoryIdsLast = await getCategoryUnder({categoryIds, knex});
 
             query.where((builder) => {
                 builder
-                    .whereRaw('products.id::text = ?', search)
-                    .orWhereRaw('products.name ~* ?', search)
-                    .orWhereRaw('products.collection ~* ?', search)
+                    .whereRaw('products.id::text = ?', fastfilter)
+                    .orWhereRaw('products.name ~* ?', fastfilter)
+                    .orWhereRaw('collections.name ~* ?', fastfilter)
+                    .orWhereRaw('categories.name ~* ?', fastfilter)
                     .orWhereIn('products.categoryId', [...categoryIds, ...categoryIdsLast]);
             });
         }
