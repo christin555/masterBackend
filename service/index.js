@@ -8,6 +8,7 @@ const {getPopular} = require('./products/getPopular');
 
 const {getFilterFields} = require('./catalog/Filter/getFilterFields');
 
+const {getLinks} = require('./getLinks');
 
 const {callme} = require('./send/callme');
 const {getArticles} = require('./articles/getArticles');
@@ -23,6 +24,8 @@ module.exports = {
     getPopular,
 
     getFilterFields,
+
+    getLinks,
 
     getProduct,
 

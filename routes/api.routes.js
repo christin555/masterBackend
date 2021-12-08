@@ -14,6 +14,8 @@ router.post('/article/get', getMethod(() => 'getArticle'));
 
 router.post('/upload', (query) => getMethod('upload', query));
 
+router.get('/getLinks', getMethod(() => 'getLinks'));
+
 router.post('/send/callme', getMethod(() => 'callme'));
 
 module.exports = router;
