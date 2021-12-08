@@ -18,6 +18,8 @@ module.exports = {
                 'products.name',
                 'products.description',
                 'products.categoryId',
+                'categories.name as category',
+                'categories.brands as brand',
                 'prices.price as price',
                 'collectionName',
                 'finishingMaterial',
