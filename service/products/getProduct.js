@@ -19,9 +19,9 @@ module.exports = {
                 'products.description',
                 'products.categoryId',
                 'categories.name as category',
-                'categories.brands as brand',
+                'brands.name as brand',
                 'prices.price as price',
-                'collectionName',
+                'collections.name as collectionName',
                 'finishingMaterial',
                 'brands.name as brand',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
@@ -39,10 +39,14 @@ module.exports = {
                     this.on('media.entity', '=', entity.PRODUCT);
                 });
             })
-            .leftJoin('collections', 'collections.id', 'collectionId')
+            .leftJoin('collections', 'collections.id', 'products.collectionId')
+            .leftJoin('categories', 'categories.id', 'products.categoryId')
             .leftJoin('brands', 'brands.id', 'brandId')
             .where('products.alias', alias)
-            .groupBy(['products.alias', 'products.id', 'products.name', 'collections.name', 'brands.name', 'prices.price']);
+            .groupBy([
+                'products.alias', 'products.id', 'products.name', 'categories.name',
+                'collections.name', 'brands.name', 'prices.price'
+            ]);
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
         //const catagories = await getNextLevelCategory({knex, categoryId: product.categoryId});

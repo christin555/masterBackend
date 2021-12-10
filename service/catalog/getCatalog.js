@@ -14,6 +14,7 @@ module.exports = {
         const bodyProducts = {
             limit, offset, filter
         };
+        console.log('lo', limit, offset)
 
         //Если первый уровень иерархии и не быстрый поиск, то возвращаем категории первого уровня и все товары
         if (!category && !filter?.fastfilter) {
