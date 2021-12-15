@@ -1,12 +1,14 @@
 const {entity} = require('../../enums');
 const {mapToList} = require('../tools/mapToList');
 const {setSearchParams} = require('../tools/setSearchParams');
-const {Laminate} = require('../catalog/Filter/filters/laminate');
+const {Laminate} = require('../catalog/Filter/filters/floors');
 const {createSearch} = require('./searchHandlers');
 
 module.exports = {
-    getProducts: async({knex, body, category}) => {
-        const {filter, limit, offset} = body;
+    getProducts: async ({knex, body, category}) => {
+        const {filter, limit, offset, order = {}} = body;
+        const {direction, field} = order;
+
         const query = knex('products')
             .select([
                 'products.*',
@@ -17,8 +19,8 @@ module.exports = {
                 'prices.price',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
-            .leftJoin('media', function() {
-                this.on(function() {
+            .leftJoin('media', function () {
+                this.on(function () {
                     this.on('media.entityId', '=', 'products.id');
                     this.on('media.entity', '=', entity.PRODUCT);
                 });
@@ -26,8 +28,8 @@ module.exports = {
             .leftJoin('categories', 'categories.id', 'categoryId')
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
-            .leftJoin('prices', function() {
-                this.on(function() {
+            .leftJoin('prices', function () {
+                this.on(function () {
                     this.on('prices.entityId', '=', 'products.id');
                     this.on('prices.entity', '=', entity.PRODUCT);
                 });
@@ -36,7 +38,7 @@ module.exports = {
             .whereNull('collections.deleted_at')
             .limit(limit)
             .offset(offset)
-            .orderBy('weight')
+
             .groupBy([
                 'products.id',
                 'brands.name',
@@ -45,6 +47,12 @@ module.exports = {
                 'prices.price',
                 'categories.name'
             ]);
+
+        if (direction && field) {
+            query.orderByRaw(`"${field}" ${direction} NULLS LAST`);
+        } else {
+            query.orderBy('weight');
+        }
 
         const searchInstance = createSearch(category, knex, filter);
 
@@ -59,6 +67,7 @@ module.exports = {
         if (!products.length) {
             return [];
         }
+
 
         return mapToList({products});
     }

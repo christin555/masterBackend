@@ -8,7 +8,6 @@ const fields = [
 
 module.exports = {
     getHierarchy: async ({body, knex}) => {
-        console.log(body);
         const {category: alias, product} = body;
         let category, nameProduct, categoryId;
 
@@ -60,8 +59,9 @@ module.exports = {
         if(nameProduct){
             hierarchy.push({name: nameProduct});
         }
+
         return {
-            isLastLevel: category.isLast,
+            isLastLevel: alias === 'quartzvinyl' || category.isLast,
             hierarchy
         };
     }

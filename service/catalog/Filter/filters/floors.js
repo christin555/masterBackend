@@ -1,22 +1,32 @@
-class Laminate {
+const table = {
+    laminate: 'laminate_fields',
+    quartzvinyl: 'quartzvinyl_fields',
+    keramogranit: 'keramogranit_fields',
+    quartzvinyl_zamkovay: 'quartzvinyl_lock_fields',
+    quartzvinyl_kleevay: 'quartzvinyl_glue_fields'
+};
+
+class Floors {
     /**
-   * @param {Knex} knex
-   * @param {Object} filter
-   */
-    constructor(knex, filter) {
+     * @param {Knex} knex
+     * @param {Object} filter
+     * @param {String} category
+     */
+    constructor(knex, filter, category) {
         this.knex = knex;
         this.filter = filter;
+        this.category = category;
     }
 
     queryFields(field) {
         return `
-          select t.value ->> 'name' as name
-          from (
-              select json_array_elements(values) as value
-              from laminate_fields
-              where field = '${field}'
-              ) as t
-          where (t.value ->> 'id')::int = any(:filter)
+            select t.value ->> 'name' as name
+            from (
+                select json_array_elements(values) as value
+                from ${table[this.category]}
+                where field = '${field}'
+                ) as t
+            where (t.value ->> 'id'):: int = any (:filter)
         `;
     };
 
@@ -24,8 +34,30 @@ class Laminate {
         query.whereNotNull('withHeatingFloor');
     }
 
+    setBestseller(query) {
+        query.whereNotNull('isPopular');
+    }
+
     setBrandId(query, filter) {
         query.whereIn('brandId', filter);
+    }
+
+    setSize(query, filter) {
+        query.whereRaw(
+            `"size" in (${this.queryFields('size')})`,
+            {filter}
+        );
+    }
+
+    setTexture(query, filter) {
+        query.whereRaw(
+            `"texture" in (${this.queryFields('texture')})`,
+            {filter}
+        );
+    }
+
+    setFixation(query, filter) {
+        query.whereIn('products.categoryId', filter);
     }
 
     setColor(query, filter) {
@@ -60,11 +92,14 @@ class Laminate {
         const entries = Object.entries(this.filter);
 
         for (const [key, filter] of entries) {
-            const arrFilter= [].concat(filter);
+            const arrFilter = [].concat(filter);
 
             switch (key) {
             case 'withHeatingFloor':
                 this.setWithHeatingFloor(query);
+                break;
+            case 'bestseller':
+                this.setBestseller(query);
                 break;
             case 'brandId':
                 this.setBrandId(query, arrFilter);
@@ -78,6 +113,15 @@ class Laminate {
             case 'color':
                 this.setColor(query, arrFilter);
                 break;
+            case 'texture':
+                this.setTexture(query, arrFilter);
+                break;
+            case 'size':
+                this.setSize(query, arrFilter);
+                break;
+            case 'fixation':
+                this.setFixation(query, arrFilter.map(Number));
+                break;
             case 'resistanceClass':
                 this.setResistanceClass(query, arrFilter);
                 break;
@@ -86,4 +130,4 @@ class Laminate {
     }
 }
 
-module.exports = {Laminate};
+module.exports = {Floors};

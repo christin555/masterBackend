@@ -1,7 +1,10 @@
-const {Laminate} = require('../catalog/Filter/filters/laminate');
+const {Floors} = require('../catalog/Filter/filters/floors');
 
 const searchHandlers = {
-    laminate: Laminate
+    laminate: Floors,
+    quartzvinyl: Floors,
+    keramogranit: Floors,
+    sport: Floors
 };
 
 const createSearch = (category, knex, filter) => {
@@ -9,8 +12,9 @@ const createSearch = (category, knex, filter) => {
         return null;
     }
 
-    return new searchHandlers[category](knex, filter);
+    return new searchHandlers[category](knex, filter, category);
 };
+
 
 module.exports = {
     createSearch
