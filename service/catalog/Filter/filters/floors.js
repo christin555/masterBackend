@@ -3,7 +3,8 @@ const table = {
     quartzvinyl: 'quartzvinyl_fields',
     keramogranit: 'keramogranit_fields',
     quartzvinyl_zamkovay: 'quartzvinyl_lock_fields',
-    quartzvinyl_kleevay: 'quartzvinyl_glue_fields'
+    quartzvinyl_kleevay: 'quartzvinyl_glue_fields',
+    sport: 'sport_fields'
 };
 
 class Floors {
