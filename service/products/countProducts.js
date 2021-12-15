@@ -2,6 +2,7 @@ const {setSearchParams} = require('../tools/setSearchParams');
 const {getCategoryByAlias} = require("../catalog/getCategoryByAlias");
 const {getCategoryUnder} = require("../catalog/getCategoryUnder");
 const {createSearch} = require('./searchHandlers');
+const {entity} = require('../../enums');
 
 module.exports = {
     countProducts: async({body, knex}) => {
@@ -11,6 +12,12 @@ module.exports = {
             .first()
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('categories', 'categories.id', 'products.categoryId')
+            .leftJoin('prices', function () {
+                this.on(function () {
+                    this.on('prices.entityId', '=', 'products.id');
+                    this.on('prices.entity', '=', entity.PRODUCT);
+                });
+            })
             .whereNull('products.deleted_at')
             .whereNull('collections.deleted_at');
 
@@ -32,10 +39,7 @@ module.exports = {
         if (searchInstance) {
             await searchInstance.setFilterToQuery(query);
         }
-        console.log(searchParams);
         await setSearchParams({query, knex, filter: searchParams.filter});
-
-        console.log(query.toQuery());
 
         const {count} = await query;
 

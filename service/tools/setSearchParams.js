@@ -3,11 +3,12 @@ const {getCategoryUnder} = require('../catalog/getCategoryUnder');
 const filterFields = [
     'finishingMaterial',
     'collectionId',
-    'isPopular'
+    'isPopular',
+    'price'
 ];
 
 module.exports = {
-    setSearchParams: async({query, knex, filter = {}}) => {
+    setSearchParams: async ({query, knex, filter = {}}) => {
         const {categoryId, categoryIds, fastfilter} = filter;
 
         if (fastfilter) {
@@ -37,17 +38,35 @@ module.exports = {
         if (filter) {
             Object.entries(filter).forEach(([key, value]) => {
                 if (key && value && filterFields.includes(key)) {
-                    if (Array.isArray(value) && value.length) {
+                    if (key === 'price') {
+                        setPrice(query, value);
+                    } else if (Array.isArray(value) && value.length) {
                         if (key === 'finishingMaterial') {
                             query.where(key, '&&', value);
                         } else {
                             query.whereIn(key, value);
                         }
-                    } else if (typeof value === 'boolean'){
+                    } else if (typeof value === 'boolean') {
                         query.where(key, value);
+                    } else {
+                        if (key === 'finishingMaterial') {
+                            query.where(key, '&&', [value]);
+                        } else {
+                            query.where(key, value);
+                        }
                     }
                 }
             });
         }
+    }
+};
+
+const setPrice = (query, value) => {
+    if (value) {
+        const _price = value.split('-');
+
+        query
+            .where('prices.price', '>=', _price[0])
+            .where('prices.price', '<=', _price[1]);
     }
 };

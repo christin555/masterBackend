@@ -4,7 +4,8 @@ module.exports = {
             'name',
             'img',
             'level',
-            'alias'
+            'alias',
+            'categories.id'
         ])
         .join('hierarchy', 'hierarchy.under', 'categories.id')
         .where('hierarchy.head', categoryId)
