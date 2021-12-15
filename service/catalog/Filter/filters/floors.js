@@ -49,6 +49,20 @@ class Floors {
         );
     }
 
+    setColorFamily(query, filter) {
+        query.whereRaw(
+            `"colorFamily" in (${this.queryFields('colorFamily')})`,
+            {filter}
+        );
+    }
+
+    setTotalThickness(query, filter) {
+        query.whereRaw(
+            `"totalThickness" in (${this.queryFields('totalThickness')})`,
+            {filter}
+        );
+    }
+
     setTexture(query, filter) {
         query.whereRaw(
             `"texture" in (${this.queryFields('texture')})`,
@@ -124,6 +138,12 @@ class Floors {
                 break;
             case 'resistanceClass':
                 this.setResistanceClass(query, arrFilter);
+                break;
+            case 'colorFamily':
+                this.setColorFamily(query, arrFilter);
+                break;
+            case 'totalThickness':
+                this.setTotalThickness(query, arrFilter);
                 break;
             }
         }

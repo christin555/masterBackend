@@ -33,7 +33,6 @@ from (
            and size is not null
          group by size
      ) as t
-union all
   `;
 
     return knex.raw(sql);
