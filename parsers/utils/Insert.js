@@ -94,6 +94,10 @@ class Insert {
             categoryId = this.categories['keramogranit'].id;
         }
 
+        if (lowerCategory.includes('плинтус')) {
+            categoryId = this.categories['napolnyy-plintus'].id;
+        }
+
         if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {
             const {connectionType} = item;
             const lowerConnection = connectionType?.toLowerCase();

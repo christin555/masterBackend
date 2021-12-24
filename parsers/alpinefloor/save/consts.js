@@ -1,7 +1,8 @@
 const fields = {
     'Вес упаковки, кг': 'packageWeight',
     'Фактура': 'texture',
-    'Длина, мм': 'length',
+    'Длина, мм': 'depth',
+    'Глубина, мм': '',
     'Защитный слой': 'protectiveLayer',
     'Количество плиток в упаковке, штук': 'itemsInPackage',
     'Класс износостойкости': 'resistanceClass',
@@ -10,7 +11,8 @@ const fields = {
     'Микрофаска': 'chamfer',
     'Ширина, мм': 'width',
     'name': 'name',
-    'collection': 'collection',
+    'Тип': 'type',
+    'collection': 'collectionName',
     'code': 'code',
     'connectionType': 'connectionType'
 };
