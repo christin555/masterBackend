@@ -4,7 +4,7 @@ const selectors = {
     link: '.product-tile__hover-content a',
     code: '.item-detail-class__name',
     detailHead: 'h1.item-detail__header',
-    img: '[data-fancybox="images"] img',
+    img: '[data-fancybox="images"]',
     chars: '.table-row'
 };
 
@@ -47,7 +47,7 @@ class Strategy {
             .trim();
 
         if(resJSON.collection === 'Сопутствующие товары'){
-            return null;
+            //return null;
         }
 
         resJSON.code = html(selectors.code)
@@ -55,13 +55,19 @@ class Strategy {
             .text()
             .trim();
 
-        resJSON._categoryType = 'кварцвинил';
 
         if (resJSON['Способ укладки']?.toLowerCase().includes('клей')){
             resJSON.connectionType = 'Клеевой';
+            resJSON._categoryType = 'кварцвинил';
         }
         if (resJSON['Способ укладки']?.toLowerCase().includes('замок')) {
             resJSON.connectionType = 'Замковый';
+            resJSON._categoryType = 'кварцвинил';
+        }
+
+        if (resJSON['Способ укладки']?.toLowerCase().includes('режется')) {
+            resJSON.connectionType = resJSON['Способ укладки'];
+            resJSON._categoryType = 'плинтус';
         }
 
         return resJSON;
@@ -71,7 +77,7 @@ class Strategy {
         const images = [];
 
         $(selectors.img).each((_, img) => {
-            const src = img.attribs['data-src'];
+            const src = img.attribs['href'];
 
             images.push(this.baseUrl + src);
         });
