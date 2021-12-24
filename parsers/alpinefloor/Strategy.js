@@ -46,8 +46,8 @@ class Strategy {
             .text()
             .trim();
 
-        if(resJSON.collection === 'Сопутствующие товары'){
-            //return null;
+        if(!resJSON['Способ укладки']){
+            return null;
         }
 
         resJSON.code = html(selectors.code)
