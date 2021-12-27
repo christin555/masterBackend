@@ -95,7 +95,11 @@ class Insert {
         }
 
         if (lowerCategory.includes('плинтус')) {
-            categoryId = this.categories['napolnyy-plintus'].id;
+            categoryId = this.categories['napolnyy_plintus'].id;
+        }
+
+        if (lowerCategory === 'probkovoe_pokrytie') {
+            categoryId = this.categories['probkovoe_pokrytie'].id;
         }
 
         if (lowerCategory === 'кварцвинил' || lowerCategory === 'art vinyl') {

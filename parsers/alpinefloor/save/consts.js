@@ -1,8 +1,8 @@
 const fields = {
     'Вес упаковки, кг': 'packageWeight',
     'Фактура': 'texture',
-    'Длина, мм': 'depth',
-    'Глубина, мм': '',
+    'Длина, мм': 'length',
+    'Глубина, мм': 'depth',
     'Защитный слой': 'protectiveLayer',
     'Количество плиток в упаковке, штук': 'itemsInPackage',
     'Класс износостойкости': 'resistanceClass',
