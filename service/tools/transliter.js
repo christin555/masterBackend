@@ -1,4 +1,7 @@
 const translitRuEn = (str) => {
+    if(!str){
+        return '';
+    }
     const magic = function (lit) {
         const arrayLits = [
             ["а", "a"], ["б", "b"],
