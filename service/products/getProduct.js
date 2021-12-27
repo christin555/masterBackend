@@ -24,6 +24,7 @@ module.exports = {
                 'collections.name as collectionName',
                 'finishingMaterial',
                 'brands.name as brand',
+                'products.chars as chars',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
                 ...fieldsName
             ])
