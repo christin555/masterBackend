@@ -7,7 +7,7 @@ const fields = {
     'Толщина': 'thickness',
     'Формат': 'tileType',
     'Тип укладки': 'connectionType',
-    'Тип дизайна': 'thickness',
+    'Тип дизайна': 'texture',
     'name': 'name',
     'collection': 'collectionName',
     'chars': 'chars',
