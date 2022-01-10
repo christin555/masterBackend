@@ -9,7 +9,7 @@ const filterFields = [
 
 module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
-        const {categoryId, categoryIds, fastfilter} = filter;
+        const {ids, categoryId, categoryIds, fastfilter} = filter;
 
         if (fastfilter) {
             const categoryIds = await knex('categories')
@@ -25,6 +25,10 @@ module.exports = {
                     .orWhereRaw('categories.name ~* ?', fastfilter)
                     .orWhereIn('products.categoryId', [...categoryIds, ...categoryIdsLast]);
             });
+        }
+
+        if (ids) {
+            query.whereIn('products.id', ids);
         }
 
         if (categoryId) {

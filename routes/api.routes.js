@@ -9,7 +9,11 @@ router.post('/catalog/getFilterFields', getMethod(() => 'getFilterFields'));
 router.get('/products/get/:alias', getMethod(() => 'getProduct'));
 router.post('/products/getPopular', getMethod(() => 'getPopular'));
 
-router.get('/articles/getArticles', getMethod(() => 'getArticles'));
+router.post('/services/get', getMethod(() => 'getServices'));
+router.post('/works/get', getMethod(() => 'getWorks'));
+router.post('/work/get', getMethod(() => 'getWork'));
+
+router.post('/articles/getArticles', getMethod(() => 'getArticles'));
 router.post('/article/get', getMethod(() => 'getArticle'));
 
 router.post('/upload', (query) => getMethod('upload', query));
