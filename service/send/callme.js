@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 module.exports = {
-    callme: async({body}) => {
+    callme: async ({body}) => {
         const {phone, product, name} = body;
 
         const transporter = nodemailer.createTransport({
@@ -23,7 +23,9 @@ module.exports = {
             <p> Номер телефона: <b> ${phone} </b> </p>
          `;
 
-        if (product) {
+        console.log(product);
+
+        if (product?.id) {
             const img = `https://master-pola.com${product.img}`;
 
             text += `Код товара: ${product.id}, ${product.name}`;
@@ -44,6 +46,6 @@ module.exports = {
         });
 
         console.log('Message sent: %s', info.messageId);
-        return {}
+        return {};
     }
 };

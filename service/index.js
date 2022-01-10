@@ -6,6 +6,10 @@ const {countProducts} = require('./products/countProducts');
 const {getProduct} = require('./products/getProduct');
 const {getPopular} = require('./products/getPopular');
 
+const {getServices} = require('./services/getServices');
+const {getWorks} = require('./works/getWorks');
+const {getWork} = require('./works/getWork');
+
 const {getFilterFields} = require('./catalog/Filter/getFilterFields');
 
 const {getLinks} = require('./getLinks');
@@ -22,6 +26,10 @@ module.exports = {
     upload,
     countProducts,
     getPopular,
+
+    getServices,
+    getWorks,
+    getWork,
 
     getFilterFields,
 
