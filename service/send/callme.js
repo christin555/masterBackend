@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 module.exports = {
     callme: async ({body}) => {
-        const {phone, product, name} = body;
+        const {phone, product, name, address} = body;
 
         const transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
@@ -21,6 +21,7 @@ module.exports = {
             <b>Новая заявка на обратный звонок</b>
             <p> Имя: <b> ${name} </b> </p>
             <p> Номер телефона: <b> ${phone} </b> </p>
+            <p> ${address} </p>
          `;
 
         console.log(product);
