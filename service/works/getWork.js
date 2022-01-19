@@ -30,7 +30,6 @@ module.exports = {
         if (work.relations?.length) {
             const services = work.relations.filter(({entity}) => entity === entityEnum.SERVICE);
             const products = work.relations.filter(({entity}) => entity === entityEnum.PRODUCT);
-            console.log(products);
 
             if (services.length) {
                 const body = {
@@ -42,7 +41,6 @@ module.exports = {
             }
 
             if (products.length) {
-                console.log('hhh');
                 const body = {
                     filter: {
                         ids: products.map(({entityId}) => entityId)
@@ -64,7 +62,7 @@ module.exports = {
         );
 
         const [services, products, imgs] = await Promise.all(promises);
-        console.log(imgs);
+
         work.services = services;
         work.products = products;
         work.imgs = imgs;

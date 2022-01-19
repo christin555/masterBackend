@@ -1,4 +1,5 @@
 const {Floors} = require('../catalog/Filter/filters/floors');
+const {Doors} = require('../catalog/Filter/filters/doors');
 
 const searchHandlers = {
     laminate: Floors,
@@ -6,7 +7,8 @@ const searchHandlers = {
     quartzvinyl_zamkovay: Floors,
     quartzvinyl_kleevay: Floors,
     keramogranit: Floors,
-    sport: Floors
+    sport: Floors,
+    doors: Doors
 };
 
 const createSearch = (category, knex, filter) => {

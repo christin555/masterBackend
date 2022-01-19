@@ -1,9 +1,19 @@
 const doorsFilterValues = async (knex) => {
     const sql = `
         select json_build_object(
-                       'collections',
+                       'brands',
                        (
                            select array_agg(json_build_object('id', id, 'name', name))
+                           from brands
+                           where "categoryId" = (
+                               select id
+                               from categories
+                               where alias = 'doors'
+                           )
+                       ),
+                       'collections',
+                       (
+                           select array_agg(json_build_object('id', id, 'name', name, 'brandId', collections."brandId"))
                            from collections
                            where "categoryId" = (
                                select id
@@ -13,8 +23,9 @@ const doorsFilterValues = async (knex) => {
                        ),
                        'finishingMaterials',
                        (
-                           select array_agg(json_build_object('id', id, 'name', name))
+                           select array_agg(json_build_object('id', id, 'name', name, 'img', img, 'brandId', "finishingMaterialDoors"."brandId"))
                            from "finishingMaterialDoors"
+                           where type = 1
                        )
                    ) as
         values

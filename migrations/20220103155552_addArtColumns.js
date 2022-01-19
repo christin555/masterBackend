@@ -1,8 +1,8 @@
 exports.up = function (knex) {
     return Promise.all([
         knex.schema.alterTable('articles', (table) => {
-            table.boolean('isPopular')
-                .nullable();
+          //  table.boolean('isPopular')
+            //    .nullable();
             table.text('imgPreview')
                 .nullable();
         })

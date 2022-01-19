@@ -2,6 +2,7 @@ const axios = require('axios');
 const http = require('http');
 const https = require('https');
 const {Utils: {sleep}} = require('./Utils');
+const iconv = require('iconv-lite');
 
 class LinksIterator {
     /**
@@ -35,12 +36,21 @@ class LinksIterator {
         for (const url of this.urls) {
             try {
                 const {data, status} = await this.axios
-                    .get(url);
+                    .get(url, {
+                        responseType: 'arraybuffer',
+                        responseEncoding: 'binary'
+                    })
+                    .then(({data, status}) =>{
+                        return {
+                            data: iconv.decode(Buffer.from(data), 'windows-1251'),
+                            status
+                        };
+                    });
 
                 console.log(`${url} is up, status: ${status}`);
                 yield {url, data};
                 await sleep(this.ms);
-            } catch(error) {
+            } catch (error) {
                 console.log(`skip ${this.baseUrl} ${url} cause ${error.message}`);
                 yield {error};
             }

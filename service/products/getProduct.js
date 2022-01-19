@@ -1,3 +1,4 @@
+const {groupArray2Object} = require("../tools/array2Object");
 const {entity} = require('../../enums');
 
 module.exports = {
@@ -21,7 +22,7 @@ module.exports = {
                 'categories.name as category',
                 'brands.name as brand',
                 'prices.price as price',
-                'collections.name as collectionName',
+                'collections.name as collection',
                 'finishingMaterial',
                 'brands.name as brand',
                 'products.chars as chars',
@@ -55,7 +56,11 @@ module.exports = {
             const finishingMaterial = await knex('finishingMaterialDoors')
                 .select()
                 .whereIn('id', product.finishingMaterial);
-            fields.push({name: 'finishingMaterial', values: finishingMaterial});
+
+            fields.push({
+                name: 'finishingMaterial',
+                values: groupArray2Object(finishingMaterial, 'type')
+            });
         }
 
         return {

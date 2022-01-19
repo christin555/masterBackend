@@ -24,7 +24,6 @@ module.exports = {
             <p> ${address} </p>
          `;
 
-        console.log(product);
 
         if (product?.id) {
             const img = `https://master-pola.com${product.img}`;

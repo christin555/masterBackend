@@ -54,6 +54,7 @@ module.exports = {
             query.orderBy('weight');
         }
 
+        console.log(filter);
         const searchInstance = createSearch(category, knex, filter);
 
         if (searchInstance) {
