@@ -21,7 +21,7 @@ module.exports = {
             <b>Новая заявка на обратный звонок</b>
             <p> Имя: <b> ${name} </b> </p>
             <p> Номер телефона: <b> ${phone} </b> </p>
-            <p> ${address} </p>
+            <p> ${JSON.stringify(address)} </p>
          `;
 
         console.log(product);

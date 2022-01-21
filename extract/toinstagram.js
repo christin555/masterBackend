@@ -16,6 +16,7 @@ const columns = [
     ['image_link'],
     ['status'],
     ['additional_image_link'],
+    ['category'],
 ];
 
 const status = 'active';
@@ -64,6 +65,7 @@ const getProducts = async (knex) => {
             'prices.price',
             'categories.alias as category',
             'collections.name as collection',
+            'categories.name as categoryname',
             'brands.name as brand',
             knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
         ])
@@ -84,9 +86,9 @@ const getProducts = async (knex) => {
         })
         .whereNull('products.deleted_at')
         .whereNull('collections.deleted_at')
-        .groupBy(['products.id', 'products.alias', 'categories.alias', 'collections.name', 'brands.name', 'prices.price']);
+        .groupBy(['products.id', 'products.alias', 'categories.alias', 'collections.name', 'categories.name', 'brands.name', 'prices.price']);
 
-    return products.map(({alias, collection, name, category, imgs, ...item}) => {
+    return products.map(({alias, collection, categoryname, name, category, imgs, ...item}) => {
         const image_link = `https://master-pola.com${imgs[0]?.src}`;
         const additional_image_link = imgs?.slice(1).map(({src}) => `https://master-pola.com${src}`).join(',');
 
@@ -101,7 +103,8 @@ const getProducts = async (knex) => {
             image_link,
             additional_image_link,
             fb_product_category: ['laminate', 'quartzvinyl_kleevay', 'quartzvinyl_zamkovay'].includes(category) ?
-                fb_cat['laminate_qvarz'] : fb_cat['other']
+                fb_cat['laminate_qvarz'] : fb_cat['other'],
+            category: categoryname
         };
     });
 };

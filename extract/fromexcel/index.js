@@ -15,13 +15,15 @@ const start = async () => {
     await doc.useApiKey(process.env.GOOGLE_API_KEY);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByIndex[2];
+    const sheet = doc.sheetsByIndex[4];
     await sheet.loadCells('A1:Z1000');
 
     const rows = getRows({sheet, knex});
     const bdRows = await getBdRows({rows, knex});
 
     await insertPrices({rows, bdRows, knex});
+
+    console.log('end extracting products prices');
 };
 
 
