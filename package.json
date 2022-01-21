@@ -28,6 +28,7 @@
     "express-promise-router": "^3.0.3",
     "faker": "^5.0.0",
     "google-spreadsheet": "^3.1.15",
+    "iconv-lite": "^0.6.3",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.12",
     "knex-migrate": "^1.7.4",

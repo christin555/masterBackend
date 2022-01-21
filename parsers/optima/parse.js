@@ -28,6 +28,7 @@ module.exports = {
 
         for (const {data: dataProduct} of productsHtml.filter(Boolean)) {
             if (dataProduct) {
+                console.log(1);
                 const $ = cheerio.load(dataProduct);
                 const name = $('[class="door-name"]:first').text().trim();
                 const content = $('[class="content"] > p').text().trim();
@@ -48,7 +49,7 @@ module.exports = {
 
                     codeGlazing.push(name);
                 });
-
+                console.log(2);
                 const variants = await getVariant(Object.keys(codeFinishingMaterial), codeModel);
                 const namesFinishingMaterial = Object.values(codeFinishingMaterial);
                 const imgsAll = variants.map(({data: {html}}, index) => {
@@ -59,6 +60,8 @@ module.exports = {
                         imgs
                     };
                 });
+
+                console.log(3);
 
                 const newProducts = codeGlazing.map((glazing, index)=>{
                     return {

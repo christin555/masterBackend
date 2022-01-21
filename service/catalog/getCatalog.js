@@ -38,7 +38,7 @@ module.exports = {
             //Иначе получаем ирерархию категорий и айдишники подкатегорий и их товары
             else {
                 categories = await getNextLevelCategory({knex, categoryId});
-               // filter.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
+                // filter.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
             }
 
             // products = await getProducts({knex, body: bodyProducts, category});

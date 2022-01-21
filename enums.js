@@ -5,7 +5,14 @@ const entity = {
     SERVICE: 4,
     WORK: 5
 };
+const finishing = {
+    MATERIAL: 1,
+    WINDOW: 2,
+    PHOTO: 3
+};
+
 
 module.exports = {
-    entity
+    entity,
+    finishing
 };

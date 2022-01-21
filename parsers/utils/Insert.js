@@ -3,7 +3,7 @@ const {InsertImages} = require('./InsertImages');
 const {translitRuEn} = require("../../service/tools/transliter");
 
 class Insert {
-    constructor({items, fields, collections, categories, knex, logger}) {
+    constructor({items, fields, collections, finishingMaterials, categories, knex, logger}) {
         this.fields = fields;
         this.items = items;
         this.knex = knex;
@@ -11,6 +11,8 @@ class Insert {
 
         this.collections = array2Object(collections, 'nameDealer', true);
         this.categories = array2Object(categories, 'alias');
+        this.finishingMaterials = array2Object(finishingMaterials, 'dataId', true);
+        console.log(finishingMaterials);
 
         this.imageInsert = new InsertImages(knex, logger);
     }
@@ -30,10 +32,14 @@ class Insert {
             _item.collectionId = this.getCollection(item);
             _item.categoryId = this.getCategory(item);
 
+            if (this.finishingMaterials) {
+                _item.finishingMaterial = this.getFinishingMaterial(item);
+            }
+
             _item.alias = `${translitRuEn(item._categoryType)}_${translitRuEn(item.collection)}_${translitRuEn(_item.name)}`.toLowerCase();
             item.alias = _item.alias;
 
-            console.log(item.alias)
+
             this.imageInsert.fillImages(item);
 
             return _item;
@@ -64,6 +70,20 @@ class Insert {
         return _item;
     };
 
+    getFinishingMaterial(item) {
+        const finishingMaterials = [];
+
+        item.finishingMaterials.map(name => {
+            if (this.finishingMaterials[name.toLowerCase()]) {
+                finishingMaterials.push(this.finishingMaterials[name.toLowerCase()].id);
+            }
+        });
+
+
+        return finishingMaterials;
+    }
+
+
     getCollection(item) {
         const lowerCollection = item.collection?.toLowerCase();
 
@@ -84,6 +104,10 @@ class Insert {
 
         if (lowerCategory === 'ламинат') {
             categoryId = this.categories['laminate'].id;
+        }
+
+        if (lowerCategory === 'двери') {
+            categoryId = this.categories['doors'].id;
         }
 
         if (lowerCategory.includes('паркет')) {
