@@ -1,16 +1,22 @@
 const {BaseParser} = require('../BaseParser');
-const {FileSystem, logger} = require('../utils');
+const {logger} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {SaveProducts} = require('./save/SaveProducts');
 const {finishing: finishingEnum} = require('../../enums');
 const path = require("path");
-const crypto = require("crypto");
 const knex = require('../../knex');
 const {ImageSaver} = require("../utils");
-const {getFinishingMaterials} = require("../oldFuckingParsing/doors/getFinishingMaterials");
 const baseUrl = 'https://www.syngy.ru/';
 
-const urls = ['/catalog/seriya_khaytek/', '/catalog/seriya_peskostruy/'];
+const urls = [
+    '/catalog/seriya_khaytek/', 
+    '/catalog/seriya_peskostruy/',
+    '/catalog/seriya_neoklassika/',
+    '/catalog/seriya_angliyskaya_klassika/',
+    '/catalog/seriya_stil_loft/',
+    '/catalog/detskaya_seriya/',
+    '/catalog/fotopechat_tripleks/'
+];
 
 const start = async() => {
     console.log('start Synergi');
@@ -28,6 +34,7 @@ const start = async() => {
         const products = await parser.parse();
 
 
+        console.log(1)
         const saverImgs = new ImageSaver(logger, 100);
         const array = Object.values(finishing).map(({dataId, name, img}) => {
 
@@ -43,6 +50,8 @@ const start = async() => {
         });
         saverImgs.save(array);
 
+        console.log(2);
+
         await knex('finishingMaterialDoors')
             .insert(array.map(({name, dataId, src}) => {
                 return {
@@ -54,7 +63,7 @@ const start = async() => {
             }))
             .onConflict(['name', 'dataId'])
             .merge();
-
+            console.log(3)
 
         const saver = new SaveProducts(
             products,
