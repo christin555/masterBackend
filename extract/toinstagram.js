@@ -1,6 +1,6 @@
 const knex = require('../knex');
 const excel = require('excel4node');
-const {entity} = require("../enums");
+const {getProducts: getProductsQuery} = require('./tools/getProducts');
 
 const columns = [
     ['id'],
@@ -56,37 +56,7 @@ const start = async () => {
 };
 
 const getProducts = async (knex) => {
-    const products = await knex('products')
-        .select([
-            'products.id',
-            'products.alias',
-            'products.description',
-            'products.name',
-            'prices.price',
-            'categories.alias as category',
-            'collections.name as collection',
-            'categories.name as categoryname',
-            'brands.name as brand',
-            knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
-        ])
-        .leftJoin('categories', 'categories.id', 'categoryId')
-        .leftJoin('collections', 'collections.id', 'collectionId')
-        .leftJoin('brands', 'brands.id', 'brandId')
-        .join('prices', function () {
-            this.on(function () {
-                this.on('prices.entityId', '=', 'products.id');
-                this.on('prices.entity', '=', entity.PRODUCT);
-            });
-        })
-        .join('media', function () {
-            this.on(function () {
-                this.on('media.entityId', '=', 'products.id');
-                this.on('media.entity', '=', entity.PRODUCT);
-            });
-        })
-        .whereNull('products.deleted_at')
-        .whereNull('collections.deleted_at')
-        .groupBy(['products.id', 'products.alias', 'categories.alias', 'collections.name', 'categories.name', 'brands.name', 'prices.price']);
+    const products = await getProductsQuery(knex);
 
     return products.map(({alias, collection, categoryname, name, category, imgs, ...item}) => {
         const image_link = `https://master-pola.com${imgs[0]?.src}`;
