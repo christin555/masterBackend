@@ -37,7 +37,8 @@
     "pm2": "^5.1.0",
     "postgres": "^1.0.2",
     "shift-parser": "^7.0.3",
-    "sqlite3": "^5.0.0"
+    "sqlite3": "^5.0.0",
+    "xml-js": "^1.6.11"
   },
   "devDependencies": {
     "axios": "^0.21.3",
