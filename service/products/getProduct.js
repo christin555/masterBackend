@@ -1,9 +1,12 @@
 const {groupArray2Object} = require("../tools/array2Object");
 const {entity} = require('../../enums');
+const {checkProduct} = require('./checkProduct');
 
 module.exports = {
     getProduct: async({params, knex}) => {
         const {alias} = params;
+
+        await checkProduct({alias, knex});
 
         const fields = await knex('catalogItems')
             .pluck('item')
