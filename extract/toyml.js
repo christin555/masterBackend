@@ -77,7 +77,7 @@ const concatJsonProducts = (products) => {
             }
         });
 
-        json.yml_catalog.offers.push({offer});
+        json.yml_catalog.shop.offers.push({offer});
     });
 };
 
@@ -113,9 +113,9 @@ const json = {
                     }
                 }
             },
-            categories: []
+            categories: [],
+            offers: []
         },
-        offers: []
     },
 };
 
