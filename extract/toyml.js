@@ -47,20 +47,22 @@ const workJson = async () => {
 };
 
 const save = (result) => {
+    const src = '/static/files/products.xml';
     const root = FileSystem.findRoot();
-    const path = dirname('/static/files/products.yml');
+    const path = dirname(src);
 
     FileSystem.mkdirP(resolve(root, path));
-    const actualPath = resolve(root, '/static/files/products.yml');
+    const actualPath = resolve(root, src);
 
     fs.writeFileSync(actualPath, result);
 };
 
 const concatJsonProducts = (products) => {
-    products.forEach(({id, name, alias, country, description, categoryId, price, ...product}) => {
+    products.forEach(({id, name, alias, country, description, brand, categoryId, price, ...product}) => {
         const offer = {
             _attributes: {id},
             name,
+            vendor: brand,
             url: `https://master-pola.com/product/${alias.replace(`'`, '&apos')}`,
             price,
             currencyId: 'RUB',
@@ -100,7 +102,7 @@ const json = {
                 }
         },
     yml_catalog: {
-        "_attributes": {"date": "1.0"},
+       // "_attributes": {"date": "1.0"},
         shop: {
             name: "Мастер Пола",
             company: 'Салон напольных покрытий и дверей "Мастер Пола"',
