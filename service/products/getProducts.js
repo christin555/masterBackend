@@ -54,7 +54,6 @@ module.exports = {
             query.orderBy('weight');
         }
 
-        console.log(filter);
         const searchInstance = createSearch(category, knex, filter);
 
         if (searchInstance) {
@@ -63,7 +62,6 @@ module.exports = {
 
         await setSearchParams({query, knex, filter});
 
-        console.log(query.toQuery());
         const products = await query;
 
 

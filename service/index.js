@@ -19,6 +19,7 @@ const {getArticles} = require('./articles/getArticles');
 const {getArticle} = require('./articles/getArticle');
 
 const {upload} = require('./upload');
+const {getHeaders} = require('./seo/getHeaders');
 
 module.exports = {
     getCatalog,
@@ -40,5 +41,7 @@ module.exports = {
     callme,
 
     getArticles,
-    getArticle
+    getArticle,
+
+    getHeaders
 };

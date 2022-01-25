@@ -10,6 +10,7 @@ module.exports = {
         const {category, filter = {}} = searchParams;
         let categories;
         let products;
+        let headers = {};
 
         const bodyProducts = {
             limit, offset, filter, order
@@ -23,14 +24,14 @@ module.exports = {
         }
 
         if (category) {
-            const {id: categoryId, isLast} = await getCategoryByAlias({knex, alias: category});
+            const {id: categoryId, isLast, seo_title, seo_desc} = await getCategoryByAlias({knex, alias: category});
+            headers = {seo_desc, seo_title};
 
             //Если уровень последний, то ниже уже нет категорий, поэтому возввращаем только товары
             if (isLast) {
                 filter.categoryIds = [categoryId];
                 products = await getProducts({knex, body: bodyProducts, category});
-            }
-            else if(category === 'quartzvinyl'){
+            } else if (category === 'quartzvinyl') {
                 categories = await getNextLevelCategory({knex, categoryId});
                 filter.categoryIds = await getCategoryUnder({categoryIds: [categoryId], knex});
                 products = await getProducts({knex, body: bodyProducts, category});
@@ -42,7 +43,7 @@ module.exports = {
             }
 
             // products = await getProducts({knex, body: bodyProducts, category});
-        } else if(filter?.fastfilter){
+        } else if (filter?.fastfilter) {
             categories = await getFirstLevels({knex});
             products = await getProducts({knex, body: bodyProducts, category});
         }

@@ -22,4 +22,6 @@ router.get('/getLinks', getMethod(() => 'getLinks'));
 
 router.post('/send/callme', getMethod(() => 'callme'));
 
+router.post('/seo/getHeaders', getMethod(() => 'getHeaders'));
+
 module.exports = router;
