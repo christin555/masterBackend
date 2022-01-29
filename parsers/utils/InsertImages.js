@@ -36,6 +36,7 @@ class InsertImages {
             throw new Error(`name and images are required for fill`);
         }
 
+        console.log(alias);
         if (images) {
             this.images.push(alias, images);
         }

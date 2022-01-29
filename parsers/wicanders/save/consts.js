@@ -11,7 +11,8 @@ const fields = {
     'name': 'name',
     'collection': 'collectionName',
     'chars': 'chars',
-    'description': 'description'
+    'description': 'description',
+    'code': 'code'
 };
 
 

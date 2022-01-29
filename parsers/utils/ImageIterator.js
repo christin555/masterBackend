@@ -20,15 +20,16 @@ class ImageHashIterator {
 
             const images = [];
 
-            for (const imgUrl of imgs) {
-                const hash = crypto.createHash('md5').update(imgUrl);
+            imgs.forEach((imgUrl, index) => {
+                //const hash = crypto.createHash('md5').update(imgUrl);
                 const ext = path.extname(imgUrl);
 
                 images.push({
-                    path: hash.digest('hex') + ext,
+                    //path: hash.digest('hex') + ext,
+                    path: `${alias}_${index}`+ ext,
                     url: imgUrl
                 });
-            }
+            });
 
             yield {
                 alias,

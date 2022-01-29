@@ -40,12 +40,12 @@ class LinksIterator {
                         responseType: 'arraybuffer',
                         responseEncoding: 'binary'
                     })
-                    .then(({data, status}) =>{
-                        return {
-                            data: iconv.decode(Buffer.from(data), 'windows-1251'),
-                            status
-                        };
-                    });
+                    // .then(({data, status}) =>{
+                    //     return {
+                    //         data: iconv.decode(Buffer.from(data), 'windows-1251'),
+                    //         status
+                    //     };
+                    // });
 
                 console.log(`${url} is up, status: ${status}`);
                 yield {url, data};

@@ -11,7 +11,9 @@ class Insert {
 
         this.collections = array2Object(collections, 'nameDealer', true);
         this.categories = array2Object(categories, 'alias');
-        this.finishingMaterials = array2Object(finishingMaterials, 'dataId', true);
+        if (finishingMaterials) {
+            this.finishingMaterials = array2Object(finishingMaterials, 'dataId', true);
+        }
 
         this.imageInsert = new InsertImages(knex, logger);
     }
@@ -85,7 +87,7 @@ class Insert {
 
     getCollection(item) {
         const lowerCollection = item.collection?.toLowerCase();
-        console.log(this.collections,  item.collection)
+        console.log(this.collections, item.collection);
 
         if (!this.collections[lowerCollection]) {
             return;

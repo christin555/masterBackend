@@ -2,13 +2,13 @@ const {parse} = require('node-html-parser');
 const cheerio = require('cheerio');
 const selectors = {
     link: '.product-title a',
-    code: '.item-detail-class__name',
     detailHead: '.vm-products-title h2',
     img: '.product-slider img',
     chars: '.product-field-display',
     details: '.product-field',
     desc: '.content-block--text',
-    blocks: '.content-block-item-content'
+    blocks: '.content-block-item-content',
+    code: '.goods-article h4'
 };
 
 class Strategy {
@@ -38,6 +38,7 @@ class Strategy {
         resJSON.images = this.collectImages(html);
         resJSON.name = this.collectDetail(html);
 
+        Object.assign(resJSON, this.collectCode(html));
         Object.assign(resJSON, this.collectChars(html));
         Object.assign(resJSON, this.collectDetails(html));
 
@@ -56,6 +57,10 @@ class Strategy {
         return resJSON;
     }
 
+    collectCode($) {
+        return $(selectors.code).text().trim();
+    }
+
     collectImages($) {
         const images = [];
 
@@ -72,6 +77,7 @@ class Strategy {
     collectDetail($) {
         return $(selectors.detailHead).text().trim();
     }
+
     collectDetails($) {
         const chars = {};
 

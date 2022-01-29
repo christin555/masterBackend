@@ -29,6 +29,9 @@ module.exports = {
                 .first(fields)
                 .where('alias', alias);
         }
+        if (!category) {
+            return {};
+        }
 
         const categoryHead = await knex
             .withRecursive('tmp', (qb) => {
@@ -56,7 +59,7 @@ module.exports = {
             };
         }).sort((a, b) => a.level - b.level);
 
-        if(nameProduct){
+        if (nameProduct) {
             hierarchy.push({name: nameProduct});
         }
 

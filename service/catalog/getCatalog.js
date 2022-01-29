@@ -1,3 +1,4 @@
+const {checkCatalog} = require("./checkCatalog");
 const {getProducts} = require('../products/getProducts');
 const {getFirstLevels} = require('./getFirstLevels');
 const {getNextLevelCategory} = require('./getNextLevelCategory');
@@ -24,6 +25,8 @@ module.exports = {
         }
 
         if (category) {
+            await checkCatalog({alias: category, knex});
+
             const {id: categoryId, isLast, seo_title, seo_desc} = await getCategoryByAlias({knex, alias: category});
             headers = {seo_desc, seo_title};
 
