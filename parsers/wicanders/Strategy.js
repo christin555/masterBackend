@@ -8,7 +8,7 @@ const selectors = {
     details: '.product-field',
     desc: '.content-block--text',
     blocks: '.content-block-item-content',
-    code: '.goods-article h4'
+    code: '.goods-article'
 };
 
 class Strategy {
@@ -37,8 +37,8 @@ class Strategy {
 
         resJSON.images = this.collectImages(html);
         resJSON.name = this.collectDetail(html);
+        resJSON.code = this.collectCode(html);
 
-        Object.assign(resJSON, this.collectCode(html));
         Object.assign(resJSON, this.collectChars(html));
         Object.assign(resJSON, this.collectDetails(html));
 
@@ -46,7 +46,7 @@ class Strategy {
 
         resJSON._categoryType = 'probkovoe_pokrytie';
 
-        if (resJSON['ТИП МОНТАЖА']?.toLowerCase().includes('кле')){
+        if (resJSON['ТИП МОНТАЖА']?.toLowerCase().includes('кле')) {
             resJSON.connectionType = 'Клеевой';
         }
 
@@ -58,7 +58,17 @@ class Strategy {
     }
 
     collectCode($) {
-        return $(selectors.code).text().trim();
+        let _code;
+        $(selectors.code).children().each((_, child) => {
+            const code = $(child).text().trim();
+            console.log(code);
+            if (/\D/.test(code)) {
+                _code = code;
+                return;
+            }
+        });
+
+        return _code;
     }
 
     collectImages($) {

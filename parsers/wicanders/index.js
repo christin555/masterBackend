@@ -21,7 +21,7 @@ const start = async () => {
     const products = await parser.parse();
     // FileSystem.saveToJSON('alpinefloor', products);
 
-    console.log(new Set(products.map(({collection}) =>collection)));
+    console.log(products)
     const saver = new SaveProducts(
         products,
         {knex, logger}
