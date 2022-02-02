@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "devstart": "nodemon -r dotenv/config server.js",
+    "dev": "nodemon -r dotenv/config server.js",
     "knex": "./node_modules/.bin/knex",
     "eslint": "eslint",
     "prodstart": "pm2 start server.js",

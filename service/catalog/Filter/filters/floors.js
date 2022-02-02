@@ -4,7 +4,8 @@ const table = {
     keramogranit: 'keramogranit_fields',
     quartzvinyl_zamkovay: 'quartzvinyl_lock_fields',
     quartzvinyl_kleevay: 'quartzvinyl_glue_fields',
-    sport: 'sport_fields'
+    sport: 'sport_fields',
+    probkovoe_pokrytie: 'probka_fields'
 };
 
 class Floors {
@@ -43,6 +44,10 @@ class Floors {
         query.whereIn('brandId', filter);
     }
 
+    setCollectionId(query, filter) {
+        query.whereIn('collectionId', filter);
+    }
+
     setSize(query, filter) {
         query.whereRaw(
             `"size" in (${this.queryFields('size')})`,
@@ -60,6 +65,13 @@ class Floors {
     setTotalThickness(query, filter) {
         query.whereRaw(
             `"totalThickness" in (${this.queryFields('totalThickness')})`,
+            {filter}
+        );
+    }
+
+    setField(query, filter, field){
+        query.whereRaw(
+            `"${field}" in (${this.queryFields(field)})`,
             {filter}
         );
     }
@@ -116,7 +128,11 @@ class Floors {
             case 'bestseller':
                 this.setBestseller(query);
                 break;
+            case 'collections':
+                this.setCollectionId(query, arrFilter);
+                break;
             case 'brandId':
+            case 'brands':
                 this.setBrandId(query, arrFilter);
                 break;
             case 'width':
@@ -138,6 +154,7 @@ class Floors {
                 this.setFixation(query, arrFilter.map(Number));
                 break;
             case 'resistanceClass':
+            case 'resistanceClasses':
                 this.setResistanceClass(query, arrFilter);
                 break;
             case 'colorFamily':
@@ -145,6 +162,9 @@ class Floors {
                 break;
             case 'totalThickness':
                 this.setTotalThickness(query, arrFilter);
+                break;
+            case 'fixationType':
+                this.setField(query, arrFilter, 'fixationType');
                 break;
             }
         }

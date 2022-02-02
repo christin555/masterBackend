@@ -8,7 +8,8 @@ const searchHandlers = {
     quartzvinyl_kleevay: Floors,
     keramogranit: Floors,
     sport: Floors,
-    doors: Doors
+    doors: Doors,
+    probkovoe_pokrytie: Floors
 };
 
 const createSearch = (category, knex, filter) => {

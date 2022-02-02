@@ -1,7 +1,7 @@
 const doorsFilterValues = async (knex) => {
     const sql = `
         select json_build_object(
-                       'brands',
+                       'brandId',
                        (
                            select array_agg(json_build_object('id', id, 'name', name))
                            from brands
@@ -11,7 +11,7 @@ const doorsFilterValues = async (knex) => {
                                where alias = 'doors'
                            )
                        ),
-                       'collections',
+                       'collectionId',
                        (
                            select array_agg(json_build_object('id', id, 'name', name, 'brandId', collections."brandId"))
                            from collections
@@ -21,7 +21,7 @@ const doorsFilterValues = async (knex) => {
                                where alias = 'doors'
                            )
                        ),
-                       'finishingMaterials',
+                       'finishingMaterial',
                        (
                            select array_agg(json_build_object('id', id, 'name', name, 'img', img, 'brandId', "finishingMaterialDoors"."brandId"))
                            from "finishingMaterialDoors"
@@ -107,6 +107,15 @@ const sportFilterValues = async (knex) =>{
     return values;
 };
 
+const probkaFilterValues = async (knex) =>{
+    await knex.raw(`refresh materialized view probka_fields`);
+
+    const sql = `json_object_agg(probka_fields.field, probka_fields.values) as values`;
+    const {values} = await knex('probka_fields').first(knex.raw(sql));
+
+    return values;
+};
+
 
 const filtersHandlers = {
     doors: doorsFilterValues,
@@ -116,7 +125,9 @@ const filtersHandlers = {
     quartzvinyl: quartzVinylTileFilterValues,
     quartzvinyl_zamkovay: quartzVinylTileLockFilterValues,
     quartzvinyl_kleevay: quartzVinylTileGlueFilterValues,
-    sport: sportFilterValues
+    sport: sportFilterValues,
+    probkovoe_pokrytie:probkaFilterValues
+
 };
 
 module.exports = {
