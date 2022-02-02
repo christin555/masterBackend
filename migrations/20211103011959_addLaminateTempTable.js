@@ -57,7 +57,7 @@ select 'collections' as field, json_agg(t) as values
 from (
          select distinct collections.id, collections.name, collections."brandId"
          from collections
-         where collections."categoryId" = ${categoryId}
+         where collections."categoryId" = ${categoryId} and collections.deleted_at is null
      ) as t;
   `;
 
