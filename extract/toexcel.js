@@ -6,6 +6,7 @@ const columns = [
     ['alias', 'alias'],
     ['Название', 'name'],
     ['Бренд', 'brand'],
+    ['Артикул', 'code'],
     ['Коллекция', 'collection'],
     ['Общая толщина/толщина', 'totalThickness'],
     ['Цена', 'price']
@@ -18,6 +19,7 @@ const start = async () => {
         .select([
             'products.alias',
             'products.name',
+            'products.code',
             'categories.name as category',
             'collections.name as collection',
             'products.connectionType',
@@ -37,15 +39,18 @@ const start = async () => {
         .whereNull('products.deleted_at')
         .whereNull('collections.deleted_at')
         .orderBy('brands.name');
+        console.log('start extracting products3');
 
     const productsGrouped = productsGroup(products);
     const workbook = new excel.Workbook();
+    console.log('start extracting products2');
 
     Object.entries(productsGrouped).forEach(([category, categoryItems]) => {
         const worksheet = workbook.addWorksheet(category);
 
         let row = 1;
 
+        console.log(columns)
         columns.forEach(([column], index) => {
             worksheet.cell(1, index+1).string(column);
         });
@@ -61,7 +66,7 @@ const start = async () => {
         });
     });
 
-    workbook.write('Цены.xlsx');
+    workbook.write('Prices.xlsx');
     console.log('End extracting');
    // process.exit()
 };

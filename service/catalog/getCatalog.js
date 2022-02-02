@@ -11,7 +11,7 @@ module.exports = {
         const {category, filter = {}} = searchParams;
         let categories;
         let products;
-        let headers = {};
+    
 
         const bodyProducts = {
             limit, offset, filter, order
@@ -27,8 +27,8 @@ module.exports = {
         if (category) {
             await checkCatalog({alias: category, knex});
 
-            const {id: categoryId, isLast, seo_title, seo_desc} = await getCategoryByAlias({knex, alias: category});
-            headers = {seo_desc, seo_title};
+            const {id: categoryId, isLast} = await getCategoryByAlias({knex, alias: category});
+
 
             //Если уровень последний, то ниже уже нет категорий, поэтому возввращаем только товары
             if (isLast) {

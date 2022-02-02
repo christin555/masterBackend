@@ -15,7 +15,7 @@ const start = async () => {
     await doc.useApiKey(process.env.GOOGLE_API_KEY);
     await doc.loadInfo();
 
-    const sheet = doc.sheetsByIndex[4];
+    const sheet = doc.sheetsByIndex[1];
     await sheet.loadCells('A1:Z1000');
 
     const rows = getRows({sheet, knex});

@@ -8,9 +8,7 @@ module.exports = {
                 'level',
                 'alias',
                 'description',
-                'isLast',
-                'seo_title',
-                'seo_desc',
+                'isLast'
             ])
             .where('alias', alias)
 };
