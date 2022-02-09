@@ -4,7 +4,12 @@ const getRows = ({sheet}) => {
     const {aliasColumn, priceColumn} = findColumnsIndex(sheet);
     const rows = [];
 
-    for (let r = 1; r < 300; r++) {
+    console.log(priceColumn, priceColumn);
+    if (!priceColumn) {
+        return [];
+    }
+
+    for (let r = 1; r < 500; r++) {
         const price = sheet.getCell(r, priceColumn)?.value;
         const alias = sheet.getCell(r, aliasColumn)?.value;
 

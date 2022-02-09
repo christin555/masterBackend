@@ -24,4 +24,11 @@ router.post('/send/callme', getMethod(() => 'callme'));
 
 router.post('/seo/getHeaders', getMethod(() => 'getHeaders'));
 
+router.get('/categories/get', getMethod(() => 'getCategories'));
+
+//todo - add jwt
+router.post('/admin/getPricesProducts', getMethod(() => 'getPricesProducts'));
+router.post('/admin/updatePrices', getMethod(() => 'updatePrices'));
+router.post('/admin/deleteProducts', getMethod(() => 'deleteProducts'));
+
 module.exports = router;

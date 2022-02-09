@@ -34,7 +34,6 @@ const start = async() => {
         const products = await parser.parse();
 
 
-        console.log(1)
         const saverImgs = new ImageSaver(logger, 100);
         const array = Object.values(finishing).map(({dataId, name, img}) => {
 
@@ -50,8 +49,6 @@ const start = async() => {
         });
         saverImgs.save(array);
 
-        console.log(2);
-
         await knex('finishingMaterialDoors')
             .insert(array.map(({name, dataId, src}) => {
                 return {
@@ -63,7 +60,6 @@ const start = async() => {
             }))
             .onConflict(['name', 'dataId'])
             .merge();
-            console.log(3)
 
         const saver = new SaveProducts(
             products,

@@ -11,6 +11,7 @@ module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
         const {ids, categoryId, categoryIds, fastfilter} = filter;
 
+        console.log('fastFilter', fastfilter)
         if (fastfilter) {
             const categoryIds = await knex('categories')
                 .pluck('id')
@@ -22,6 +23,7 @@ module.exports = {
                     .whereRaw('products.id::text = ?', fastfilter)
                     .orWhereRaw('products.name ~* ?', fastfilter)
                     .orWhereRaw('collections.name ~* ?', fastfilter)
+                    .orWhereRaw('brands.name ~* ?', fastfilter)
                     .orWhereRaw('categories.name ~* ?', fastfilter)
                     .orWhereIn('products.categoryId', [...categoryIds, ...categoryIdsLast]);
             });
@@ -31,6 +33,7 @@ module.exports = {
             query.whereIn('products.id', ids);
         }
 
+        console.log(categoryId)
         if (categoryId) {
             query.where('products.categoryId', categoryId);
         }

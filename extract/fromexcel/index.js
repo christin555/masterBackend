@@ -14,16 +14,23 @@ const start = async () => {
     const doc = new GoogleSpreadsheet(docid);
     await doc.useApiKey(process.env.GOOGLE_API_KEY);
     await doc.loadInfo();
+    const rows = [];
+    const countsheet = doc.sheetCount;
+    
+    for(let i = 0; i < countsheet; i++){
+        console.log(i)
+        const sheet = doc.sheetsByIndex[i];
+        await sheet.loadCells('A1:Z1000');
+        rows.push(...getRows({sheet}));
+    }
 
-    const sheet = doc.sheetsByIndex[1];
-    await sheet.loadCells('A1:Z1000');
-
-    const rows = getRows({sheet, knex});
+    console.log(rows)
     const bdRows = await getBdRows({rows, knex});
 
     await insertPrices({rows, bdRows, knex});
 
     console.log('end extracting products prices');
+    process.exit();
 };
 
 
