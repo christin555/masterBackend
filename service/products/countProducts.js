@@ -18,6 +18,7 @@ module.exports = {
                     this.on('prices.entity', '=', entity.PRODUCT);
                 });
             })
+            .leftJoin('brands', 'brands.id', 'brandId')
             .whereNull('products.deleted_at')
             .whereNull('collections.deleted_at');
 
