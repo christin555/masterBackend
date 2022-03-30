@@ -51,7 +51,7 @@ module.exports = {
         if (direction && field) {
             query.orderByRaw(`"${field}" ${direction} NULLS LAST`);
         } else {
-            query.orderBy('weight');
+            query.orderBy('brands.weight');
         }
 
         const searchInstance = createSearch(category, knex, filter);
