@@ -1,4 +1,4 @@
-const {Strategy} = require('./Strategy');
+0const {Strategy} = require('./Strategy');
 const {BaseParser} = require('../BaseParser');
 const {SaveProducts} = require('./save/SaveProducts');
 
