@@ -1,21 +1,24 @@
 const knex = require('../knex');
 const convert = require('xml-js');
 const axios = require("axios");
-// const fs = require('fs');
-// const {resolve, dirname} = require('path');
-// const {FileSystem} = require('../parsers/utils/FileSystem');
+const fs = require('fs');
+const {resolve, dirname} = require('path');
+const {FileSystem} = require('../parsers/utils/FileSystem');
 const {array2Object} = require("../service/tools/array2Object");
 const {SaveProducts} = require("./save/SaveProducts");
+const json = require('../decoria.json')
 
 const start = async () => {
     console.log('start extracting products to yml');
 
     try {
-        const catalog_export = await axios.get('https://decomaster.su/bitrix/catalog_export/export_JcB.xml').then(({data}) => data);
-        const result = convert.xml2json(catalog_export, {ignoreComment: true, compact: true, alwaysChildren: false});
+       // const catalog_export = await axios.get('https://decomaster.su/bitrix/catalog_export/export_JcB.xml').then(({data}) => data);
+       // const result = convert.xml2json(catalog_export, {ignoreComment: true, compact: true, alwaysChildren: false});
+      
+       // save(result);
+       // return;
 
-
-        const root = result.yml_catalog;
+        const root = json.yml_catalog;
         const categories = root.shop.categories.category
             .map(({_attributes, _text}) => {
                 return {..._attributes, name: _text};
@@ -48,6 +51,8 @@ const start = async () => {
                     collectionName: categories_obj[categories_obj[t.categoryId].parentId].name
                 };
             });
+
+        
 
         const saver = new SaveProducts(
             filtered_offers,
@@ -101,16 +106,16 @@ const start = async () => {
 //     return category;
 // };
 
-// const save = (result) => {
-//     const src = './decoria.json';
-//     const root = FileSystem.findRoot();
-//     const path = dirname(src);
-//
-//     FileSystem.mkdirP(resolve(root, path));
-//     const actualPath = resolve(root, src);
-//
-//     fs.writeFileSync(actualPath, result);
-// };
+const save = (result) => {
+    const src = './decoria.json';
+    const root = FileSystem.findRoot();
+    const path = dirname(src);
+
+    FileSystem.mkdirP(resolve(root, path));
+    const actualPath = resolve(root, src);
+
+    fs.writeFileSync(actualPath, result);
+};
 
 module.exports = {
     start

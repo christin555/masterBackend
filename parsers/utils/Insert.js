@@ -121,7 +121,7 @@ class Insert {
         }
 
         if (lowerCategory.includes('плинтус')) {
-            categoryId = this.categories['napolnyy_plintus'].id;
+            categoryId = this.categories['napolnyy-plintus'].id;
         }
 
         if (lowerCategory === 'probkovoe_pokrytie') {
