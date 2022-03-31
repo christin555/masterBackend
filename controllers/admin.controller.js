@@ -1,4 +1,4 @@
-const service = require('../service');
+const service = require('../service/admin');
 const {promiseFn} = require('./promiseFn');
 
 module.exports = {

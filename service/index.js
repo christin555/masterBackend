@@ -22,11 +22,6 @@ const {upload} = require('./upload');
 const {getHeaders} = require('./seo/getHeaders');
 const {getCategories} = require('./catalog/getCategories');
 
-//вынести  с jwt
-const {getPricesProducts} = require('./admin/getPricesProducts');
-const {updatePrices} = require('./admin/updatePrices');
-const {deleteProducts} = require('./admin/deleteProducts');
-
 module.exports = {
     getCatalog,
     getHierarchy,
@@ -51,9 +46,5 @@ module.exports = {
 
     getHeaders,
 
-    getCategories,
-
-    getPricesProducts,
-    updatePrices,
-    deleteProducts
+    getCategories
 };

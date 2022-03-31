@@ -8,15 +8,18 @@ const {array2Object} = require("../service/tools/array2Object");
 const {SaveProducts} = require("./save/SaveProducts");
 const json = require('../decoria.json')
 
+
 const start = async () => {
     console.log('start extracting products to yml');
 
     try {
+
        // const catalog_export = await axios.get('https://decomaster.su/bitrix/catalog_export/export_JcB.xml').then(({data}) => data);
        // const result = convert.xml2json(catalog_export, {ignoreComment: true, compact: true, alwaysChildren: false});
       
        // save(result);
        // return;
+
 
         const root = json.yml_catalog;
         const categories = root.shop.categories.category
@@ -59,7 +62,7 @@ const start = async () => {
             {knex}
         );
 
-        await saver.save();
+       // await saver.save();
 
         process.exit(0);
     } catch (e) {
