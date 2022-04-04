@@ -19,6 +19,8 @@ module.exports = {
             .first([
                 'products.id',
                 'products.alias',
+                'products.name',
+                'products.description',
                 'products.categoryId',
                 'categories.name as category',
                 'brands.name as brand',
