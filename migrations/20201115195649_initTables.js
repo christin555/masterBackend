@@ -118,9 +118,6 @@ exports.up = (knex) => Promise.all([
             .string('height')
             .comment('Высота');
         table
-            .string('isSimple')
-            .comment('Нет подложки');
-        table
             .string('link3d')
             .comment('фотографии яндекс диск');
         table

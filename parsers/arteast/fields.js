@@ -5,7 +5,6 @@ const fields = {
     'color': 'color',
     'description': 'description',
     'height': 'height',
-    'is_sample': 'isSimple',
     'items_in_package': 'itemsInPackage',
     'length': 'length',
     'meters_in_package': 'metersInPackage',

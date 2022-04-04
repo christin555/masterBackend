@@ -3,7 +3,7 @@ const {entity} = require('../../enums');
 const {checkProduct} = require('./checkProduct');
 
 module.exports = {
-    getProduct: async({params, knex}) => {
+    getProduct: async ({params, knex}) => {
         const {alias} = params;
 
         await checkProduct({alias, knex});
@@ -13,7 +13,7 @@ module.exports = {
             .join('catalogs', 'catalogs.id', 'catalogItems.catalogId')
             .where('name', 'quartzvinylCardFields');
 
-        const fieldsName = fields.map(({name}) => name);
+        const fieldsName = fields.map(({name}) => name).filter((item) => item.isHide !== true);
 
         const product = await knex('products')
             .first([
@@ -32,14 +32,14 @@ module.exports = {
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs'),
                 ...fieldsName
             ])
-            .leftJoin('prices', function() {
-                this.on(function() {
+            .leftJoin('prices', function () {
+                this.on(function () {
                     this.on('prices.entityId', '=', 'products.id');
                     this.on('prices.entity', '=', entity.PRODUCT);
                 });
             })
-            .leftJoin('media', function() {
-                this.on(function() {
+            .leftJoin('media', function () {
+                this.on(function () {
                     this.on('media.entityId', '=', 'products.id');
                     this.on('media.entity', '=', entity.PRODUCT);
                 });
