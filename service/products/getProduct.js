@@ -42,6 +42,7 @@ module.exports = {
                 this.on(function () {
                     this.on('media.entityId', '=', 'products.id');
                     this.on('media.entity', '=', entity.PRODUCT);
+                    this.onNull('media.deletedAt');
                 });
             })
             .leftJoin('collections', 'collections.id', 'products.collectionId')

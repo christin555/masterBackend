@@ -9,6 +9,7 @@ const {getFields} = require('./getFields');
 const {addObject} = require('./addObject');
 const {editProducts} = require('./editProducts');
 const {getColumns} = require('./getColumns');
+const {upload} = require('../upload');
 
 module.exports = {
     getPricesProducts,
@@ -19,5 +20,6 @@ module.exports = {
     getCategories,
     addObject,
     editProducts,
-    getColumns
+    getColumns,
+    upload
 };

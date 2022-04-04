@@ -9,5 +9,6 @@ router.post('/getFields', getMethod(() => 'getFields'));
 router.post('/addObject', getMethod(() => 'addObject'));
 router.post('/editProducts', getMethod(() => 'editProducts'));
 router.get('/getColumns', getMethod(() => 'getColumns'));
+router.post('/upload', getMethod(() => 'upload'));
 
 module.exports = router;

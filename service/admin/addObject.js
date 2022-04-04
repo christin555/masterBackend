@@ -7,10 +7,12 @@ module.exports = {
         const {product} = body;
 
         product.alias = `${translitRuEn(product._category)}_${translitRuEn(product._collection)}_${translitRuEn(product.name)}`.toLowerCase();
-     
+
         const images = product.urls?.split(',')?.map((item) => item.trim()) || null;
-        const price = product.price;
+        const imagesAdd = product.imgsAdd;
         
+        const price = product.price;
+
         delete product._category;
         delete product._collection;
         delete product.urls;
@@ -34,16 +36,34 @@ module.exports = {
             .merge()
             .returning(['id', 'alias', 'name']);
 
+        const afterInsertPromises = [];
+
         if (images) {
             this.imageInsert = new InsertImages(knex, logger);
-            this.imageInsert.fillImages({alias, images});
-            await this.imageInsert.insert([{id, alias, name, images}]);
+            const _alias = alias + '_' + Date.now().toString();
+            this.imageInsert.fillImages({alias: _alias, images});
+            afterInsertPromises.push(this.imageInsert.insert([{id, alias: _alias, name, images}]));
         }
         
-        if(price){
-            await knex('prices')
-                .insert({price, entityId:id, entity: entity.PRODUCT});
+        if (imagesAdd) {
+            const _imagesAdd = imagesAdd.map(({src, isMain}) => {
+                return {
+                    entity: entity.PRODUCT,
+                    entityId:id,
+                    src: src,
+                    isMain
+                };
+            }).flat();
+
+            afterInsertPromises.push(knex('media').insert(_imagesAdd));
         }
+        
+        if (price) {
+            afterInsertPromises.push(knex('prices')
+                .insert({price, entityId: id, entity: entity.PRODUCT}));
+        }
+
+        await Promise.all(afterInsertPromises);
 
         return alias;
     }

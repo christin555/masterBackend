@@ -11,15 +11,23 @@ module.exports = {
             fastfilter: fastfilter?.trim() || null,
             categoryId
         };
-        
+
         const query = knex('products')
             .select([
                 'products.*',
                 'brands.name as brand',
                 'categories.name as category',
                 'collections.name as collection',
-                'prices.price'
+                'prices.price',
+                knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
+            .leftJoin('media', function () {
+                this.on(function () {
+                    this.on('media.entityId', '=', 'products.id');
+                    this.on('media.entity', '=', entity.PRODUCT);
+                    this.onNull('media.deletedAt');
+                });
+            })
             .leftJoin('categories', 'categories.id', 'categoryId')
             .leftJoin('collections', 'collections.id', 'collectionId')
             .leftJoin('brands', 'brands.id', 'brandId')
@@ -39,8 +47,8 @@ module.exports = {
                 'categories.name'
             ])
             .orderBy(['brand', 'collection', 'name']);
-        
-        
+
+
         await setSearchParams({query, knex, filter});
 
         const products = await query;
@@ -51,7 +59,7 @@ module.exports = {
         }
 
 
-        return mapToList({products});
+        return products;
     }
 };
 

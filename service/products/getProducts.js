@@ -23,6 +23,7 @@ module.exports = {
                 this.on(function () {
                     this.on('media.entityId', '=', 'products.id');
                     this.on('media.entity', '=', entity.PRODUCT);
+                    this.onNull('media.deletedAt');
                 });
             })
             .leftJoin('categories', 'categories.id', 'categoryId')
