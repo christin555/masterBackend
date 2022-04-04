@@ -4,7 +4,6 @@ const getRows = ({sheet}) => {
     const {aliasColumn, priceColumn} = findColumnsIndex(sheet);
     const rows = [];
 
-    console.log(priceColumn, priceColumn);
     if (!priceColumn) {
         return [];
     }

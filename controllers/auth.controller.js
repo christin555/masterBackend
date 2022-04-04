@@ -63,15 +63,14 @@ exports.login = async (req, res) => {
             const isVerified = await verifyPassword(password, result.password);
             if (isVerified) {
                 const response = await getUser({params: {id: result.id}, knex});
-                console.log(2);
-                response.token = jwt.sign({id: result.id}, secretKey, {expiresIn: '24h'});
+
+                response.token = jwt.sign({id: result.id}, secretKey, {expiresIn: '365d'});
                 res.status(200).json(response);
             } else {
                 res.status(400).json({
                     message: "Auth is failed"
                 });
             }
-
         }
         )
         .catch((err) => {
@@ -81,8 +80,6 @@ exports.login = async (req, res) => {
             });
         }
         );
-
-    console.log(res)
 
     return res;
 };

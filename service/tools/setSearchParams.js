@@ -11,7 +11,6 @@ module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
         const {ids, categoryId, categoryIds, fastfilter} = filter;
 
-        console.log('fastFilter', fastfilter)
         if (fastfilter) {
             const categoryIds = await knex('categories')
                 .pluck('id')
@@ -33,7 +32,6 @@ module.exports = {
             query.whereIn('products.id', ids);
         }
 
-        console.log(categoryId)
         if (categoryId) {
             query.where('products.categoryId', categoryId);
         }

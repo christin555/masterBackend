@@ -7,6 +7,8 @@ const {getCategories} = require('../catalog/getCategories');
 const {getUser} = require('./getUser');
 const {getFields} = require('./getFields');
 const {addObject} = require('./addObject');
+const {editProducts} = require('./editProducts');
+const {getColumns} = require('./getColumns');
 
 module.exports = {
     getPricesProducts,
@@ -15,5 +17,7 @@ module.exports = {
     getUser,
     getFields,
     getCategories,
-    addObject
+    addObject,
+    editProducts,
+    getColumns
 };

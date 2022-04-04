@@ -14,10 +14,7 @@ module.exports = {
         
         const query = knex('products')
             .select([
-                'products.id',
-                'products.name',
-                'products.alias',
-                'products.size',
+                'products.*',
                 'brands.name as brand',
                 'categories.name as category',
                 'collections.name as collection',
@@ -40,7 +37,8 @@ module.exports = {
                 'collections.name',
                 'prices.price',
                 'categories.name'
-            ]);
+            ])
+            .orderBy(['brand', 'collection', 'name']);
         
         
         await setSearchParams({query, knex, filter});

@@ -61,7 +61,7 @@ class Strategy {
         let _code;
         $(selectors.code).children().each((_, child) => {
             const code = $(child).text().trim();
-            console.log(code);
+
             if (!_code && /\D/.test(code)) {
                 _code = code;
             }

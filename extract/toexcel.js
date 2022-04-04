@@ -39,7 +39,8 @@ const start = async () => {
         .whereNull('products.deleted_at')
         .whereNull('collections.deleted_at')
         .orderBy('brands.name');
-        console.log('start extracting products3');
+
+    console.log('start extracting products3');
 
     const productsGrouped = productsGroup(products);
     const workbook = new excel.Workbook();
@@ -50,7 +51,6 @@ const start = async () => {
 
         let row = 1;
 
-        console.log(columns)
         columns.forEach(([column], index) => {
             worksheet.cell(1, index+1).string(column);
         });

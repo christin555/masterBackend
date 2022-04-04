@@ -6,7 +6,7 @@ const knex = require("../knex/index");
 exports.verifyToken = async(req, res, next) => {
     const bearerHeader = req.headers['authorization'];
 
-    if(typeof bearerHeader !=='undefined'){
+    if(typeof bearerHeader !== 'undefined'){
         const token = bearerHeader.split(' ');
 
         jwt.verify(token[1], secretKey,(err) =>

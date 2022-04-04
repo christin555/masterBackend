@@ -7,5 +7,7 @@ router.post('/deleteProducts', getMethod(() => 'deleteProducts'));
 router.get('/categories/get', getMethod(() => 'getCategories'));
 router.post('/getFields', getMethod(() => 'getFields'));
 router.post('/addObject', getMethod(() => 'addObject'));
+router.post('/editProducts', getMethod(() => 'editProducts'));
+router.get('/getColumns', getMethod(() => 'getColumns'));
 
 module.exports = router;

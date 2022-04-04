@@ -14,16 +14,20 @@ module.exports = {
         
 
         await knex('logs')
-            .insert({
-                action: 'changePrice',
-                data: JSON.stringify(products),
-                created_at: new Date()
-            });
-
+            .insert(
+                products.map((product) => {
+                    return {
+                        action: 'changePrice',
+                        data: JSON.stringify(product),
+                        created_at: new Date()
+                    };
+                }
+                ));
+            
         return knex('prices')
             .insert(data)
             .onConflict(['entity','entityId'])
             .merge();
-        
+
     }
 };

@@ -59,14 +59,14 @@ module.exports = {
             {
                 name: 'urls',
                 type: 'text',
-                title: 'Ссылки на фото через пробел',
+                title: 'Ссылки на фото через запятую',
                 isRequired: true
             },
-            // {
-            //     name: 'price',
-            //     type: 'integer',
-            //     title: 'Цена, руб'
-            // }
+            {
+                name: 'price',
+                type: 'integer',
+                title: 'Цена, руб'
+            }
         ];
 
         return [...addFields, ...fields];
