@@ -13,7 +13,8 @@ module.exports = {
             .join('catalogs', 'catalogs.id', 'catalogItems.catalogId')
             .where('name', 'quartzvinylCardFields');
 
-        const fieldsName = fields.filter((item) => item.isHide !== true).map(({name}) => `products.${name}`);
+        const fieldsFiltered = fields.filter((item) => item.isHide !== true);
+        const fieldsName = fieldsFiltered.map(({name}) => `products.${name}`);
 
         const product = await knex('products')
             .first([
@@ -69,7 +70,7 @@ module.exports = {
 
         return {
             values: product,
-            fields
+            fields: fieldsFiltered
         };
     }
 };
