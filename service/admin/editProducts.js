@@ -41,17 +41,6 @@ module.exports = {
             }));
         }
 
-        if (images_urls) {
-            this.imageInsert = new InsertImages(knex, logger);
-            const _images = products.map(({id, alias, name}) => {
-                const _alias = alias + '_' + Date.now().toString();
-                this.imageInsert.fillImages({alias: _alias, images: images_urls});
-
-                return {id, alias: _alias, name, images: images_urls};
-            })
-            promises.push(this.imageInsert.insert(_images));
-        }
-
         if (images) {
 
             if (ids.length === 1) {
@@ -71,6 +60,17 @@ module.exports = {
             }).flat();
 
             promises.push(knex('media').insert(_imagesAdd).onConflict(['entity', 'entityId', 'src']).merge());
+        }
+
+        if (images_urls) {
+            this.imageInsert = new InsertImages(knex, logger, true);
+            const _images = products.map(({id, alias, name}) => {
+                const _alias = alias + '_' + Date.now().toString();
+                this.imageInsert.fillImages({alias: _alias, images: images_urls});
+
+                return {id, alias: _alias, name, images: images_urls};
+            })
+            promises.push(this.imageInsert.insert(_images));
         }
 
         promises.push(knex('products').update(_data).whereIn('id', ids));

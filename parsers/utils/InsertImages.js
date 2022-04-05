@@ -1,13 +1,13 @@
-const {array2Object} = require('../../service/tools/array2Object');
-const {entity} = require('../../enums');
-const {ImageHashIterator} = require('./ImageIterator');
-const {ImageSaver} = require('./ImageSaveIterator');
+const { array2Object } = require('../../service/tools/array2Object');
+const { entity } = require('../../enums');
+const { ImageHashIterator } = require('./ImageIterator');
+const { ImageSaver } = require('./ImageSaveIterator');
 
 class InsertImages {
-    constructor(knex, logger) {
+    constructor (knex,logger,noMain) {
         this.knex = knex;
         this.logger = logger;
-
+        this.noMain = noMain;
         this.images = new ImageHashIterator();
         this.imageSaver = new ImageSaver(logger);
     }
@@ -30,28 +30,28 @@ class InsertImages {
     }
 
     fillImages(item) {
-        const {alias, images} = item;
+        const { alias,images } = item;
 
         if (!alias || !images) {
             throw new Error(`name and images are required for fill`);
         }
 
         if (images) {
-            this.images.push(alias, images);
+            this.images.push(alias,images);
         }
     }
 
     prepareImages(insertedProducts) {
-        const obj = array2Object(insertedProducts, 'alias');
+        const obj = array2Object(insertedProducts,'alias');
 
         const imagesToInsert = [];
         const imagesToDownload = [];
 
         const generator = this.generateImage(obj);
 
-        for (const {alias, images} of this.images) {
-            images.forEach(({path, url}, idx) => {
-                const image = generator(alias, path, idx);
+        for (const { alias,images } of this.images) {
+            images.forEach(({ path,url },idx) => {
+                const image = generator(alias,path,idx);
 
                 imagesToInsert.push(image);
 
@@ -62,23 +62,26 @@ class InsertImages {
             });
         }
 
-        return {imagesToInsert, imagesToDownload};
+        return { imagesToInsert,imagesToDownload };
     }
 
     generateImage(obj) {
-        return (name, path, idx) => {
+        return (name,path,idx) => {
             const img = {
                 entity: entity.PRODUCT,
                 entityId: obj[name].id,
                 src: `/static/images/${String(entity.PRODUCT)}/${path}`
             };
 
-            // TODO переделать в таблице на order
-            if (idx === 0) {
-                img.isMain = true;
-            } else {
-                img.isForHover = true;
+            if (!this.noMain) {
+                // TODO переделать в таблице на order
+                if (idx === 0) {
+                    img.isMain = true;
+                } else {
+                    img.isForHover = true;
+                }
             }
+
 
             return img;
         };
@@ -114,4 +117,4 @@ class InsertImages {
     }
 }
 
-module.exports = {InsertImages};
+module.exports = { InsertImages };
