@@ -43,13 +43,13 @@ module.exports = {
 
         if (images_urls) {
             this.imageInsert = new InsertImages(knex, logger);
-
-            promises.push(this.imageInsert.insert(products.map(({id, alias, name}) => {
+            const _images = products.map(({id, alias, name}) => {
                 const _alias = alias + '_' + Date.now().toString();
-                this.imageInsert.fillImages({alias: _alias, images});
+                this.imageInsert.fillImages({alias: _alias, images: images_urls});
 
-                return {id, alias: _alias, name, images};
-            })));
+                return {id, alias: _alias, name, images: images_urls};
+            })
+            promises.push(this.imageInsert.insert(_images));
         }
 
         if (images) {
