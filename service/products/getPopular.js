@@ -7,6 +7,6 @@ module.exports = {
         const filter = {
             isPopular: true
         };
-        return getProducts({knex, body: {filter}});
+        return getProducts({knex, body: {filter, limit: 15}});
     }
 };
