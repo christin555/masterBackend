@@ -6,7 +6,7 @@ module.exports = {
     addObject: async ({body, knex, logger}) => {
         const {product} = body;
 
-        product.alias = `${translitRuEn(product._category)}_${translitRuEn(product._collection)}_${translitRuEn(product.name)}`.toLowerCase();
+        product.alias = `${translitRuEn(product._category)}-${translitRuEn(product._collection)}-${translitRuEn(product.name)}`.toLowerCase();
 
         const images = product.urls?.split(',')?.map((item) => item.trim()) || null;
         const imagesAdd = product.imgsAdd;
