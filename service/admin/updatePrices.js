@@ -4,11 +4,13 @@ module.exports = {
     updatePrices: async ({body, knex}) => {
         const {products} = body;
 
-        const data = products.map(({id, newPrice}) => {
+        const data = products.map(({id, newPrice, salePercent, salePrice}) => {
             return {
                 entity: entity.PRODUCT,
                 entityId: id,
-                price: newPrice
+                price: newPrice,
+                salePercent,
+                salePrice
             };
         });
         

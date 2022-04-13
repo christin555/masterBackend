@@ -11,12 +11,20 @@ module.exports = {
         const images = product.urls?.split(',')?.map((item) => item.trim()) || null;
         const imagesAdd = product.imgsAdd;
         
-        const price = product.price;
+        const price = {
+            price: product.price,
+            salePrice: product.salePrice,
+            salePercent: product.salePercent,
+        };
 
         delete product._category;
         delete product._collection;
         delete product.urls;
         delete product.price;
+        delete product.salePrice;
+        delete product.salePercent;
+
+
 
         const columns = await knex('information_schema.columns')
             .pluck('column_name')
@@ -60,7 +68,7 @@ module.exports = {
         
         if (price) {
             afterInsertPromises.push(knex('prices')
-                .insert({price, entityId: id, entity: entity.PRODUCT}));
+                .insert({...price, entityId: id, entity: entity.PRODUCT}));
         }
 
         await Promise.all(afterInsertPromises);

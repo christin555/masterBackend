@@ -28,14 +28,15 @@ module.exports = {
             return res;
         }, {});
 
-        if (data.price) {
+        if (data.price || data.salePrice || data.salePercent) {
             promises.push(updatePrices({
                 body: {
                     products: ids.map(id => {
-                        return {
-                            newPrice: data.price,
-                            id
-                        };
+                        const item = {id};
+                        data.price && (item.newPrice = data.price);
+                        data.salePrice && (item.salePrice = data.salePrice);
+                        data.salePercent && (item.salePercent = data.salePercent);
+                        return item;
                     })
                 }, knex
             }));
@@ -69,7 +70,7 @@ module.exports = {
                 this.imageInsert.fillImages({alias: _alias, images: images_urls});
 
                 return {id, alias: _alias, name, images: images_urls};
-            })
+            });
             promises.push(this.imageInsert.insert(_images));
         }
 
