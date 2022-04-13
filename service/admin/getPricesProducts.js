@@ -46,7 +46,10 @@ module.exports = {
                 'brands.name',
                 'collections.name',
                 'prices.price',
-                'categories.name'
+                'categories.name',
+                'prices.price',
+                'prices.salePrice',
+                'prices.salePercent',
             ])
             .orderBy(['brand', 'collection', 'name']);
 
