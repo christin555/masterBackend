@@ -19,6 +19,8 @@ module.exports = {
                 'categories.name as category',
                 'collections.name as collection',
                 'prices.price',
+                'prices.salePrice',
+                'prices.salePercent',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
             .leftJoin('media', function () {
