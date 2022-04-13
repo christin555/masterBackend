@@ -11,12 +11,18 @@ module.exports = {
 
         const query = knex('products')
             .select([
-                'products.*',
+                'products.name',
+                'products.alias',
+                'products.isBestPrice',
+                'products.isPopular',
+                'products.finishingMaterial',
                 'brands.name as brand',
                 'categories.name as category',
                 'collections.name as collection',
                 'brands.weight',
                 'prices.price',
+                'prices.salePrice',
+                'prices.salePercent',
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
             .leftJoin('media', function () {
@@ -46,6 +52,8 @@ module.exports = {
                 'brands.weight',
                 'collections.name',
                 'prices.price',
+                'prices.salePrice',
+                'prices.salePercent',
                 'categories.name'
             ]);
 

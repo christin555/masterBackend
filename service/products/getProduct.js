@@ -26,6 +26,10 @@ module.exports = {
                 'categories.name as category',
                 'brands.name as brand',
                 'prices.price as price',
+                'isPopular',
+                'isBestPrice',
+                'prices.salePrice',
+                'prices.salePercent',
                 'collections.name as collection',
                 'finishingMaterial',
                 'brands.name as brand',
@@ -52,7 +56,9 @@ module.exports = {
             .where('products.alias', alias)
             .groupBy([
                 'products.alias', 'products.id', 'products.name', 'categories.name',
-                'collections.name', 'brands.name', 'prices.price'
+                'collections.name', 'brands.name', 'prices.price', 'prices.salePrice', 'prices.salePercent',
+                'isPopular',
+                'isBestPrice',
             ]);
 
         //для дверей, так как пока нет иерархи ниже чем двери, то так)))
