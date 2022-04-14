@@ -4,6 +4,10 @@ module.exports = {
     getArticle: async({body, knex}) => {
         const {alias} = body;
 
+        await knex('articles')
+            .update({'watchCount': knex.raw('"watchCount" + 1')})
+            .where('alias', alias);
+        
         return knex('articles')
             .first([
                 '*',
@@ -16,5 +20,6 @@ module.exports = {
                     this.on('media.entity', '=', entity.ARTICLE);
                 });
             });
+
     }
 };
