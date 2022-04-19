@@ -10,16 +10,19 @@ module.exports = {
         
         return knex('articles')
             .first([
-                '*',
-                'articles.type as category'
+                'articles.*',
+                'articles.type as category',
+                knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as media'),
             ])
             .where('alias', alias)
             .leftJoin('media', function() {
                 this.on(function() {
                     this.on('media.entityId', '=', 'articles.id');
                     this.on('media.entity', '=', entity.ARTICLE);
+                    this.onNull('media.deletedAt');
                 });
-            });
+            })
+            .groupBy(['articles.id']);
 
     }
 };
