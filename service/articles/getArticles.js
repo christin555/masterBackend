@@ -4,14 +4,7 @@ module.exports = {
     getArticles: async ({body, knex}) => {
         const {limit, isPopular} = body;
 
-        const query = knex('articles')
-            .select()
-            .leftJoin('media', function () {
-                this.on(function () {
-                    this.on('media.entityId', '=', 'articles.id');
-                    this.on('media.entity', '=', entity.ARTICLE);
-                });
-            });
+        const query = knex('articles').select();
 
         if (limit) {
             query.limit(limit);
@@ -20,6 +13,7 @@ module.exports = {
         if (isPopular) {
             query.where('isPopular', isPopular);
         }
+
         return query;
     }
 };
