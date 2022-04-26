@@ -66,6 +66,16 @@ module.exports = {
                 name: 'price',
                 type: 'integer',
                 title: 'Цена, руб'
+            },
+            {
+                name: 'salePrice',
+                type: 'integer',
+                title: 'Цена со скидкой, руб'
+            },
+            {
+                name: 'salePercent',
+                type: 'integer',
+                title: 'Процент скидки, руб'
             }
         ];
 
