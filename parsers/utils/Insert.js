@@ -108,6 +108,10 @@ class Insert {
             categoryId = this.categories['laminate'].id;
         }
 
+        if (lowerCategory === 'стен') {
+            categoryId = this.categories['nastennye_paneli'].id;
+        }
+
         if (lowerCategory === 'двери') {
             categoryId = this.categories['doors'].id;
         }
