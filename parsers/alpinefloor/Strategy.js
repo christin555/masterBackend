@@ -64,7 +64,10 @@ class Strategy {
             resJSON.connectionType = 'Замковый';
             resJSON._categoryType = 'кварцвинил';
         }
-
+        if (resJSON['Способ укладки']?.toLowerCase().includes('на стену')) {
+            resJSON.connectionType = 'Клеевой';
+            resJSON._categoryType = 'стен';
+        }
         if (resJSON['Способ укладки']?.toLowerCase().includes('режется')) {
             resJSON.connectionType = resJSON['Способ укладки'];
             resJSON._categoryType = 'плинтус';

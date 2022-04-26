@@ -7,20 +7,20 @@ const knex = require('../../knex');
 const baseUrl = 'https://alpinefloor.su';
 
 const urls = [
-    '/catalog/grand-sequoia',
-    '/catalog/expressive',
-    '/catalog/light-parquet',
-    '/catalog/intense',
-    '/catalog/classic-collection',
-    '/catalog/collection-easy-line',
-    '/catalog/the-sequoia-collection',
-    '/catalog/collection-stone',
-    '/catalog/grand-stone',
-    '/catalog/the-collection-of-real-wood',
-    '/catalog/premium-xl',
-    '/catalog/solo',
-
-    '/catalog/related-products/napolnyy-plintus'
+    //'/catalog/grand-sequoia',
+    '/catalog/quartz-tiles-vinyl-for-walls',
+    // '/catalog/light-parquet',
+    // '/catalog/intense',
+    // '/catalog/classic-collection',
+    // '/catalog/collection-easy-line',
+    // '/catalog/the-sequoia-collection',
+    // '/catalog/collection-stone',
+    // '/catalog/grand-stone',
+    // '/catalog/the-collection-of-real-wood',
+    // '/catalog/premium-xl',
+    // '/catalog/solo',
+    //
+    // '/catalog/related-products/napolnyy-plintus'
 ];
 
 const start = async() => {
@@ -37,7 +37,6 @@ const start = async() => {
         const products = await parser.parse();
         // FileSystem.saveToJSON('alpinefloor', products);
 
-        console.log(products);
         const saver = new SaveProducts(
             products,
             {knex, logger}
