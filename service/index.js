@@ -22,6 +22,8 @@ const {upload} = require('./upload');
 const {getHeaders} = require('./seo/getHeaders');
 const {getCategories} = require('./catalog/getCategories');
 
+const {getSelection} = require('./selections/getSelection');
+
 module.exports = {
     getCatalog,
     getHierarchy,
@@ -46,5 +48,7 @@ module.exports = {
 
     getHeaders,
 
-    getCategories
+    getCategories,
+
+    getSelection
 };

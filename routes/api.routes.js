@@ -26,4 +26,5 @@ router.post('/seo/getHeaders', getMethod(() => 'getHeaders'));
 
 router.get('/categories/get', getMethod(() => 'getCategories'));
 
+router.post('/selections/get', getMethod(() => 'getSelection'));
 module.exports = router;

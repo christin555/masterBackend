@@ -4,12 +4,23 @@ const filterFields = [
     'finishingMaterial',
     'collectionId',
     'isPopular',
-    'price'
+    'price',
+    'brandId'
 ];
 
 module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
-        const {ids, categoryId, categoryIds, fastfilter} = filter;
+        const {ids, categoryId, categoryIds, fastfilter, selection} = filter;
+
+        if (selection) {
+            const [filterSelection] = await knex('selections')
+                .pluck('filter')
+                .where('alias', selection);
+
+            Object.entries(filterSelection).forEach(([key, value]) => {
+                setQueryField(key, value, query);
+            });
+        }
 
         if (fastfilter) {
             const categoryIds = await knex('categories')
@@ -43,25 +54,29 @@ module.exports = {
         if (filter) {
             Object.entries(filter).forEach(([key, value]) => {
                 if (key && value && filterFields.includes(key)) {
-                    if (key === 'price') {
-                        setPrice(query, value);
-                    } else if (Array.isArray(value) && value.length) {
-                        if (key === 'finishingMaterial') {
-                            query.where(key, '&&', value);
-                        } else {
-                            query.whereIn(key, value);
-                        }
-                    } else if (typeof value === 'boolean') {
-                        query.where(key, value);
-                    } else {
-                        if (key === 'finishingMaterial') {
-                            query.where(key, '&&', [value]);
-                        } else {
-                            query.where(key, value);
-                        }
-                    }
+                    setQueryField(key, value, query);
                 }
             });
+        }
+    }
+};
+
+const setQueryField = (key, value, query) => {
+    if (key === 'price') {
+        setPrice(query, value);
+    } else if (Array.isArray(value) && value.length) {
+        if (key === 'finishingMaterial') {
+            query.where(key, '&&', value);
+        } else {
+            query.whereIn(key, value);
+        }
+    } else if (typeof value === 'boolean') {
+        query.where(key, value);
+    } else {
+        if (key === 'finishingMaterial') {
+            query.where(key, '&&', [value]);
+        } else {
+            query.where(key, value);
         }
     }
 };

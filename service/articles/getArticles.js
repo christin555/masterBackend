@@ -2,7 +2,7 @@ const {entity} = require('../../enums');
 
 module.exports = {
     getArticles: async ({body, knex}) => {
-        const {limit, isPopular, category} = body;
+        const {limit, isPopular, category, withMedia} = body;
 
         const query = knex('articles').select('articles.*');
 
@@ -26,11 +26,23 @@ module.exports = {
                     });
                 });
         }
-        
+
         if (isPopular) {
             query.where('isPopular', isPopular);
         }
-        console.log(query.toQuery());
+
+        if (withMedia) {
+            query.select(knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as media'));
+            query.leftJoin('media', function () {
+                this.on(function () {
+                    this.on('media.entityId', '=', 'articles.id');
+                    this.on('media.entity', '=', entity.ARTICLE);
+                    this.onNull('media.deletedAt');
+                });
+            })
+                .groupBy(['articles.id']);
+        }
+
         return query;
     }
 };
