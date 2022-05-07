@@ -15,7 +15,8 @@ module.exports = {
                     this.on('prices.entity', '=', entity.SERVICE);
                 });
             })
-            .offset(offset);
+            .offset(offset)
+            .orderBy('order');
 
         if (limit) {
             services.limit(limit);
