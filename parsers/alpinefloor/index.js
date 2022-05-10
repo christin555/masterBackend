@@ -7,8 +7,8 @@ const knex = require('../../knex');
 const baseUrl = 'https://alpinefloor.su';
 
 const urls = [
-    //'/catalog/grand-sequoia',
-    '/catalog/quartz-tiles-vinyl-for-walls',
+    '/catalog/ultra-collection/'
+    //'/catalog/quartz-tiles-vinyl-for-walls',
     // '/catalog/light-parquet',
     // '/catalog/intense',
     // '/catalog/classic-collection',
