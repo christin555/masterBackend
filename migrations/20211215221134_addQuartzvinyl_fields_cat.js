@@ -64,7 +64,7 @@ from (
          from brands
                   inner join collections on "brandId" = brands.id
                   inner join products on products."collectionId" = collections."id"
-         where products."categoryId" = ${categoryId_lock}
+         where products."categoryId" = ${categoryId_lock} and brands.deleted_at is null
          group by brands.id
      ) as t
 union all
@@ -73,7 +73,7 @@ from (
          select distinct collections.id, collections.name, collections."brandId"
          from collections
                  inner join products on products."collectionId" = collections."id"
-         where products."categoryId" = ${categoryId_lock}
+         where products."categoryId" = ${categoryId_lock} and collections.deleted_at is null
      ) as t;
   `;
 
@@ -138,7 +138,7 @@ from (
          from brands
                   inner join collections on "brandId" = brands.id
                   inner join products on products."collectionId" = collections."id"
-         where products."categoryId" = ${categoryId_glue}
+         where products."categoryId" = ${categoryId_glue} and brands.deleted_at is null
          group by brands.id
      ) as t
 union all
@@ -147,7 +147,7 @@ from (
          select distinct collections.id, collections.name, collections."brandId"
          from collections
                  inner join products on products."collectionId" = collections."id"
-         where products."categoryId" = ${categoryId_glue}
+         where products."categoryId" = ${categoryId_glue} and collections.deleted_at is null
      ) as t;
   `;
 
