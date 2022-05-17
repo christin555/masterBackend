@@ -6,6 +6,7 @@ router.post('/catalog/getHierarchy', getMethod(() => 'getHierarchy'));
 router.post('/catalog/countProducts', getMethod(() => 'countProducts'));
 router.post('/catalog/getFilterFields', getMethod(() => 'getFilterFields'));
 
+router.post('/products/get', getMethod(() => 'getProducts'));
 router.get('/products/get/:alias', getMethod(() => 'getProduct'));
 router.post('/products/getPopular', getMethod(() => 'getPopular'));
 

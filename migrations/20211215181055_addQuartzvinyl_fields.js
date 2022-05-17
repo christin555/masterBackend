@@ -6,9 +6,6 @@ exports.up = async (knex) => {
     const cids = await getNextLevelCategory({categoryId, knex});
     const ids = cids.map(({id}) => id);
 
-   // console.log(cids);
-
-    //throw new Error('1')
     const sql = `
     CREATE MATERIALIZED VIEW quartzvinyl_fields as
 select 'color' as field, json_agg(t) as values

@@ -5,6 +5,7 @@ const {getHierarchy} = require('./catalog/getHierarchy');
 const {countProducts} = require('./products/countProducts');
 const {getProduct} = require('./products/getProduct');
 const {getPopular} = require('./products/getPopular');
+const {getProducts} = require('./products/getProducts');
 
 const {getServices} = require('./services/getServices');
 const {getWorks} = require('./works/getWorks');
@@ -30,6 +31,7 @@ module.exports = {
     upload,
     countProducts,
     getPopular,
+    getProducts,
 
     getServices,
     getWorks,

@@ -5,13 +5,14 @@ const filterFields = [
     'collectionId',
     'isPopular',
     'price',
+    'isSale',
     'brandId'
 ];
 
 module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
         const {ids, categoryId, categoryIds, fastfilter, selection} = filter;
-
+        
         if (selection) {
             const [filterSelection] = await knex('selections')
                 .pluck('filter')
@@ -62,7 +63,9 @@ module.exports = {
 };
 
 const setQueryField = (key, value, query) => {
-    if (key === 'price') {
+    if(key === 'isSale'){
+        setAction(query);
+    } else if (key === 'price') {
         setPrice(query, value);
     } else if (Array.isArray(value) && value.length) {
         if (key === 'finishingMaterial') {
@@ -80,6 +83,8 @@ const setQueryField = (key, value, query) => {
         }
     }
 };
+
+const setAction = (query) => query.whereNotNull('prices.salePrice');
 
 const setPrice = (query, value) => {
     if (value) {
