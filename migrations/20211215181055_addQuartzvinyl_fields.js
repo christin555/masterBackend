@@ -67,7 +67,7 @@ from (
          from brands
                   inner join collections on "brandId" = brands.id
                   inner join products on products."collectionId" = collections."id"
-         where products."categoryId" in (${ids})
+         where products."categoryId" in (${ids}) and brands.deleted_at is null
          group by brands.id
      ) as t
 union all
@@ -76,7 +76,7 @@ from (
          select distinct collections.id, collections.name, collections."brandId"
          from collections
                  inner join products on products."collectionId" = collections."id"
-         where products."categoryId" in (${ids})
+         where products."categoryId" in (${ids}) and collections.deleted_at is null
      ) as t;
   `;
 
