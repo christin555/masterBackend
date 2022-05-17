@@ -14,7 +14,7 @@ from (
                 "color"        as name
          from products
          where "categoryId" in (${ids})
-           and "color" is not null
+           and "color" is not null and products.deleted_at is null
          group by "color"
      ) as t
 union all
@@ -24,7 +24,7 @@ from (
                 "texture"        as name
          from products
          where "categoryId" in (${ids})
-           and "texture" is not null
+           and "texture" is not null and products.deleted_at is null
          group by "texture"
      ) as t
 union all
@@ -34,7 +34,7 @@ from (
                 "resistanceClass"    as name
          from products
          where "categoryId" in (${ids})
-           and "resistanceClass" is not null
+           and "resistanceClass" is not null and products.deleted_at is null
          group by "resistanceClass"
      ) as t
 union all
@@ -44,7 +44,7 @@ from (
                 thickness            as name
          from products
          where "categoryId" in (${ids})
-           and thickness is not null
+           and thickness is not null and products.deleted_at is null
          group by thickness
      ) as t
 union all
@@ -54,7 +54,7 @@ from (
                 width                as name
          from products
          where "categoryId" in (${ids})
-           and width is not null
+           and width is not null and products.deleted_at is null
          group by width
      ) as t
 union all
@@ -80,6 +80,4 @@ from (
     return knex.raw(sql);
 };
 
-exports.down = knex => {
-
-};
+exports.down = knex => knex.raw('drop MATERIALIZED view quartzvinyl_fields');

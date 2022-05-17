@@ -14,7 +14,7 @@ from (
                 "color"        as name
          from products
          where "categoryId" = ${categoryId_lock}
-           and "color" is not null
+           and "color" is not null and products.deleted_at is null
          group by "color"
      ) as t
 union all
@@ -24,7 +24,7 @@ from (
                 "texture"        as name
          from products
          where "categoryId" = ${categoryId_lock}
-           and "texture" is not null
+           and "texture" is not null and products.deleted_at is null
          group by "texture"
      ) as t
 union all
@@ -34,7 +34,7 @@ from (
                 "resistanceClass"    as name
          from products
          where "categoryId" = ${categoryId_lock}
-           and "resistanceClass" is not null
+           and "resistanceClass" is not null and products.deleted_at is null
          group by "resistanceClass"
      ) as t
 union all
@@ -44,7 +44,7 @@ from (
                 thickness            as name
          from products
          where "categoryId" = ${categoryId_lock}
-           and thickness is not null
+           and thickness is not null and products.deleted_at is null
          group by thickness
      ) as t
 union all
@@ -54,7 +54,7 @@ from (
                 width                as name
          from products
          where "categoryId" = ${categoryId_lock}
-           and width is not null
+           and width is not null and products.deleted_at is null
          group by width
      ) as t
 union all
@@ -98,7 +98,7 @@ from (
                 "texture"        as name
          from products
          where "categoryId" = ${categoryId_glue}
-           and "texture" is not null
+           and "texture" is not null and products.deleted_at is null
          group by "texture"
      ) as t
 union all
@@ -108,7 +108,7 @@ from (
                 "resistanceClass"    as name
          from products
          where "categoryId" = ${categoryId_glue}
-           and "resistanceClass" is not null
+           and "resistanceClass" is not null and products.deleted_at is null
          group by "resistanceClass"
      ) as t
 union all
@@ -118,7 +118,7 @@ from (
                 thickness            as name
          from products
          where "categoryId" = ${categoryId_glue}
-           and thickness is not null
+           and thickness is not null and products.deleted_at is null
          group by thickness
      ) as t
 union all
@@ -128,7 +128,7 @@ from (
                 width                as name
          from products
          where "categoryId" = ${categoryId_glue}
-           and width is not null
+           and width is not null and products.deleted_at is null
          group by width
      ) as t
 union all
@@ -154,6 +154,7 @@ from (
     await knex.raw(sql_glue);
 };
 
-exports.down = knex => {
-
-};
+exports.down = knex => Promise.all([
+    knex.raw('drop MATERIALIZED view quartzvinyl_lock_fields'),
+    knex.raw('drop MATERIALIZED view quartzvinyl_glue_fields')
+]);
