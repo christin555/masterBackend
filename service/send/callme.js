@@ -49,9 +49,17 @@ module.exports = {
         }
 
 
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: 'masterpola72t@gmail.com',
             to: 'kriska_555@mail.ru',
+            subject: 'Заявка на обратный звонок ✔',
+            text: text,
+            html: emailHtml
+        });
+        
+        const info = await transporter.sendMail({
+            from: 'masterpola72t@gmail.com',
+            to: 'masterpola72@mail.ru',
             subject: 'Заявка на обратный звонок ✔',
             text: text,
             html: emailHtml
