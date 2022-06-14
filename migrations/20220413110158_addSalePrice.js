@@ -9,5 +9,5 @@ exports.up = (knex) => knex.schema.alterTable('prices', (table) => {
 
 exports.down = (knex) => knex.schema.alterTable('prices', (table) => {
     table.dropColumns('salePrice');
- //   table.dropColumns('salePercent');
+    table.dropColumns('salePercent');
 });

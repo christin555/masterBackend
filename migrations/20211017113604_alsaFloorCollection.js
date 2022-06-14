@@ -29,7 +29,7 @@ exports.up = async(knex) => {
         .returning('id');
 
     await knex('collections')
-        .insert(collections(brandId));
+        .insert(collections(brandId.id));
 };
 
 exports.down = knex => {

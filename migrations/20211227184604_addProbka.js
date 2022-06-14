@@ -10,7 +10,20 @@ const brand = {
     alias: 'wicanders'
 };
 
-exports.up = async(knex) => addCollection(knex, brand, coll);
+exports.up = async (knex) => {
+    await knex('categories')
+        .insert({
+            alias: 'probkovoe_pokrytie',
+            name: 'Пробковое покрытие',
+            level: 2,
+            isLast:true,
+            img: '/dashboard/uploads/52ec984cc72302fd412e2aa145a6526c_XL_3564cf1886.jpg'
+        });
 
 
-exports.down = function (knex) {};
+    return addCollection(knex, brand, coll);
+};
+
+
+exports.down = function (knex) {
+};

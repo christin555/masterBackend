@@ -45,11 +45,11 @@ exports.up = async(knex) => {
     
     return Promise.all([
         knex('collections')
-            .insert(collections(id, parquetId))
+            .insert(collections(id, parquetId.id))
             .onConflict(['name', 'brandId'])
             .merge(), 
         knex('hierarchy')
-            .insert({head: floorId, under:  parquetId})
+            .insert({head: floorId, under:  parquetId.id})
     ]);
 };
 

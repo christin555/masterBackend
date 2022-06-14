@@ -1,3 +1,4 @@
+const layoutFix = require("./layoutFix");
 const {getCategoryUnder} = require('../catalog/getCategoryUnder');
 
 const filterFields = [
@@ -12,7 +13,7 @@ const filterFields = [
 module.exports = {
     setSearchParams: async ({query, knex, filter = {}}) => {
         const {ids, categoryId, categoryIds, fastfilter, selection} = filter;
-        
+
         if (selection) {
             const [filterSelection] = await knex('selections')
                 .pluck('filter')
@@ -24,19 +25,15 @@ module.exports = {
         }
 
         if (fastfilter) {
-            const categoryIds = await knex('categories')
-                .pluck('id')
-                .whereRaw('name ~* ?', fastfilter);
-            const categoryIdsLast = await getCategoryUnder({categoryIds, knex});
+            // query.select(knex.raw(`strict_word_similarity(?, "searchKeys") as sml`,fastfilter))
+            //     .orderBy('sml');
 
+            const trans_fastfilter = layoutFix(fastfilter);
             query.where((builder) => {
                 builder
                     .whereRaw('products.id::text = ?', fastfilter)
-                    .orWhereRaw('products.name ~* ?', fastfilter)
-                    .orWhereRaw('collections.name ~* ?', fastfilter)
-                    .orWhereRaw('brands.name ~* ?', fastfilter)
-                    .orWhereRaw('categories.name ~* ?', fastfilter)
-                    .orWhereIn('products.categoryId', [...categoryIds, ...categoryIdsLast]);
+                    .orWhereRaw(`? <<% "searchKeys"`, fastfilter)
+                    .orWhereRaw(`? <<% "searchKeys"`, trans_fastfilter);
             });
         }
 
@@ -63,7 +60,7 @@ module.exports = {
 };
 
 const setQueryField = (key, value, query) => {
-    if(key === 'isSale'){
+    if (key === 'isSale') {
         setAction(query);
     } else if (key === 'price') {
         setPrice(query, value);

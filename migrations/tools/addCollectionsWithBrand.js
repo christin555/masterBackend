@@ -9,7 +9,7 @@ const collections = (brandId, coll) => {
 };
 
 exports.addCollection = async function (knex, brand, coll) {
-    const [brandId] = await knex('brands')
+    const [{id: brandId}] = await knex('brands')
         .insert(brand)
         .returning('id')
         .onConflict(['name'])

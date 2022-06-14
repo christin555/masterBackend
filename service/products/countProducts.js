@@ -22,6 +22,7 @@ module.exports = {
             .whereNull('products.deleted_at')
             .whereNull('collections.deleted_at');
 
+
         if (category) {
             const {id: categoryId, isLast} = await getCategoryByAlias({knex,alias: category});
 
@@ -43,7 +44,6 @@ module.exports = {
         await setSearchParams({query, knex, filter: searchParams.filter});
 
         const {count} = await query;
-
         return count;
     }
 };

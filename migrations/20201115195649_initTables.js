@@ -168,6 +168,7 @@ exports.up = (knex) => Promise.all([
         table.string('name');
         table.string('alias');
         table.integer('weight');
+        table.timestamp('deleted_at');
 
         table.unique(['name']);
     }),

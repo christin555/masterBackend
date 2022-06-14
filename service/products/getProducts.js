@@ -1,13 +1,29 @@
 const {entity} = require('../../enums');
 const {mapToList} = require('../tools/mapToList');
 const {setSearchParams} = require('../tools/setSearchParams');
-const {Laminate} = require('../catalog/Filter/filters/floors');
 const {createSearch} = require('./searchHandlers');
 
 module.exports = {
     getProducts: async ({knex, body, category}) => {
+        await knex.raw(`SET pg_trgm.strict_word_similarity_threshold = 0.3;`);
+
         const {filter, limit, offset, order = {}} = body;
         const {direction, field} = order;
+
+        const colNames = [
+            'products.id',
+            'brands.name',
+            'brands.weight',
+            'collections.name',
+            'prices.price',
+            'prices.salePrice',
+            'prices.salePercent',
+            'categories.name'
+        ];
+
+        if(filter.fastfilter){
+            colNames.push('searchKeys');
+        }
 
         const query = knex('products')
             .select([
@@ -45,17 +61,7 @@ module.exports = {
             .whereNull('collections.deleted_at')
             .limit(limit)
             .offset(offset)
-
-            .groupBy([
-                'products.id',
-                'brands.name',
-                'brands.weight',
-                'collections.name',
-                'prices.price',
-                'prices.salePrice',
-                'prices.salePercent',
-                'categories.name'
-            ]);
+            .groupBy(colNames);
 
         if (direction && field) {
             query.orderByRaw(`"${field}" ${direction} NULLS LAST`);
@@ -73,11 +79,9 @@ module.exports = {
 
         const products = await query;
 
-
         if (!products.length) {
             return [];
         }
-
 
         return mapToList({products});
     }

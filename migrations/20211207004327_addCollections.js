@@ -49,7 +49,7 @@ exports.up = async function(knex) {
         .returning('id');
 
     await knex('collections')
-        .insert(collections(brandId));
+        .insert(collections(brandId.id));
 };
 
 exports.down = function(knex) {
