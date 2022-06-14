@@ -1,4 +1,8 @@
-function layoutFix(str, reverse) {
+function isCyrillic(str) {
+    return /[а-я]/i.test(str);
+}
+
+function layoutFix(str) {
     const replacer = {
         "q": "й", "w": "ц", "e": "у", "r": "к", "t": "е", "y": "н", "u": "г",
         "i": "ш", "o": "щ", "p": "з", "[": "х", "]": "ъ", "a": "ф", "s": "ы",
@@ -7,7 +11,7 @@ function layoutFix(str, reverse) {
         "n": "т", "m": "ь", ",": "б", ".": "ю", "/": ".",
     };
 
-    reverse && Object.keys(replacer).forEach(key => {
+    isCyrillic(str) && Object.keys(replacer).forEach(key => {
         const v = replacer[key];
         delete (replacer[key]);
         replacer[v] = key;

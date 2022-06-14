@@ -31,7 +31,7 @@ module.exports = {
             query.where((builder) => {
                 const _fastfilter = getQuerySim(fastfilter);
                 const _fastfilter_trans = getQuerySim(layoutFix(fastfilter));
-                
+
                 builder
                     .whereRaw('products.id::text = ?', fastfilter)
                     .orWhereRaw(`(${_fastfilter.string})/${_fastfilter.length} > 0.5`)

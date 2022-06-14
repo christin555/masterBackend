@@ -76,7 +76,6 @@ module.exports = {
         }
 
         await setSearchParams({query, knex, filter});
-        console.log(query.toQuery());
 
         const products = await query;
 
