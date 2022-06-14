@@ -28,12 +28,14 @@ module.exports = {
             // query.select(knex.raw(`strict_word_similarity(?, "searchKeys") as sml`,fastfilter))
             //     .orderBy('sml');
 
-            const trans_fastfilter = layoutFix(fastfilter);
             query.where((builder) => {
+                const _fastfilter = getQuerySim(fastfilter);
+                const _fastfilter_trans = getQuerySim(layoutFix(fastfilter));
+                
                 builder
                     .whereRaw('products.id::text = ?', fastfilter)
-                    .orWhereRaw(`? <<% "searchKeys"`, fastfilter)
-                    .orWhereRaw(`? <<% "searchKeys"`, trans_fastfilter);
+                    .orWhereRaw(`(${_fastfilter.string})/${_fastfilter.length} > 0.5`)
+                    .orWhereRaw(`(${_fastfilter_trans.string})/${_fastfilter_trans.length} > 0.5`);
             });
         }
 
@@ -57,6 +59,18 @@ module.exports = {
             });
         }
     }
+};
+
+const getQuerySim = (fastfilter) => {
+    const arr_words = fastfilter
+        .trim()
+        .split(' ')
+        .map((word) => `strict_word_similarity('${word}', "searchKeys")`);
+    
+    return {
+        string: arr_words.join('+'),
+        length: arr_words.length
+    };
 };
 
 const setQueryField = (key, value, query) => {
