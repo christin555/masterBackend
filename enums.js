@@ -5,6 +5,13 @@ const entity = {
     SERVICE: 4,
     WORK: 5
 };
+
+const posts = {
+    WORKS: 1,
+    PRODUCT: 2,
+    OTHER: 3
+};
+
 const finishing = {
     MATERIAL: 1,
     WINDOW: 2,
@@ -14,5 +21,6 @@ const finishing = {
 
 module.exports = {
     entity,
-    finishing
+    finishing,
+    posts
 };
