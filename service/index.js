@@ -9,7 +9,7 @@ const {getProducts} = require('./products/getProducts');
 
 const {getServices} = require('./services/getServices');
 const {getWorks} = require('./works/getWorks');
-const {getWork} = require('./works/getWork');
+const {getRelations} = require('./articles/getRelations');
 
 const {getFilterFields} = require('./catalog/Filter/getFilterFields');
 
@@ -35,7 +35,6 @@ module.exports = {
 
     getServices,
     getWorks,
-    getWork,
 
     getFilterFields,
 
