@@ -1,3 +1,4 @@
+const ErrorHandler = require("../tools/Error");
 const {getRelations} = require("./getRelations");
 const {entity} = require('../../enums');
 
@@ -26,7 +27,10 @@ module.exports = {
             .groupBy(['articles.id']);
 
         if (!article) {
-            return {};
+            return new ErrorHandler({
+                message: 'Article not found',
+                status: 400
+            });
         }
 
         article.relations = await getRelations({id: article.id, knex});
