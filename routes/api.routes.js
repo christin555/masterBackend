@@ -12,7 +12,6 @@ router.post('/products/getPopular', getMethod(() => 'getPopular'));
 
 router.post('/services/get', getMethod(() => 'getServices'));
 router.post('/works/get', getMethod(() => 'getWorks'));
-router.post('/work/get', getMethod(() => 'getWork'));
 
 router.post('/articles/getArticles', getMethod(() => 'getArticles'));
 router.post('/article/get', getMethod(() => 'getArticle'));

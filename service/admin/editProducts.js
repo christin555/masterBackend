@@ -28,14 +28,14 @@ module.exports = {
             return res;
         }, {});
 
-        if (data.price || data.salePrice || data.salePercent) {
+        if (data.price || data.salePrice) {
             promises.push(updatePrices({
                 body: {
                     products: ids.map(id => {
                         const item = {id};
                         data.price && (item.newPrice = data.price);
                         data.salePrice && (item.salePrice = data.salePrice);
-                        data.salePercent && (item.salePercent = data.salePercent);
+            
                         return item;
                     })
                 }, knex
@@ -74,16 +74,18 @@ module.exports = {
             promises.push(this.imageInsert.insert(_images));
         }
 
-        promises.push(knex('products').update(_data).whereIn('id', ids));
-        promises.push(knex('logs').insert({
-            action: 'massedit',
-            data: JSON.stringify({
-                oldValues: products,
-                ids,
-                newValue: _data
-            }),
-            created_at: new Date()
-        }));
+        if(Object.keys(_data).length){
+            promises.push(knex('products').update(_data).whereIn('id', ids));
+            promises.push(knex('logs').insert({
+                action: 'massedit',
+                data: JSON.stringify({
+                    oldValues: products,
+                    ids,
+                    newValue: _data
+                }),
+                created_at: new Date()
+            }))
+        }
 
         await Promise.all(promises);
     }
