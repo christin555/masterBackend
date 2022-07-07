@@ -46,6 +46,7 @@ class LinksIterator {
                     //         status
                     //     };
                     // });
+                    // JSON.parse(data) для таркет 
 
                 console.log(`${url} is up, status: ${status}`);
                 yield {url, data};
