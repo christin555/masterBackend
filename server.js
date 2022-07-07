@@ -12,7 +12,10 @@ const adminRoute = require('./routes/admin.routes');
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.json({type: 'application/vnd.api+json'}));
-app.use(cors());
+app.use(cors({
+    origin: 'https://admin.master-pola.com',
+    optionsSuccessStatus: 200
+}));
 app.use(fileUpload());
 
 app.use('/auth/', authRoute);
