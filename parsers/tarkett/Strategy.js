@@ -15,8 +15,7 @@ class Strategy {
     }
 
     collectAllLinks(content) {
-        const {collectionResult} = content;
-
+        const {collectionResult} = contпшеent;
         const links = new Set();
 
         collectionResult.forEach(({id, name}) => {
@@ -49,7 +48,7 @@ class Strategy {
 
         const _categoryType = sku_category_b2b_names[0];
         const color_family = sku_color_family.value;
-        const color_tone = sku_color_tone.value;
+        const color_tone = sku_color_tone?.value;
         const sku_collection_id = sku_collection_ids[0];
         const collection = sku_collection_names[0];
 
@@ -91,7 +90,7 @@ class Strategy {
             surface_treatment,
             lacquer_gloss_level,
             wear_layer_thickness
-        } = item.sku_technical_caracteristics;
+        } = item.sku_technical_caracteristics || {};
 
         return {
             format_type,
