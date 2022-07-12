@@ -27,7 +27,7 @@ module.exports = {
 
         const query = knex('products')
             .select([
-                'products.name',
+                'products.fullName',
                 'products.alias',
                 'products.isBestPrice',
                 'products.isPopular',

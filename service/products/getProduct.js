@@ -21,6 +21,7 @@ module.exports = {
                 'products.id',
                 'products.alias',
                 'products.name',
+                'products.fullName',
                 'products.description',
                 'products.categoryId',
                 'categories.name as category',
