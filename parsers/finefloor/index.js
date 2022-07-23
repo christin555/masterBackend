@@ -7,9 +7,9 @@ const knex = require('../../knex');
 const baseUrl = 'https://finefloor.ru';
 
 const urls = [
-    '/catalog/stone/',
-    '/catalog/wood/',
-    '/catalog/zamkovyy-tip/ff-1800/',
+    '/catalog/stone/?SHOWALL_2=1',
+    '/catalog/wood/?SHOWALL_2=1',
+    '/catalog/zamkovyy-tip/ff-1800/?SHOWALL_2=1',
 ];
 
 const start = async() => {
