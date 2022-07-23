@@ -73,13 +73,8 @@ class InsertImages {
                 src: `/static/images/${String(entity.PRODUCT)}/${path}`
             };
 
-            if (!this.noMain) {
-                // TODO переделать в таблице на order
-                if (idx === 0) {
-                    img.isMain = true;
-                } else {
-                    img.isForHover = true;
-                }
+            if (idx === 0) {
+                img.isMain = true;
             }
 
 
@@ -113,7 +108,7 @@ class InsertImages {
     saveImagesToDB(imagesToInsert) {
         this.logger.debug('insert images');
 
-        return this.knex('media').insert(imagesToInsert);
+        return this.knex('media').insert(imagesToInsert).onConflict(['entity', 'entityId', 'src']).merge();
     }
 }
 
