@@ -87,7 +87,6 @@ class Insert {
 
     getCollection(item) {
         const lowerCollection = item.collection?.toLowerCase();
-        console.log(this.collections, item.collection);
 
         if (!this.collections[lowerCollection]) {
             return;

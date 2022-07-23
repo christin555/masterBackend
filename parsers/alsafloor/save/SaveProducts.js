@@ -1,5 +1,5 @@
-const {getCategories} = require('../../oldFuckingParsing/getCategories');
-const {getCollections} = require('../../oldFuckingParsing/getCollections');
+const {getCategories} = require('../../utils/getCategories');
+const {getCollections} = require('../../utils/getCollections');
 const {array2Object} = require('../../../service/tools/array2Object');
 const {InsertImages} = require('../../utils');
 const {translitRuEn} = require("../../../service/tools/transliter");

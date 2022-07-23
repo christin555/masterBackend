@@ -1,30 +1,19 @@
 const {BaseParser} = require('../BaseParser');
-const {FileSystem, logger} = require('../utils');
+const {logger} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {SaveProducts} = require('../SaveProducts');
 const fields = require('./consts');
 const knex = require('../../knex');
-const baseUrl = 'https://alpinefloor.su';
+const baseUrl = 'https://finefloor.ru';
 
 const urls = [
-    '/catalog/stone-lvt/'
-    //'/catalog/quartz-tiles-vinyl-for-walls',
-    // '/catalog/light-parquet',
-    // '/catalog/intense',
-    // '/catalog/classic-collection',
-    // '/catalog/collection-easy-line',
-    // '/catalog/the-sequoia-collection',
-    // '/catalog/collection-stone',
-    // '/catalog/grand-stone',
-    // '/catalog/the-collection-of-real-wood',
-    // '/catalog/premium-xl',
-    // '/catalog/solo',
-    //
-    // '/catalog/related-products/napolnyy-plintus'
+    '/catalog/stone/',
+    '/catalog/wood/',
+    '/catalog/zamkovyy-tip/ff-1800/',
 ];
 
 const start = async() => {
-    console.log('start Alpinefloor');
+    console.log('start Finefloor');
 
     try {
         const parser = new BaseParser(
@@ -35,11 +24,10 @@ const start = async() => {
         );
 
         const products = await parser.parse();
-        // FileSystem.saveToJSON('alpinefloor', products);
 
         const saver = new SaveProducts(
             products,
-            {knex, logger, brand: 'alpine', fields}
+            {knex, logger, brand: 'finefloor', fields}
         );
 
         await saver.save();

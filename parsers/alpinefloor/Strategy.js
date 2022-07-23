@@ -60,6 +60,7 @@ class Strategy {
             resJSON.connectionType = 'Клеевой';
             resJSON._categoryType = 'кварцвинил';
         }
+
         if (resJSON['Способ укладки']?.toLowerCase().includes('замок')) {
             resJSON.connectionType = 'Замковый';
             resJSON._categoryType = 'кварцвинил';

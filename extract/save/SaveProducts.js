@@ -1,6 +1,6 @@
 const {fields} = require('./consts');
-const {getCategories} = require('../../parsers/oldFuckingParsing/getCategories');
-const {getCollections} = require('../../parsers/oldFuckingParsing/getCollections');
+const {getCategories} = require('../../parsers/utils/getCategories');
+const {getCollections} = require('../../parsers/utils/getCollections');
 const {Insert, logger} = require('../../parsers/utils');
 
 class SaveProducts {

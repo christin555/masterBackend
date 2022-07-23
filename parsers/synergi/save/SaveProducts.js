@@ -1,7 +1,7 @@
 const {getFinishingMaterials} = require("../../oldFuckingParsing/doors/getFinishingMaterials");
 const {fields} = require('./consts');
-const {getCategories} = require('../../oldFuckingParsing/getCategories');
-const {getCollections} = require('../../oldFuckingParsing/getCollections');
+const {getCategories} = require('../../utils/getCategories');
+const {getCollections} = require('../../utils/getCollections');
 const {Insert} = require('../../utils');
 
 class SaveProducts {

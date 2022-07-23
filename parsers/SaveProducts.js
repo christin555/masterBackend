@@ -1,19 +1,20 @@
-const {fields} = require('./consts');
-const {getCategories} = require('../../oldFuckingParsing/getCategories');
-const {getCollections} = require('../../oldFuckingParsing/getCollections');
-const {Insert} = require('../../utils');
+const {getCategories} = require('./utils/getCategories');
+const {getCollections} = require('./utils/getCollections');
+const {Insert} = require('./utils');
 
 class SaveProducts {
-    constructor(products, {knex, logger}) {
+    constructor(products, {knex, logger, brand, fields}) {
         this.products = products;
+        this.fields = fields;
         this.logger = logger;
         this.knex = knex;
+        this.brand = brand;
     }
 
     async init() {
         const [categories, collections] = await Promise.all([
             getCategories({knex: this.knex}),
-            getCollections({knex: this.knex, brand: 'alpine'})
+            getCollections({knex: this.knex, brand: this.brand})
         ]);
 
         this.categories = categories;
@@ -27,7 +28,7 @@ class SaveProducts {
             items: this.products,
             collections: this.collections,
             categories: this.categories,
-            fields,
+            fields: this.fields,
             logger: this.logger,
             knex: this.knex
         });
