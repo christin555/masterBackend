@@ -33,7 +33,7 @@ class Strategy {
         const resJSON = {};
         resJSON.name = this.collectDetail(html);
 
-        if (resJSON.name) {
+        if (!resJSON.name) {
             return null;
         }
 
