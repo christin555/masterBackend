@@ -7,7 +7,8 @@ const fields = {
     'Упаковка (м2)': 'metersInPackage',
     'name': 'name',
     'collection': 'collectionName',
-    'connectionType': 'connectionType'
+    'connectionType': 'connectionType',
+    'searchKeys': 'searchKeys'
 };
 
 

@@ -2,7 +2,7 @@ const {BaseParser} = require('../BaseParser');
 const {FileSystem, logger} = require('../utils');
 const {Strategy} = require('./Strategy');
 const {SaveProducts} = require('../SaveProducts');
-const fields = require('./consts');
+const {fields} = require('./consts');
 const knex = require('../../knex');
 const baseUrl = 'https://alpinefloor.su';
 

@@ -31,31 +31,26 @@ class Strategy {
     collectItem(content) {
         const html = cheerio.load(content);
         const resJSON = {};
+
         resJSON.name = this.collectDetail(html);
 
-        if (!resJSON.name) {
-            return null;
+        if (!resJSON.name || resJSON.name === 'Каталог плитки ПВХ') {
+            return;
         }
 
         resJSON.images = this.collectImages(html);
-
         resJSON.collection = this.collectCollection(html);
-
         Object.assign(resJSON, this.collectChars(html));
 
+        //static
         resJSON._categoryType = 'кварцвинил';
+        resJSON.searchKeys = 'Finefloor ' + resJSON.collection + ' ' + resJSON.name;
 
         if (resJSON['Способ укладки']?.toLowerCase().includes('кле')) {
             resJSON.connectionType = 'Клеевой';
         } else {
             resJSON.connectionType = 'Замковый';
         }
-
-        resJSON.code = html(selectors.code)
-            .first()
-            .text()
-            .trim();
-
 
         return resJSON;
     }
