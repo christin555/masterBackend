@@ -6,6 +6,7 @@ const filterFields = [
     'collectionId',
     'isPopular',
     'price',
+    'substrateThickness',
     'isSale',
     'brandId'
 ];
@@ -78,6 +79,10 @@ const setQueryField = (key, value, query) => {
         setAction(query);
     } else if (key === 'price') {
         setPrice(query, value);
+    }
+    //хуйня конечн
+    else if (key === 'substrateThickness') {
+        query.whereNotNull('substrateThickness');
     } else if (Array.isArray(value) && value.length) {
         if (key === 'finishingMaterial') {
             query.where(key, '&&', value);
@@ -95,7 +100,7 @@ const setQueryField = (key, value, query) => {
     }
 };
 
-const setAction = (query) => query.whereNotNull('prices.salePrice');
+const setAction = (query) => query.where('prices.salePrice', '>', 0);
 
 const setPrice = (query, value) => {
     if (value) {

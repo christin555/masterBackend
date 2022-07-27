@@ -74,7 +74,7 @@ from (
          from collections
                  inner join products on products."collectionId" = collections."id"
          where products."categoryId" = ${categoryId_lock} and collections.deleted_at is null
-     ) as t;
+     ) as t; 
   `;
 
     await knex.raw(sql);

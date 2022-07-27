@@ -39,6 +39,7 @@ module.exports = {
                 'prices.price',
                 'prices.salePrice',
                 'prices.salePercent',
+                knex.raw('CASE WHEN "salePrice" > 0 THEN "salePrice" ELSE price END AS "orderPrice"'),
                 knex.raw('COALESCE(json_agg(media) FILTER (WHERE media."entityId" IS NOT NULL), null) as imgs')
             ])
             .leftJoin('media', function () {
